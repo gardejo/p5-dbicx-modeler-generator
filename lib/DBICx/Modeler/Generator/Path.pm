@@ -11,7 +11,7 @@ use MooseX::Types::Path::Class qw(File Dir);
 
 
 # ****************************************************************
-# namespace clearer
+# namespace cleaner
 # ****************************************************************
 
 use namespace::clean -except => [qw(meta)];

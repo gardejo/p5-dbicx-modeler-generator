@@ -25,7 +25,7 @@ use Text::MicroTemplate::Extended;
 
 
 # ****************************************************************
-# namespace clearer
+# namespace cleaner
 # ****************************************************************
 
 use namespace::clean -except => [qw(meta)];
