@@ -37,12 +37,14 @@ use namespace::clean -except => [qw(meta)];
 
 bind_constructor '/DBICx/Modeler/Generator' => (
     args => {
-        class    => bind_value '/DBICx/Modeler/Generator/Class',
-        tree     => bind_value '/DBICx/Modeler/Generator/Tree',
-        path     => bind_value '/DBICx/Modeler/Generator/Path',
-        dsn      => bind_value '/DBICx/Modeler/Generator/dsn',
-        username => bind_value '/DBICx/Modeler/Generator/username',
-        password => bind_value '/DBICx/Modeler/Generator/password',
+        class       => bind_value '/DBICx/Modeler/Generator/Class',
+        tree        => bind_value '/DBICx/Modeler/Generator/Tree',
+        path        => bind_value '/DBICx/Modeler/Generator/Path',
+        dsn         => bind_value '/DBICx/Modeler/Generator/dsn',
+        username    => bind_value '/DBICx/Modeler/Generator/username',
+        password    => bind_value '/DBICx/Modeler/Generator/password',
+        components  => bind_value '/DBICx/Modeler/Generator/components',
+        is_debug    => bind_value '/DBICx/Modeler/Generator/is_debug',
     },
 );
 
@@ -74,6 +76,51 @@ has [qw(dsn username password)] => (
     isa         => 'Str',
     required    => 1,
 );
+
+has 'components' => (
+    is          => 'ro',
+    isa         => 'ArrayRef[Str]',
+    lazy_build  => 1,
+);
+
+has 'is_debug' => (
+    is          => 'ro',
+    isa         => 'Bool',
+    lazy_build  => 1,
+);
+
+
+# ****************************************************************
+# hook(s) on construction
+# ****************************************************************
+
+around BUILDARGS => sub {
+    my ($next, $class, @args) = @_;
+
+    my $option = $class->$next(@args);
+
+    delete $option->{components}
+        unless defined $option->{components};
+    delete $option->{is_debug}
+        unless defined $option->{is_debug};
+
+    return $option;
+};
+
+
+# ****************************************************************
+# builder(s)
+# ****************************************************************
+
+sub _build_components {
+    return [qw(
+        UTF8Columns
+    )];
+}
+
+sub _build_is_debug {
+    return 0;
+}
 
 
 # ****************************************************************
@@ -242,12 +289,10 @@ sub _make_schemata {
     make_schema_at(
         $self->class->schema,
         {
-            components              => [qw(
-                UTF8Columns
-            )],
+            components              => $self->components,
             dump_directory          => $self->path->target,
             really_erase_my_files   => 1,
-            debug                   => 1,
+            debug                   => $self->is_debug,
         },
         [
             $self->dsn,
