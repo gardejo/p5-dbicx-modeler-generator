@@ -219,7 +219,7 @@ blah blah blah
 
 =head2 Loaders
 
-=head3 C<< $self->reload_class('attribute') >>
+=head3 C<< $self->reload_class($attribute) >>
 
 Reload class which is C<model> or C<class>.
 

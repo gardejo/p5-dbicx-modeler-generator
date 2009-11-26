@@ -252,13 +252,13 @@ blah blah blah
 
 =head2 Remover
 
-=head3 C<< $self->remove_path({ file => 'file_attribute', directory => 'directory_attribute'}) >>
+=head3 C<< $self->remove_path({ file => $file_attribute, directory => $directory_attribute}) >>
 
 Removes file(s) and directory tree.
 
 =head2 Maintainer for library path
 
-=head3 C<< $self->add_source_library >>
+=head3 C<< $self->add_source_library() >>
 
 Added source directory into library path (which is C<@INC>).
 
