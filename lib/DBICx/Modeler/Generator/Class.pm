@@ -10,6 +10,14 @@ use MooseX::Orochi;
 
 
 # ****************************************************************
+# general dependency(-ies)
+# ****************************************************************
+
+use Class::Unload;
+use Module::Load;
+
+
+# ****************************************************************
 # namespace cleaner
 # ****************************************************************
 
@@ -39,13 +47,7 @@ has 'application' => (
     required    => 1,
 );
 
-has 'model_part' => (
-    is          => 'ro',
-    isa         => 'Str',
-    lazy_build  => 1,
-);
-
-has 'schema_part' => (
+has [qw(model_part schema_part)] => (
     is          => 'ro',
     isa         => 'Str',
     lazy_build  => 1,
@@ -128,6 +130,21 @@ sub _build_route_to_schema {
 
 
 # ****************************************************************
+# public method(s)
+# ****************************************************************
+
+sub reload_class {
+    my ($self, $attribute) = @_;
+
+    my $class = $self->$attribute;
+    Class::Unload->unload($class);  # unload class of target
+    load $class;                    # reload class from source (@INC is added)
+
+    return;
+}
+
+
+# ****************************************************************
 # protected/private method(s)
 # ****************************************************************
 
@@ -187,6 +204,14 @@ DBICx::Modeler::Generator::Class -
 =head1 DESCRIPTION
 
 blah blah blah
+
+=head1 METHODS
+
+=head2 Loaders
+
+=head3 C<< $self->reload_class('attribute') >>
+
+Reload class which is C<model> or C<class>.
 
 =head1 AUTHOR
 

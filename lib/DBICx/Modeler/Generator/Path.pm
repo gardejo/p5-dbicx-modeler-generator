@@ -36,8 +36,9 @@ bind_constructor '/DBICx/Modeler/Generator/Path' => (
 
 has 'tree' => (
     is          => 'ro',
-    isa         => 'DBICx::Modeler::Generator::TreeLike',
+    does        => 'DBICx::Modeler::Generator::TreeLike',
     weak_ref    => 1,
+    required    => 1,
 );
 
 has 'root' => (
@@ -50,6 +51,7 @@ has 'root' => (
 has [qw(source target)] => (
     is          => 'ro',
     isa         => Dir,
+    init_arg    => undef,
     coerce      => 1,
     lazy_build  => 1,
 );
@@ -167,6 +169,30 @@ sub _build_target_schemata {
 
 
 # ****************************************************************
+# public method(s)
+# ****************************************************************
+
+sub remove_path {
+    my ($self, $path) = @_;
+
+    my ($file, $directory) = @$path{qw(file directory)};
+
+    $self->$file->remove;
+    $self->$directory->rmtree;
+
+    return;
+}
+
+sub add_source_library {
+    my $self = shift;
+
+    unshift @INC, $self->source->stringify;
+
+    return;
+}
+
+
+# ****************************************************************
 # protected/private method(s)
 # ****************************************************************
 
@@ -221,6 +247,20 @@ DBICx::Modeler::Generator::Path -
 =head1 DESCRIPTION
 
 blah blah blah
+
+=head1 METHODS
+
+=head2 Remover
+
+=head3 C<< $self->remove_path({ file => 'file_attribute', directory => 'directory_attribute'}) >>
+
+Removes file(s) and directory tree.
+
+=head2 Maintainer for library path
+
+=head3 C<< $self->add_source_library >>
+
+Added source directory into library path (which is C<@INC>).
 
 =head1 AUTHOR
 

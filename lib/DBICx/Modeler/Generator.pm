@@ -14,16 +14,13 @@ use 5.008_001;
 
 use Moose;
 use MooseX::Orochi;
-use MooseX::Types::Path::Class qw(Dir);
 
 
 # ****************************************************************
 # general dependency(-ies)
 # ****************************************************************
 
-use Class::Unload;
 use DBIx::Class::Schema::Loader qw(make_schema_at);
-use Module::Load;
 use Text::MicroTemplate::Extended;
 
 
@@ -48,7 +45,6 @@ our $VERSION = "0.00";
 bind_constructor '/DBICx/Modeler/Generator' => (
     args => {
         class       => bind_value '/DBICx/Modeler/Generator/Class',
-        tree        => bind_value '/DBICx/Modeler/Generator/Tree',
         path        => bind_value '/DBICx/Modeler/Generator/Path',
         dsn         => bind_value '/DBICx/Modeler/Generator/dsn',
         username    => bind_value '/DBICx/Modeler/Generator/username',
@@ -67,18 +63,27 @@ has 'class' => (
     is          => 'ro',
     does        => 'DBICx::Modeler::Generator::ClassLike',
     required    => 1,
-);
-
-has 'tree' => (
-    is          => 'ro',
-    does        => 'DBICx::Modeler::Generator::TreeLike',
-    required    => 1,
+    handles     => {
+        _reload_model_class  => [ reload_class => 'model'  ],
+        _reload_schema_class => [ reload_class => 'schema' ],
+    },
 );
 
 has 'path' => (
     is          => 'ro',
     does        => 'DBICx::Modeler::Generator::PathLike',
     required    => 1,
+    handles     => {
+        _remove_models      => [ remove_path => {
+            file      => 'target_model',
+            directory => 'target_models',
+        } ],
+        _remove_schemata    => [ remove_path => {
+            file      => 'target_schema',
+            directory => 'target_schemata',
+        } ],
+        _add_source_library => 'add_source_library',
+    },
 );
 
 has [qw(dsn username password)] => (
@@ -162,41 +167,10 @@ sub update_schemata {
 # protected/private method(s)
 # ****************************************************************
 
-sub _remove_models {
-    my $self = shift;
-
-    $self->path->target_model->remove;
-    $self->path->target_models->rmtree;
-
-    return;
-}
-
 sub _create_models {
     my $self = shift;
 
     $self->_make_models;
-
-    return;
-}
-
-=for comment
-
-sub _modify_models {
-    my $self = shift;
-
-    $self->_reload_model_class;
-    $self->_make_models;
-
-    return;
-}
-
-=cut
-
-sub _remove_schemata {
-    my $self = shift;
-
-    $self->path->target_schema->remove;
-    $self->path->target_schemata->rmtree;
 
     return;
 }
@@ -209,45 +183,26 @@ sub _create_schemata {
     return;
 }
 
+=for comment
+
+sub _modify_models {
+    my $self = shift;
+
+    $self->_add_source_library;
+    $self->_reload_model_class;
+    $self->_make_models;
+
+    return;
+}
+
+=cut
+
 sub _modify_schemata {
     my $self = shift;
 
+    $self->_add_source_library;
     $self->_reload_schema_class;
     $self->_make_schemata;
-
-    return;
-}
-
-sub _reload_model_class {
-    my $self = shift;
-
-    $self->_reload_class($self->class->model);
-
-    return;
-}
-
-sub _reload_schema_class {
-    my $self = shift;
-
-    $self->_reload_class($self->class->schema);
-
-    return;
-}
-
-sub _reload_class {
-    my ($self, $class) = @_;
-
-    Class::Unload->unload($class);  # unload class of target
-    $self->_add_source_library;
-    load $class;                    # reload class from source (@INC is added)
-
-    return;
-}
-
-sub _add_source_library {
-    my $self = shift;
-
-    unshift @INC, $self->path->source->stringify;
 
     return;
 }

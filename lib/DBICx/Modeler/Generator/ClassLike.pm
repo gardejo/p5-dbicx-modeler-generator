@@ -24,6 +24,7 @@ requires qw(
     model_part      schema_part
     model           schema
     route_to_model  route_to_schema
+    reload_class
 );
 
 

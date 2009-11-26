@@ -22,7 +22,10 @@ use namespace::clean;
 requires qw(
     source      source_model    source_models   source_schema   source_schemata
     target      target_model    target_models   target_schema   target_schemata
+    root
     extension
+    remove_path
+    add_source_library
 );
 
 
