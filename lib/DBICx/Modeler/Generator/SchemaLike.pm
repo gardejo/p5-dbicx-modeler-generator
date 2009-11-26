@@ -1,4 +1,4 @@
-package DBICx::Modeler::Generator::ClassLike;
+package DBICx::Modeler::Generator::SchemaLike;
 
 
 # ****************************************************************
@@ -20,13 +20,7 @@ use namespace::clean;
 # ****************************************************************
 
 requires qw(
-    application
-    model_part      schema_part
-    model           schema
-    route_to_model  route_to_schema
-    reload_class
-    get_class_name_from_path_string
-    get_fully_qualified_class_name
+    dsn username password components is_debug make_schemata
 );
 
 
@@ -46,7 +40,7 @@ __END__
 
 =head1 NAME
 
-DBICx::Modeler::Generator::ClassLike - Class interface to DBICx::Modeler::Generator
+DBICx::Modeler::Generator::SchemaLike - Schema interface to DBICx::Modeler::Generator
 
 =head1 SYNOPSIS
 

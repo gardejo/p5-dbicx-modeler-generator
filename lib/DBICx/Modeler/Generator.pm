@@ -17,14 +17,6 @@ use MooseX::Orochi;
 
 
 # ****************************************************************
-# general dependency(-ies)
-# ****************************************************************
-
-use DBIx::Class::Schema::Loader qw(make_schema_at);
-use Text::MicroTemplate::Extended;
-
-
-# ****************************************************************
 # namespace cleaner
 # ****************************************************************
 
@@ -45,12 +37,9 @@ our $VERSION = "0.00";
 bind_constructor '/DBICx/Modeler/Generator' => (
     args => {
         class       => bind_value '/DBICx/Modeler/Generator/Class',
+        model       => bind_value '/DBICx/Modeler/Generator/Model',
         path        => bind_value '/DBICx/Modeler/Generator/Path',
-        dsn         => bind_value '/DBICx/Modeler/Generator/dsn',
-        username    => bind_value '/DBICx/Modeler/Generator/username',
-        password    => bind_value '/DBICx/Modeler/Generator/password',
-        components  => bind_value '/DBICx/Modeler/Generator/components',
-        is_debug    => bind_value '/DBICx/Modeler/Generator/is_debug',
+        schema      => bind_value '/DBICx/Modeler/Generator/Schema',
     },
 );
 
@@ -66,6 +55,15 @@ has 'class' => (
     handles     => {
         _reload_model_class  => [ reload_class => 'model'  ],
         _reload_schema_class => [ reload_class => 'schema' ],
+    },
+);
+
+has 'model' => (
+    is          => 'ro',
+    does        => 'DBICx::Modeler::Generator::ModelLike',
+    required    => 1,
+    handles     => {
+        _make_models => 'make_models',
     },
 );
 
@@ -86,56 +84,14 @@ has 'path' => (
     },
 );
 
-has [qw(dsn username password)] => (
+has 'schema' => (
     is          => 'ro',
-    isa         => 'Str',
+    does        => 'DBICx::Modeler::Generator::SchemaLike',
     required    => 1,
+    handles     => {
+        _make_schemata => 'make_schemata',
+    },
 );
-
-has 'components' => (
-    is          => 'ro',
-    isa         => 'ArrayRef[Str]',
-    lazy_build  => 1,
-);
-
-has 'is_debug' => (
-    is          => 'ro',
-    isa         => 'Bool',
-    lazy_build  => 1,
-);
-
-
-# ****************************************************************
-# hook(s) on construction
-# ****************************************************************
-
-around BUILDARGS => sub {
-    my ($next, $class, @args) = @_;
-
-    my $args = $class->$next(@args);
-
-    delete $args->{components}
-        unless defined $args->{components};
-    delete $args->{is_debug}
-        unless defined $args->{is_debug};
-
-    return $args;
-};
-
-
-# ****************************************************************
-# builder(s)
-# ****************************************************************
-
-sub _build_components {
-    return [qw(
-        UTF8Columns
-    )];
-}
-
-sub _build_is_debug {
-    return 0;
-}
 
 
 # ****************************************************************
@@ -146,8 +102,12 @@ sub update_models {
     my $self = shift;
 
     $self->_remove_models;
-    $self->_create_models;
-    # $self->_modify_models;
+
+    $self->_make_models($self->class, $self->path);
+
+    # $self->_add_source_library;
+    # $self->_reload_model_class;
+    # $self->_make_models($self->class, $self->path);
 
     return;
 }
@@ -156,111 +116,12 @@ sub update_schemata {
     my $self = shift;
 
     $self->_remove_schemata;
-    $self->_create_schemata;
-    $self->_modify_schemata;
 
-    return;
-}
-
-
-# ****************************************************************
-# protected/private method(s)
-# ****************************************************************
-
-sub _create_models {
-    my $self = shift;
-
-    $self->_make_models;
-
-    return;
-}
-
-sub _create_schemata {
-    my $self = shift;
-
-    $self->_make_schemata;
-
-    return;
-}
-
-=for comment
-
-sub _modify_models {
-    my $self = shift;
-
-    $self->_add_source_library;
-    $self->_reload_model_class;
-    $self->_make_models;
-
-    return;
-}
-
-=cut
-
-sub _modify_schemata {
-    my $self = shift;
+    $self->_make_schemata($self->class, $self->path);
 
     $self->_add_source_library;
     $self->_reload_schema_class;
-    $self->_make_schemata;
-
-    return;
-}
-
-sub _make_schemata {
-    my $self = shift;
-
-    make_schema_at(
-        $self->class->schema,
-        {
-            components              => $self->components,
-            dump_directory          => $self->path->target,
-            really_erase_my_files   => 1,
-            debug                   => $self->is_debug,
-        },
-        [
-            $self->dsn,
-            $self->username,
-            $self->password,
-        ],
-    );
-
-    return;
-}
-
-sub _make_models {
-    my $self = shift;
-
-    mkdir $self->path->target_models->stringify
-        unless -f $self->path->target_models->stringify;
-
-    my $template = Text::MicroTemplate::Extended->new(
-        include_path    => [
-            $self->path->source_models->stringify,
-        ],
-        extension       => $self->path->extension,
-    );
-
-    foreach my $schema_file ( $self->path->target_schemata->children) {
-        my $module = $schema_file->basename;
-        ( my $class = $module ) =~ s{\.pm}{};
-
-        ( my $template_name = $schema_file->basename ) =~ s{\.pm}{};
-        if ( ! -f $self->path->source_models->file($module) ) {
-            $template_name = 'Base';
-        }
-
-        $template->template_args({
-            stash => {
-                package => $self->class->model . '::' . $class,
-                code    => q{},
-            }
-        });
-
-        my $handle = $self->path->target_models->file($module)->openw;
-        $handle->print($template->render($template_name));
-        $handle->close;
-    }
+    $self->_make_schemata($self->class, $self->path);
 
     return;
 }
@@ -320,54 +181,6 @@ for further datail.
 
 =head2 MANDATORY DEPENDENCIES
 
-=head3 C<< /DBICx/Modeler/Generator/dsn >>
-
-It is a data source name which used by database connection.
-
-=over 4
-
-=item Type
-
-C<< Str >>
-
-=item Example
-
-C<< dbi:mysql:dbname=myapp:host=localhost >>
-
-=back
-
-=head3 C<< /DBICx/Modeler/Generator/username >>
-
-It is a username which used by database connection.
-
-=over 4
-
-=item Type
-
-C<< Str >>
-
-=item Eexample
-
-C<< mysql_user >>
-
-=back
-
-=head3 C<< /DBICx/Modeler/Generator/password >>
-
-It is a password which used by database connection.
-
-=over 4
-
-=item Type
-
-C<< Str >>
-
-=item Example
-
-C<< foobar >>
-
-=back
-
 =head3 C<< /DBICx/Modeler/Generator/Class >>
 
 It is a concrete class
@@ -391,6 +204,14 @@ C<< Str >>
 C<< MyApp >>
 
 =back
+
+=head3 C<< /DBICx/Modeler/Generator/Model >>
+
+It is a concrete class
+complies with L<DBICx::Modeler::Generator::ModelLike> role.
+
+This distribution contains a concrete class
+which named L<DBICx::Modeler::Generator::Model> for common usage.
 
 =head3 C<< /DBICx/Modeler/Generator/Path >>
 
@@ -416,6 +237,62 @@ C<< /path/to/root >>
 
 =back
 
+=head3 C<< /DBICx/Modeler/Generator/Schema >>
+
+It is a concrete class
+complies with L<DBICx::Modeler::Generator::SchemaLike> role.
+
+This distribution contains a concrete class
+which named L<DBICx::Modeler::Generator::Schema> for common usage.
+
+=head3 C<< /DBICx/Modeler/Generator/Schema/dsn >>
+
+It is a data source name which used by database connection.
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Example
+
+C<< dbi:mysql:dbname=myapp:host=localhost >>
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Schema/username >>
+
+It is a username which used by database connection.
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Eexample
+
+C<< mysql_user >>
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Schema/password >>
+
+It is a password which used by database connection.
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Example
+
+C<< foobar >>
+
+=back
+
 =head3 C<< /DBICx/Modeler/Generator/Tree >>
 
 It is a concrete class
@@ -425,34 +302,6 @@ This distribution contains a concrete class
 which named L<DBICx::Modeler::Generator::Tree> for common usage.
 
 =head2 OPTIONAL DEPENDENCIES
-
-=head3 C<< /DBICx/Modeler/Generator/components >>
-
-=over 4
-
-=item Type
-
-C<< ArrayRef[Str] >>
-
-=item Default
-
-C<< [qw(UTF8Columns)] >>
-
-=back
-
-=head3 C<< /DBICx/Modeler/Generator/is_debug >>
-
-=over 4
-
-=item Type
-
-C<< Bool >>
-
-=item Default
-
-C<< 0 >> (false)
-
-=back
 
 =head3 C<< /DBICx/Modeler/Generator/Class/model_part >>
 
@@ -482,6 +331,20 @@ C<< Schema >>
 
 =back
 
+=head3 C<< /DBICx/Modeler/Generator/Model/base >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Default
+
+C<< Base >>
+
+=back
+
 =head3 C<< /DBICx/Modeler/Generator/Path/extension >>
 
 =over 4
@@ -493,6 +356,34 @@ C<< Str >>
 =item Default
 
 C<< .pm >>
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Schema/components >>
+
+=over 4
+
+=item Type
+
+C<< ArrayRef[Str] >>
+
+=item Default
+
+C<< [qw(UTF8Columns)] >>
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Schema/is_debug >>
+
+=over 4
+
+=item Type
+
+C<< Bool >>
+
+=item Default
+
+C<< 0 >> (false)
 
 =back
 

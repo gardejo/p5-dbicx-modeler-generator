@@ -1,4 +1,4 @@
-package DBICx::Modeler::Generator::Class;
+package DBICx::Modeler::Generator::Schema;
 
 
 # ****************************************************************
@@ -13,8 +13,7 @@ use MooseX::Orochi;
 # general dependency(-ies)
 # ****************************************************************
 
-use Class::Unload;
-use Module::Load;
+use DBIx::Class::Schema::Loader qw(make_schema_at);
 
 
 # ****************************************************************
@@ -28,11 +27,13 @@ use namespace::clean -except => [qw(meta)];
 # dependency injection
 # ****************************************************************
 
-bind_constructor '/DBICx/Modeler/Generator/Class' => (
+bind_constructor '/DBICx/Modeler/Generator/Schema' => (
     args => {
-        application => bind_value '/DBICx/Modeler/Generator/Class/application',
-        model_part  => bind_value '/DBICx/Modeler/Generator/Class/model_part',
-        schema_part => bind_value '/DBICx/Modeler/Generator/Class/schema_part',
+        dsn         => bind_value '/DBICx/Modeler/Generator/Schema/dsn',
+        username    => bind_value '/DBICx/Modeler/Generator/Schema/username',
+        password    => bind_value '/DBICx/Modeler/Generator/Schema/password',
+        components  => bind_value '/DBICx/Modeler/Generator/Schema/components',
+        is_debug    => bind_value '/DBICx/Modeler/Generator/Schema/is_debug',
     },
 );
 
@@ -41,29 +42,21 @@ bind_constructor '/DBICx/Modeler/Generator/Class' => (
 # attribute(s)
 # ****************************************************************
 
-has 'application' => (
+has [qw(dsn username password)] => (
     is          => 'ro',
     isa         => 'Str',
     required    => 1,
 );
 
-has [qw(model_part schema_part)] => (
-    is          => 'ro',
-    isa         => 'Str',
-    lazy_build  => 1,
-);
-
-has [qw(model schema)] => (
-    is          => 'ro',
-    isa         => 'Str',
-    init_arg    => undef,
-    lazy_build  => 1,
-);
-
-has [qw(route_to_model route_to_schema)] => (
+has 'components' => (
     is          => 'ro',
     isa         => 'ArrayRef[Str]',
-    init_arg    => undef,
+    lazy_build  => 1,
+);
+
+has 'is_debug' => (
+    is          => 'ro',
+    isa         => 'Bool',
     lazy_build  => 1,
 );
 
@@ -77,10 +70,10 @@ around BUILDARGS => sub {
 
     my $args = $class->$next(@args);
 
-    delete $args->{model_part}
-        unless defined $args->{model_part};
-    delete $args->{schema_part}
-        unless defined $args->{schema_part};
+    delete $args->{components}
+        unless defined $args->{components};
+    delete $args->{is_debug}
+        unless defined $args->{is_debug};
 
     return $args;
 };
@@ -90,86 +83,40 @@ around BUILDARGS => sub {
 # builder(s)
 # ****************************************************************
 
-sub _build_model_part {
-    return 'Model';
+sub _build_components {
+    return [qw(
+        UTF8Columns
+    )];
 }
 
-sub _build_schema_part {
-    return 'Schema';
-}
-
-sub _build_model {
-    my $self = shift;
-
-    return $self->get_fully_qualified_class_name(
-        $self->application,
-        $self->model_part,
-    );
-}
-
-sub _build_schema {
-    my $self = shift;
-
-    return $self->get_fully_qualified_class_name(
-        $self->application,
-        $self->schema_part,
-    );
-}
-
-sub _build_route_to_model {
-    my $self = shift;
-
-    return $self->_split_classname($self->model);
-}
-
-sub _build_route_to_schema {
-    my $self = shift;
-
-    return $self->_split_classname($self->schema);
+sub _build_is_debug {
+    return 0;
 }
 
 
 # ****************************************************************
-# public method(s)
+# consuming role(s)
 # ****************************************************************
 
-sub reload_class {
-    my ($self, $attribute) = @_;
+sub make_schemata {
+    my ($self, $class, $path) = @_;
 
-    my $class = $self->$attribute;
-    Class::Unload->unload($class);  # unload class of target
-    load $class;                    # reload class from source (@INC is added)
+    make_schema_at(
+        $class->schema,
+        {
+            components              => $self->components,
+            dump_directory          => $path->target,
+            really_erase_my_files   => 1,
+            debug                   => $self->is_debug,
+        },
+        [
+            $self->dsn,
+            $self->username,
+            $self->password,
+        ],
+    );
 
     return;
-}
-
-sub get_fully_qualified_class_name {
-    my $self = shift;
-
-    return join '::', @_;
-}
-
-sub get_class_name_from_path_string {
-    my ($self, $path_string) = @_;
-
-    my $class_name = $path_string;
-    $class_name =~ s{ \.pm \z }{}xms;
-    $class_name =~ s{ / }{::}xmsg;
-
-    return $class_name;
-}
-
-
-# ****************************************************************
-# protected/private method(s)
-# ****************************************************************
-
-sub _split_classname {
-    my ($self, $classname) = @_;
-
-    return [
-        split '::', $classname
-    ];
 }
 
 
@@ -178,7 +125,7 @@ sub _split_classname {
 # ****************************************************************
 
 with qw(
-    DBICx::Modeler::Generator::ClassLike
+    DBICx::Modeler::Generator::SchemaLike
 );
 
 
@@ -205,7 +152,7 @@ __END__
 
 =head1 NAME
 
-DBICx::Modeler::Generator::Class -
+DBICx::Modeler::Generator::Schema -
 
 =head1 SYNOPSIS
 
@@ -217,21 +164,11 @@ blah blah blah
 
 =head1 METHODS
 
-=head2 Loaders
+=head2 Generator
 
-=head3 C<< $self->reload_class('attribute') >>
+=head3 C<< $self->make_schemata($class, $path) >>
 
-Reload class which is C<model> or C<class>.
-
-=head2 Utilities
-
-=head3 C<< $self->get_class_name_from_path_string($path_string) >>
-
-Returns a string of class name which corresponds with C<$path_string>.
-
-=head3 C<< $self->get_fully_qualified_class_name(@parts_of_class_name) >>
-
-Returns a string which joined C<@parts_of_class_name> with q<::>.
+Loads and generates schema modules.
 
 =head1 AUTHOR
 
