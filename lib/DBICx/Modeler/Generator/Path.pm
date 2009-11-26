@@ -172,9 +172,9 @@ sub _build_target_schemata {
 # ****************************************************************
 
 sub remove_path {
-    my ($self, $path) = @_;
+    my ($self, $path_attribute) = @_;
 
-    my ($file, $directory) = @$path{qw(file directory)};
+    my ($file, $directory) = @$path_attribute{qw(file directory)};
 
     $self->$file->remove;
     $self->$directory->rmtree;
