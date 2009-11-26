@@ -119,13 +119,13 @@ sub _build_schema {
 sub _build_route_to_model {
     my $self = shift;
 
-    return $self->_split_classname($self->model);
+    return $self->_split_class_name($self->model);
 }
 
 sub _build_route_to_schema {
     my $self = shift;
 
-    return $self->_split_classname($self->schema);
+    return $self->_split_class_name($self->schema);
 }
 
 
@@ -164,11 +164,11 @@ sub get_class_name_from_path_string {
 # protected/private method(s)
 # ****************************************************************
 
-sub _split_classname {
-    my ($self, $classname) = @_;
+sub _split_class_name {
+    my ($self, $class_name) = @_;
 
     return [
-        split '::', $classname
+        split '::', $class_name
     ];
 }
 
