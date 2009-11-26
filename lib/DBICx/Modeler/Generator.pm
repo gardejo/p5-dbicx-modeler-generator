@@ -2,14 +2,19 @@ package DBICx::Modeler::Generator;
 
 
 # ****************************************************************
+# perl dependency
+# ****************************************************************
+
+use 5.008_001;
+
+
+# ****************************************************************
 # MOP dependency(-ies)
 # ****************************************************************
 
 use Moose;
 use MooseX::Orochi;
-use MooseX::Types::Path::Class qw(
-    Dir
-);
+use MooseX::Types::Path::Class qw(Dir);
 
 
 # ****************************************************************
@@ -17,9 +22,7 @@ use MooseX::Types::Path::Class qw(
 # ****************************************************************
 
 use Class::Unload;
-use DBIx::Class::Schema::Loader qw(
-    make_schema_at
-);
+use DBIx::Class::Schema::Loader qw(make_schema_at);
 use Module::Load;
 use Text::MicroTemplate::Extended;
 
@@ -29,6 +32,13 @@ use Text::MicroTemplate::Extended;
 # ****************************************************************
 
 use namespace::clean -except => [qw(meta)];
+
+
+# ****************************************************************
+# class constant(s)
+# ****************************************************************
+
+our $VERSION = "0.00";
 
 
 # ****************************************************************
@@ -97,14 +107,14 @@ has 'is_debug' => (
 around BUILDARGS => sub {
     my ($next, $class, @args) = @_;
 
-    my $option = $class->$next(@args);
+    my $args = $class->$next(@args);
 
-    delete $option->{components}
-        unless defined $option->{components};
-    delete $option->{is_debug}
-        unless defined $option->{is_debug};
+    delete $args->{components}
+        unless defined $args->{components};
+    delete $args->{is_debug}
+        unless defined $args->{is_debug};
 
-    return $option;
+    return $args;
 };
 
 
@@ -211,7 +221,6 @@ sub _modify_schemata {
 sub _reload_model_class {
     my $self = shift;
 
-    # $self->_reload_class($self->class->model, $self->class->route_to_model);
     $self->_reload_class($self->class->model);
 
     return;
@@ -220,7 +229,6 @@ sub _reload_model_class {
 sub _reload_schema_class {
     my $self = shift;
 
-    # $self->_reload_class($self->class->schema, $self->class->route_to_schema);
     $self->_reload_class($self->class->schema);
 
     return;
@@ -228,52 +236,13 @@ sub _reload_schema_class {
 
 sub _reload_class {
     my ($self, $class) = @_;
-    # my ($self, $class, $route_to_class) = @_;
 
-    # unload class of target
-    # $self->_unload_class($class, $route_to_class);
-    Class::Unload->unload($class);
-
-    # reload class from source
+    Class::Unload->unload($class);  # unload class of target
     $self->_add_source_library;
-    load $class;
+    load $class;                    # reload class from source (@INC is added)
 
     return;
 }
-
-=for comment
-
-sub _unload_class {
-    my ($self, $class, $route_to_class) = @_;
-
-    # $route_to_class ||= [ split '::', $class ];
-
-    # unload class of target
-    # http://d.hatena.ne.jp/perlcodesample/20091101/1246274997
-    {
-        no strict 'refs';
-
-        # delete @ISA
-        @{ join '::', @$route_to_class, 'ISA' } = ();
-
-        # delete symbol table of class
-        %{ $class } = ();
-
-        # delete class from upper namespace
-        delete ${
-            join '::', @$route_to_class[0 .. $#{$route_to_class} - 1], q{}
-        }{
-            join '::', $route_to_class->[-1], q{}
-        };
-
-        # delete loaded information
-        delete $INC{ (join '/', @$route_to_class ) . $self->path->extension };
-    }
-
-    return;
-}
-
-=cut
 
 sub _add_source_library {
     my $self = shift;
@@ -327,7 +296,7 @@ sub _make_models {
         }
 
         $template->template_args({
-            stash   => {
+            stash => {
                 package => $self->class->model . '::' . $class,
                 code    => q{},
             }

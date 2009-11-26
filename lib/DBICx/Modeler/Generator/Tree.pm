@@ -46,6 +46,7 @@ has 'source' => (
     )],
     is          => 'ro',
     isa         => 'ArrayRef[Str]',
+    init_arg    => undef,
     lazy_build  => 1,
     handles     => {
         route_to_source => 'elements',
@@ -58,6 +59,7 @@ has 'target' => (
     )],
     is          => 'ro',
     isa         => 'ArrayRef[Str]',
+    init_arg    => undef,
     lazy_build  => 1,
     handles     => {
         route_to_target => 'elements',
@@ -70,6 +72,7 @@ has 'model' => (
     )],
     is          => 'ro',
     isa         => 'ArrayRef[Str]',
+    init_arg    => undef,
     lazy_build  => 1,
     handles     => {
         route_to_model => 'elements',
@@ -82,6 +85,7 @@ has 'schema' => (
     )],
     is          => 'ro',
     isa         => 'ArrayRef[Str]',
+    init_arg    => undef,
     lazy_build  => 1,
     handles     => {
         route_to_schema => 'elements',
@@ -148,14 +152,14 @@ has 'target_schema' => (
 around BUILDARGS => sub {
     my ($next, $class, @args) = @_;
 
-    my $option = $class->$next(@args);
+    my $args = $class->$next(@args);
 
-    delete $option->{source}
-        unless defined $option->{source};
-    delete $option->{target}
-        unless defined $option->{target};
+    delete $args->{source}
+        unless defined $args->{source};
+    delete $args->{target}
+        unless defined $args->{target};
 
-    return $option;
+    return $args;
 };
 
 

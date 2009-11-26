@@ -54,12 +54,14 @@ has 'schema_part' => (
 has [qw(model schema)] => (
     is          => 'ro',
     isa         => 'Str',
+    init_arg    => undef,
     lazy_build  => 1,
 );
 
 has [qw(route_to_model route_to_schema)] => (
     is          => 'ro',
     isa         => 'ArrayRef[Str]',
+    init_arg    => undef,
     lazy_build  => 1,
 );
 
@@ -71,14 +73,14 @@ has [qw(route_to_model route_to_schema)] => (
 around BUILDARGS => sub {
     my ($next, $class, @args) = @_;
 
-    my $option = $class->$next(@args);
+    my $args = $class->$next(@args);
 
-    delete $option->{model_part}
-        unless defined $option->{model_part};
-    delete $option->{schema_part}
-        unless defined $option->{schema_part};
+    delete $args->{model_part}
+        unless defined $args->{model_part};
+    delete $args->{schema_part}
+        unless defined $args->{schema_part};
 
-    return $option;
+    return $args;
 };
 
 

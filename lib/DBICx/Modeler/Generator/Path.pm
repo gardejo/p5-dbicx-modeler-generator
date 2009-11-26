@@ -88,12 +88,12 @@ has [qw(
 around BUILDARGS => sub {
     my ($next, $class, @args) = @_;
 
-    my $option = $class->$next(@args);
+    my $args = $class->$next(@args);
 
-    delete $option->{extension}
-        unless defined $option->{extension};
+    delete $args->{extension}
+        unless defined $args->{extension};
 
-    return $option;
+    return $args;
 };
 
 
@@ -102,11 +102,15 @@ around BUILDARGS => sub {
 # ****************************************************************
 
 sub _build_source {
-    $_[0]->root->subdir($_[0]->tree->route_to_source);
+    my $self = shift;
+
+    return $self->root->subdir($self->tree->route_to_source);
 }
 
 sub _build_target {
-    $_[0]->root->subdir($_[0]->tree->route_to_target);
+    my $self = shift;
+
+    return $self->root->subdir($self->tree->route_to_target);
 }
 
 sub _build_extension {
@@ -114,35 +118,51 @@ sub _build_extension {
 }
 
 sub _build_source_model {
-    $_[0]->_get_relative_file_path($_[0]->tree->route_to_source_model);
+    my $self = shift;
+
+    return $self->_get_relative_file_path($self->tree->route_to_source_model);
 }
 
 sub _build_target_model {
-    $_[0]->_get_relative_file_path($_[0]->tree->route_to_target_model);
+    my $self = shift;
+
+    return $self->_get_relative_file_path($self->tree->route_to_target_model);
 }
 
 sub _build_source_schema {
-    $_[0]->_get_relative_file_path($_[0]->tree->route_to_source_schema);
+    my $self = shift;
+
+    return $self->_get_relative_file_path($self->tree->route_to_source_schema);
 }
 
 sub _build_target_schema {
-    $_[0]->_get_relative_file_path($_[0]->tree->route_to_target_schema);
+    my $self = shift;
+
+    return $self->_get_relative_file_path($self->tree->route_to_target_schema);
 }
 
 sub _build_source_models {
-    $_[0]->root->subdir($_[0]->tree->route_to_source_model);
+    my $self = shift;
+
+    return $self->root->subdir($self->tree->route_to_source_model);
 }
 
 sub _build_target_models {
-    $_[0]->root->subdir($_[0]->tree->route_to_target_model);
+    my $self = shift;
+
+    return $self->root->subdir($self->tree->route_to_target_model);
 }
 
 sub _build_source_schemata {
-    $_[0]->root->subdir($_[0]->tree->route_to_source_schema);
+    my $self = shift;
+
+    return $self->root->subdir($self->tree->route_to_source_schema);
 }
 
 sub _build_target_schemata {
-    $_[0]->root->subdir($_[0]->tree->route_to_target_schema);
+    my $self = shift;
+
+    return $self->root->subdir($self->tree->route_to_target_schema);
 }
 
 
