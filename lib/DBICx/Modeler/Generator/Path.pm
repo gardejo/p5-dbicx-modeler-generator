@@ -37,7 +37,6 @@ bind_constructor '/DBICx/Modeler/Generator/Path' => (
 has 'tree' => (
     is          => 'ro',
     does        => 'DBICx::Modeler::Generator::TreeLike',
-    weak_ref    => 1,
     required    => 1,
 );
 
