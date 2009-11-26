@@ -103,11 +103,11 @@ sub update_models {
 
     $self->_remove_models;
 
-    $self->_make_models($self->class, $self->path);
+    $self->_make_models;
 
     # $self->_add_source_library;
     # $self->_reload_model_class;
-    # $self->_make_models($self->class, $self->path);
+    # $self->_make_models;
 
     return;
 }
@@ -117,11 +117,11 @@ sub update_schemata {
 
     $self->_remove_schemata;
 
-    $self->_make_schemata($self->class, $self->path);
+    $self->_make_schemata;
 
     $self->_add_source_library;
     $self->_reload_schema_class;
-    $self->_make_schemata($self->class, $self->path);
+    $self->_make_schemata;
 
     return;
 }

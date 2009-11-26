@@ -29,7 +29,9 @@ use namespace::clean -except => [qw(meta)];
 
 bind_constructor '/DBICx/Modeler/Generator/Model' => (
     args => {
-        base => bind_value '/DBICx/Modeler/Generator/Model/base',
+        class => bind_value '/DBICx/Modeler/Generator/Class',
+        path  => bind_value '/DBICx/Modeler/Generator/Path',
+        base  => bind_value '/DBICx/Modeler/Generator/Model/base',
     },
 );
 
@@ -37,6 +39,18 @@ bind_constructor '/DBICx/Modeler/Generator/Model' => (
 # ****************************************************************
 # attribute(s)
 # ****************************************************************
+
+has 'class' => (
+    is          => 'ro',
+    does        => 'DBICx::Modeler::Generator::ClassLike',
+    required    => 1,
+);
+
+has 'path' => (
+    is          => 'ro',
+    does        => 'DBICx::Modeler::Generator::PathLike',
+    required    => 1,
+);
 
 has 'base' => (
     is          => 'ro',
@@ -75,30 +89,28 @@ sub _build_base {
 # ****************************************************************
 
 sub make_models {
-    my ($self, $class, $path) = @_;
+    my $self = shift;
 
-    mkdir $path->target_models->stringify
-        unless -f $path->target_models->stringify;
+    $self->path->target_models->mkpath;
 
-    my $template = $self->_get_template($path);
+    my $template = $self->_get_template;
 
-    foreach my $schema_file ( $path->target_schemata->children ) {
+    foreach my $schema_file ( $self->path->target_schemata->children ) {
         my $table_module = $schema_file->basename;
         my $template_name
-            = $self->_get_template_name
-                ($class, $path, $table_module, $schema_file);
+            = $self->_get_template_name($table_module, $schema_file);
 
         $template->template_args({
             stash => {
-                package => $class->get_fully_qualified_class_name(
-                    $class->model,
-                    $class->get_class_name_from_path_string($table_module),
+                package => $self->class->get_fully_qualified_class_name(
+                    $self->class->model,
+                    $self->class->get_class_name_from_path_string($table_module),
                 ),
                 code    => q{},
             }
         });
         $self->_dump_models_with_template
-            ($template, $path, $table_module, $template_name);
+            ($template, $table_module, $template_name);
     }
 
     return;
@@ -110,28 +122,28 @@ sub make_models {
 # ****************************************************************
 
 sub _get_template {
-    my ($self, $path) = @_;
+    my $self = shift;
 
     return Text::MicroTemplate::Extended->new(
         include_path    => [
-            $path->source_models->stringify,
+            $self->path->source_models->stringify,
         ],
-        extension       => $path->extension,
+        extension       => $self->path->extension,
     );
 }
 
 sub _get_template_name {
-    my ($self, $class, $path, $table_module, $schema_file) = @_;
+    my ($self, $table_module, $schema_file) = @_;
 
-    return -f $path->source_models->file($table_module)
-        ? $class->get_class_name_from_path_string($schema_file->basename)
+    return -f $self->path->source_models->file($table_module)
+        ? $self->class->get_class_name_from_path_string($schema_file->basename)
         : $self->base;
 }
 
 sub _dump_models_with_template {
-    my ($self, $template, $path, $table_module, $template_name) = @_;
+    my ($self, $template, $table_module, $template_name) = @_;
 
-    my $handle = $path->target_models->file($table_module)->openw;
+    my $handle = $self->path->target_models->file($table_module)->openw;
     $handle->print($template->render($template_name));
     $handle->close;
 
@@ -185,7 +197,7 @@ blah blah blah
 
 =head2 Generator
 
-=head3 C<< $self->make_models($class, $path) >>
+=head3 C<< $self->make_models() >>
 
 Loads and generates model modules.
 

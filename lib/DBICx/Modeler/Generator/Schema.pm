@@ -29,11 +29,13 @@ use namespace::clean -except => [qw(meta)];
 
 bind_constructor '/DBICx/Modeler/Generator/Schema' => (
     args => {
-        dsn         => bind_value '/DBICx/Modeler/Generator/Schema/dsn',
-        username    => bind_value '/DBICx/Modeler/Generator/Schema/username',
-        password    => bind_value '/DBICx/Modeler/Generator/Schema/password',
-        components  => bind_value '/DBICx/Modeler/Generator/Schema/components',
-        is_debug    => bind_value '/DBICx/Modeler/Generator/Schema/is_debug',
+        class      => bind_value '/DBICx/Modeler/Generator/Class',
+        path       => bind_value '/DBICx/Modeler/Generator/Path',
+        dsn        => bind_value '/DBICx/Modeler/Generator/Schema/dsn',
+        username   => bind_value '/DBICx/Modeler/Generator/Schema/username',
+        password   => bind_value '/DBICx/Modeler/Generator/Schema/password',
+        components => bind_value '/DBICx/Modeler/Generator/Schema/components',
+        is_debug   => bind_value '/DBICx/Modeler/Generator/Schema/is_debug',
     },
 );
 
@@ -41,6 +43,18 @@ bind_constructor '/DBICx/Modeler/Generator/Schema' => (
 # ****************************************************************
 # attribute(s)
 # ****************************************************************
+
+has 'class' => (
+    is          => 'ro',
+    does        => 'DBICx::Modeler::Generator::ClassLike',
+    required    => 1,
+);
+
+has 'path' => (
+    is          => 'ro',
+    does        => 'DBICx::Modeler::Generator::PathLike',
+    required    => 1,
+);
 
 has [qw(dsn username password)] => (
     is          => 'ro',
@@ -99,13 +113,13 @@ sub _build_is_debug {
 # ****************************************************************
 
 sub make_schemata {
-    my ($self, $class, $path) = @_;
+    my $self = shift;
 
     make_schema_at(
-        $class->schema,
+        $self->class->schema,
         {
             components              => $self->components,
-            dump_directory          => $path->target,
+            dump_directory          => $self->path->target,
             really_erase_my_files   => 1,
             debug                   => $self->is_debug,
         },
@@ -166,7 +180,7 @@ blah blah blah
 
 =head2 Generator
 
-=head3 C<< $self->make_schemata($class, $path) >>
+=head3 C<< $self->make_schemata() >>
 
 Loads and generates schema modules.
 
