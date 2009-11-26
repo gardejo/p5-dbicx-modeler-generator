@@ -101,7 +101,7 @@ sub _build_schema_part {
 sub _build_model {
     my $self = shift;
 
-    return $self->_side_name(
+    return $self->_get_fully_qualified_class_name(
         $self->application,
         $self->model_part,
     );
@@ -110,7 +110,7 @@ sub _build_model {
 sub _build_schema {
     my $self = shift;
 
-    return $self->_side_name(
+    return $self->_get_fully_qualified_class_name(
         $self->application,
         $self->schema_part,
     );
@@ -148,7 +148,7 @@ sub reload_class {
 # protected/private method(s)
 # ****************************************************************
 
-sub _side_name {
+sub _get_fully_qualified_class_name {
     my $self = shift;
 
     return join '::', @_;
