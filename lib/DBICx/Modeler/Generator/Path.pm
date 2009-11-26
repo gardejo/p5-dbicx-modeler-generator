@@ -253,7 +253,7 @@ blah blah blah
 
 =head3 C<< $self->remove_path({ file => $file_attribute, directory => $directory_attribute}) >>
 
-Removes file(s) and directory tree.
+Removes file and directory tree.
 
 =head2 Maintainer for library path
 

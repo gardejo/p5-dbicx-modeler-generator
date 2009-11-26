@@ -217,7 +217,7 @@ blah blah blah
 
 =head1 METHODS
 
-=head2 Loaders
+=head2 Loader
 
 =head3 C<< $self->reload_class($attribute) >>
 
@@ -225,11 +225,11 @@ Reload class which is C<model> or C<class>.
 
 =head2 Utilities
 
-=head3 C<< $self->get_class_name_from_path_string($path_string) >>
+=head3 C<< $class_name = $self->get_class_name_from_path_string($path_string) >>
 
 Returns a string of class name which corresponds with C<$path_string>.
 
-=head3 C<< $self->get_fully_qualified_class_name(@parts_of_class_name) >>
+=head3 C<< $class_name = $self->get_fully_qualified_class_name(@parts_of_class_name) >>
 
 Returns a string which joined C<@parts_of_class_name> with q<::>.
 
