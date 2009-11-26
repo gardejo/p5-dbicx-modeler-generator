@@ -5,70 +5,78 @@ use warnings;
 
 use inc::Module::Install;
 
-my $application_root_module
-    = 'lib/DBICx/Modeler/Generator.pm';
+# ================================================================
+# gathering meta information
+# ================================================================
+    # abstract, author, license, name, perl_version, version
+    all_from        'lib/DBICx/Modeler/Generator.pm';
+
+    # supplement
+    author          'MORIYA Masaki (a.k.a. "Gardejo") <moriya@cpan.org>';
+    resources (
+        repository
+            => 'git://github.com/gardejo/p5-dbicx-modeler-generator.git',
+        bugtracker
+            => 'http://github.com/gardejo/p5-dbicx-modeler-generator/issues',
+        homepage
+            => 'http://github.com/gardejo/p5-dbicx-modeler-generator',
+    );
+
+    no_index directory => 'examples';
+#   no_index directory => 'extlib';
 
 # ================================================================
-# meta information
+# general dependency(-ies)
 # ================================================================
-# abstract, author, license, name, perl_version, version
-all_from        $application_root_module;
-perl_version    5.008_001;
-version         "0.00";
-
-# supplement
-author          'MORIYA Masaki (a.k.a. "Gardejo") <moriya@cpan.org>';
-resources (
-    repository
-        => 'git://github.com/gardejo/p5-dbicx-modeler-generator.git',
-    bugtracker
-        => undef,
-    homepage
-        => 'http://github.com/gardejo/p5-dbicx-modeler-generator',
-);
-# no_index directory => 'examples';
-# no_index directory => 'extlib';
+    requires        'Class::Unload'                 => '0';
+    requires        'DBIx::Class::Schema::Loader'   => '0';
+    requires        'DBICx::Modeler'                => '0.005';
+        # to avoid clone problem
+    requires        'Module::Load'                  => '0';
+    requires        'Moose'                         => '0.89_01';
+        # for Moose::Meta::Attribute::Native
+    requires        'MooseX::Orochi'                => '0';
+    requires        'MooseX::Types::Path::Class'    => '0';
+    requires        'Orochi'                        => '0';
+#   requires        'Text::MicroTemplate'           => '0';
+    requires        'Text::MicroTemplate::Extended' => '0';
+    requires        'namespace::clean'              => '0.08';
+        # cf. MooseX-Types-DateTime
 
 # ================================================================
-# build dependencies
+# test dependency(-ies)
 # ================================================================
-build_requires  'Module::Install'       => '0.80'; # YAML::Tiny problem
-build_requires  'Module::Load'          => '0';    # > perl 5.009_004
+    test_requires   'Test::Class'                   => '0';
+    test_requires   'Test::Exception'               => '0.27';
+        # cf. MooseX-Types-DateTime
+    test_requires   'Test::More'                    => '0';
+    test_requires   'Test::Warn'                    => '0';
 
 # ================================================================
-# general dependencies
+# build dependency(-ies)
 # ================================================================
-  requires      'List::MoreUtils'       => '0';
-  requires      'Memoize'               => '0';
-  requires      'Moose'                 => '0.41';
-  requires      'Sub::Name'             => '0';
-  requires      'namespace::clean'      => '0.08'; # cf. MX-Types-DateTime
+    build_requires  'Module::Install'               => '0.80';
+        # to avoid YAML::Tiny problem
+    build_requires  'Module::Load'                  => '0';
+        # is in perl 5.009_004
 
 # ================================================================
-# dependencies for tests
+# test(s)
 # ================================================================
-  test_requires 'Test::Class'           => '0';    # without intention
-  test_requires 'Test::Exception'       => '0.27'; # cf. MX-Types-DateTime
-  test_requires 'Test::More'            => '0';    # without intention
-  test_requires 'Test::Warn'            => '0';    # without intention
-
-# ================================================================
-# tests
-# ================================================================
-use_test_base;
-  tests         't/*.t';
-  author_tests  'xt';
+    use_test_base;
+    tests           't/*.t';
+    author_tests    'xt';
 
 # ================================================================
 # installation
 # ================================================================
-auto_include;
-auto_install;
+    auto_include;
+    auto_install;
 
 # ================================================================
-# META.yml writter
+# writter
 # ================================================================
-WriteAll;
+    WriteAll;
 
 __END__
 
