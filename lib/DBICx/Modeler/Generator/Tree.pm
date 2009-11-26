@@ -70,6 +70,7 @@ has 'model' => (
     )],
     is          => 'ro',
     isa         => 'ArrayRef[Str]',
+    init_arg    => undef,
     lazy_build  => 1,
     handles     => {
         route_to_model => 'elements',
@@ -82,6 +83,7 @@ has 'schema' => (
     )],
     is          => 'ro',
     isa         => 'ArrayRef[Str]',
+    init_arg    => undef,
     lazy_build  => 1,
     handles     => {
         route_to_schema => 'elements',
