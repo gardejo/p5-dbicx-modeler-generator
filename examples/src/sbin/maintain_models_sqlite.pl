@@ -148,7 +148,9 @@ blah blah blah
 
 =over 4
 
-=item * L<MooseX::GetOpt>
+=item *
+
+L<MooseX::GetOpt>
 
 =back
 

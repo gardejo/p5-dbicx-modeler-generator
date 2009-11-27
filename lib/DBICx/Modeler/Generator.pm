@@ -600,11 +600,17 @@ C<< [] >>
 
 =over 4
 
-=item * L<DBICx::Modeler>
+=item *
 
-=item * L<DBIx::Class::Schema::Loader>
+L<DBICx::Modeler>
 
-=item * L<DBIx::Class>
+=item *
+
+L<DBIx::Class::Schema::Loader>
+
+=item *
+
+L<DBIx::Class>
 
 =back
 
@@ -616,7 +622,9 @@ None reported.
 
 =over 4
 
-=item * Using L<MooseX::Getopt>
+=item *
+
+Using L<MooseX::Getopt>
 
 =back
 
