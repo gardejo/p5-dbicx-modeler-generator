@@ -36,10 +36,11 @@ our $VERSION = "0.00";
 
 bind_constructor '/DBICx/Modeler/Generator' => (
     args => {
-        class       => bind_value '/DBICx/Modeler/Generator/Class',
-        model       => bind_value '/DBICx/Modeler/Generator/Model',
-        path        => bind_value '/DBICx/Modeler/Generator/Path',
-        schema      => bind_value '/DBICx/Modeler/Generator/Schema',
+        class  => bind_value '/DBICx/Modeler/Generator/Class',
+        driver => bind_value '/DBICx/Modeler/Generator/Driver',
+        model  => bind_value '/DBICx/Modeler/Generator/Model',
+        path   => bind_value '/DBICx/Modeler/Generator/Path',
+        schema => bind_value '/DBICx/Modeler/Generator/Schema',
     },
 );
 
@@ -55,6 +56,15 @@ has 'class' => (
     handles     => {
         _reload_model_class  => [ reload_class => 'model'  ],
         _reload_schema_class => [ reload_class => 'schema' ],
+    },
+);
+
+has 'driver' => (
+    is          => 'ro',
+    does        => 'DBICx::Modeler::Generator::DriverLike',
+    required    => 1,
+    handles     => {
+        make_database => 'make_database',
     },
 );
 
@@ -164,29 +174,33 @@ This module provides dynamic definition of a L<DBICx::Modeler> model.
 
 =head2 Services
 
+=head3 C<< $self->make_database() >>
+
+Makes database with a creation script.
+
 =head3 C<< $self->update_models() >>
 
-Updates modules of models.
+Updates model modules.
 
 =head3 C<< $self->update_schemata() >>
 
-Updates modules of schemata.
+Updates schema modules.
 
 =head1 DEPENDENCY INJECTION
 
-This module using L<MooseX::Orochi> and L<Orochi> for dependency injection.
+This class and subclasses using L<MooseX::Orochi> for dependency injection.
 
-See C</examples/source/sbin/maintain_models.mysql.pl> in this distribution
+See C</examples/source/sbin/maintain_models_mysql.pl> in this distribution
 for further datail.
 
-=head2 MANDATORY DEPENDENCIES
+=head2 Mandatory dependencies
 
 =head3 C<< /DBICx/Modeler/Generator/Class >>
 
-It is a concrete class
-which complies with L<DBICx::Modeler::Generator::ClassLike> role.
+It is an implement class
+which complies with the L<DBICx::Modeler::Generator::ClassLike> interface.
 
-This distribution contains a concrete class
+This distribution contains the implement class
 which named L<DBICx::Modeler::Generator::Class> for common usage.
 
 =head3 C<< /DBICx/Modeler/Generator/Class/application >>
@@ -201,24 +215,34 @@ C<< Str >>
 
 =item Example
 
-C<< MyApp >>
+C<< MyApp >>, C<< My::App >>, etc.
 
 =back
 
+=head3 C<< /DBICx/Modeler/Generator/Driver >>
+
+It is an implement class
+which complies with the L<DBICx::Modeler::Generator::DriverLike> interface.
+
+This distribution contains the implement classes
+which named L<DBICx::Modeler::Generator::Driver::MySQL>
+and L<DBICx::Modeler::Generator::Driver::SQLite>
+for common usage.
+
 =head3 C<< /DBICx/Modeler/Generator/Model >>
 
-It is a concrete class
-complies with L<DBICx::Modeler::Generator::ModelLike> role.
+It is an implement class
+which complies with the L<DBICx::Modeler::Generator::ModelLike> interface.
 
-This distribution contains a concrete class
+This distribution contains the implement class
 which named L<DBICx::Modeler::Generator::Model> for common usage.
 
 =head3 C<< /DBICx/Modeler/Generator/Path >>
 
-It is a concrete class
-complies with L<DBICx::Modeler::Generator::PathLike> role.
+It is an implement class
+which complies with the L<DBICx::Modeler::Generator::PathLike> interface.
 
-This distribution contains a concrete class
+This distribution contains the implement class
 which named L<DBICx::Modeler::Generator::Path> for common usage.
 
 =head3 C<< /DBICx/Modeler/Generator/Path/root >>
@@ -229,7 +253,7 @@ It is a directory path of the application root.
 
 =item Type
 
-C<< Path::Class::Dir >> (can coerce with L<MooseX::Types::Path::Class>)
+L<Path::Class::Dir> (can be coerce with L<MooseX::Types::Path::Class>)
 
 =item Example
 
@@ -239,69 +263,35 @@ C<< /path/to/root >>
 
 =head3 C<< /DBICx/Modeler/Generator/Schema >>
 
-It is a concrete class
-complies with L<DBICx::Modeler::Generator::SchemaLike> role.
+It is an implement class
+which complies with the L<DBICx::Modeler::Generator::SchemaLike> interface.
 
-This distribution contains a concrete class
+This distribution contains the implement class
 which named L<DBICx::Modeler::Generator::Schema> for common usage.
-
-=head3 C<< /DBICx/Modeler/Generator/Schema/dsn >>
-
-It is a data source name which used by database connection.
-
-=over 4
-
-=item Type
-
-C<< Str >>
-
-=item Example
-
-C<< dbi:mysql:dbname=myapp:host=localhost >>
-
-=back
-
-=head3 C<< /DBICx/Modeler/Generator/Schema/username >>
-
-It is a username which used by database connection.
-
-=over 4
-
-=item Type
-
-C<< Str >>
-
-=item Eexample
-
-C<< mysql_user >>
-
-=back
-
-=head3 C<< /DBICx/Modeler/Generator/Schema/password >>
-
-It is a password which used by database connection.
-
-=over 4
-
-=item Type
-
-C<< Str >>
-
-=item Example
-
-C<< foobar >>
-
-=back
 
 =head3 C<< /DBICx/Modeler/Generator/Tree >>
 
-It is a concrete class
-complies with L<DBICx::Modeler::Generator::TreeLike> role.
+It is an implement class
+which complies with the L<DBICx::Modeler::Generator::TreeLike> interface.
 
-This distribution contains a concrete class
+This distribution contains the implement class
 which named L<DBICx::Modeler::Generator::Tree> for common usage.
 
-=head2 OPTIONAL DEPENDENCIES
+=head2 Optional dependencies
+
+=head3 C<< /DBICx/Modeler/Generator/Class/base_part >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Default
+
+C<< Base >>
+
+=back
 
 =head3 C<< /DBICx/Modeler/Generator/Class/model_part >>
 
@@ -331,7 +321,7 @@ C<< Schema >>
 
 =back
 
-=head3 C<< /DBICx/Modeler/Generator/Model/base >>
+=head3 C<< /DBICx/Modeler/Generator/Driver/bin >>
 
 =over 4
 
@@ -341,11 +331,158 @@ C<< Str >>
 
 =item Default
 
-C<< Base >>
+C<< mysql >>
+(from the implement class L<DBICx::Modeler::Generator::Driver::MySQL>),
+C<< sqlite3 >>
+(from the implement class L<DBICx::Modeler::Generator::Driver::SQLite>),
+etc.
 
 =back
 
-=head3 C<< /DBICx/Modeler/Generator/Path/extension >>
+=head3 C<< /DBICx/Modeler/Generator/Driver/dbd >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Default
+
+C<< mysql >>
+(from the implement class L<DBICx::Modeler::Generator::Driver::MySQL>),
+C<< SQLite >>
+(from the implement class L<DBICx::Modeler::Generator::Driver::SQLite>),
+etc.
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Driver/dbname >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Default
+
+C<< $application >>, C<< /$root/$application.$database_extension >>, etc.
+
+=item Example
+
+C<< myapp >>, C<< my_app >>, C<< /path/to/root/my_app.db >>, etc.
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Driver/dsn >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Default
+
+C<< dbi:$dbd:dbname=$dbname >>,
+C<< dbi:$dbd:dbname=$dbname;host=$host >>,
+C<< dbi:$dbd:dbname=$dbname;host=$host;port=$port >>,
+etc.
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Driver/extension >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Default
+
+C<< .db >>
+from the implement class L<DBICx::Modeler::Generator::Driver::SQLite>,
+etc.
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Driver/host >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Default
+
+C<< localhost >>
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Driver/password >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Example
+
+C<< foobar >>
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Driver/port >>
+
+=over 4
+
+=item Type
+
+C<< Int >>
+
+=item Example
+
+C<< 3306 >>, C<< 3307 >>, etc.
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Driver/username >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Eexample
+
+C<< mysql_user >>
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Path/creation_script >>
+
+=over 4
+
+=item Type
+
+L<Path::Class::File> (can be coerce with L<MooseX::Types::Path::Class>)
+
+=item Default
+
+C<< /$root/$source/$application.$script_extension >>
+
+=item Example
+
+C<< /path/to/root/source/myapp.sql >>
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Path/module_extension >>
 
 =over 4
 
@@ -356,6 +493,20 @@ C<< Str >>
 =item Default
 
 C<< .pm >>
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Path/script_extension >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Default
+
+C<< .sql >>
 
 =back
 
@@ -387,6 +538,36 @@ C<< 0 >> (false)
 
 =back
 
+=head3 C<< /DBICx/Modeler/Generator/Tree/application >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Default
+
+C<< myapp >> (from application class name C<< MyApp >>),
+C<< my_app >> (from application class name C<< My::App >>),
+etc.
+
+=back
+
+=head3 C<< /DBICx/Modeler/Generator/Tree/library >>
+
+=over 4
+
+=item Type
+
+C<< ArrayRef[Str] >>
+
+=item Default
+
+C<< [qw(lib)] >>
+
+=back
+
 =head3 C<< /DBICx/Modeler/Generator/Tree/source >>
 
 =over 4
@@ -397,7 +578,7 @@ C<< ArrayRef[Str] >>
 
 =item Default
 
-C<< [qw(source lib)] >>
+C<< [qw(source)] >>
 
 =back
 
@@ -411,7 +592,7 @@ C<< ArrayRef[Str] >>
 
 =item Default
 
-C<< [qw(lib)] >>
+C<< [] >>
 
 =back
 

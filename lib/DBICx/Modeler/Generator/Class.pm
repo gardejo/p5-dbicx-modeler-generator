@@ -31,6 +31,7 @@ use namespace::clean -except => [qw(meta)];
 bind_constructor '/DBICx/Modeler/Generator/Class' => (
     args => {
         application => bind_value '/DBICx/Modeler/Generator/Class/application',
+        base_part   => bind_value '/DBICx/Modeler/Generator/Class/base_part',
         model_part  => bind_value '/DBICx/Modeler/Generator/Class/model_part',
         schema_part => bind_value '/DBICx/Modeler/Generator/Class/schema_part',
     },
@@ -47,7 +48,7 @@ has 'application' => (
     required    => 1,
 );
 
-has [qw(model_part schema_part)] => (
+has [qw(base_part model_part schema_part)] => (
     is          => 'ro',
     isa         => 'Str',
     lazy_build  => 1,
@@ -77,10 +78,12 @@ around BUILDARGS => sub {
 
     my $args = $class->$next(@args);
 
-    delete $args->{model_part}
-        unless defined $args->{model_part};
-    delete $args->{schema_part}
-        unless defined $args->{schema_part};
+    foreach my $attribute (qw(
+        base_part model_part schema_part
+    )) {
+        delete $args->{$attribute}
+            unless defined $args->{$attribute};
+    }
 
     return $args;
 };
@@ -89,6 +92,10 @@ around BUILDARGS => sub {
 # ****************************************************************
 # builder(s)
 # ****************************************************************
+
+sub _build_base_part {
+    return 'Base';
+}
 
 sub _build_model_part {
     return 'Model';
@@ -205,7 +212,7 @@ __END__
 
 =head1 NAME
 
-DBICx::Modeler::Generator::Class -
+DBICx::Modeler::Generator::Class - Implement class for DBICx::Modeler::Generator::ClassLike
 
 =head1 SYNOPSIS
 
@@ -231,7 +238,7 @@ Returns a string of class name which corresponds with C<$path_string>.
 
 =head3 C<< $class_name = $self->get_fully_qualified_class_name(@parts_of_class_name) >>
 
-Returns a string which joined C<@parts_of_class_name> with q<::>.
+Returns a string which joined C<@parts_of_class_name> with joint string C<::>.
 
 =head1 AUTHOR
 

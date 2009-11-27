@@ -1,4 +1,4 @@
-package DBICx::Modeler::Generator::PathLike;
+package DBICx::Modeler::Generator::DriverLike;
 
 
 # ****************************************************************
@@ -20,15 +20,11 @@ use namespace::clean;
 # ****************************************************************
 
 requires qw(
-    root                source_library      target_library
-                        source_model        target_model
-                        source_models       target_models
-                        source_schema       target_schema
-                        source_schemata     target_schemata
-    creation_script
-    module_extension    script_extension
-    remove_path
-    add_source_library
+    bin
+    dbname      dsn         host        port
+    username    password
+    command
+    make_database
 );
 
 
@@ -48,7 +44,7 @@ __END__
 
 =head1 NAME
 
-DBICx::Modeler::Generator::PathLike - Path interface to DBICx::Modeler::Generator
+DBICx::Modeler::Generator::DriverLike - Driver interface to DBICx::Modeler::Generator
 
 =head1 SYNOPSIS
 

@@ -22,9 +22,11 @@ use namespace::clean -except => [qw(meta)];
 
 bind_constructor '/DBICx/Modeler/Generator/Tree' => (
     args => {
-        class  => bind_value '/DBICx/Modeler/Generator/Class',
-        source => bind_value '/DBICx/Modeler/Generator/Tree/source',
-        target => bind_value '/DBICx/Modeler/Generator/Tree/target',
+        class       => bind_value '/DBICx/Modeler/Generator/Class',
+        application => bind_value '/DBICx/Modeler/Generator/Tree/application',
+        library     => bind_value '/DBICx/Modeler/Generator/Tree/library',
+        source      => bind_value '/DBICx/Modeler/Generator/Tree/source',
+        target      => bind_value '/DBICx/Modeler/Generator/Tree/target',
     },
 );
 
@@ -37,6 +39,12 @@ has 'class' => (
     is          => 'ro',
     does        => 'DBICx::Modeler::Generator::ClassLike',
     required    => 1,
+);
+
+has 'application' => (
+    is          => 'ro',
+    isa         => 'Str',
+    lazy_build  => 1,
 );
 
 has 'source' => (
@@ -63,6 +71,44 @@ has 'target' => (
     },
 );
 
+has 'library' => (
+    traits      => [qw(
+        Array
+    )],
+    is          => 'ro',
+    isa         => 'ArrayRef[Str]',
+    lazy_build  => 1,
+    handles     => {
+        route_to_library => 'elements',
+    },
+);
+
+has 'source_library' => (
+    traits      => [qw(
+        Array
+    )],
+    is          => 'ro',
+    isa         => 'ArrayRef[Str]',
+    init_arg    => undef,
+    lazy_build  => 1,
+    handles     => {
+        route_to_source_library => 'elements',
+    },
+);
+
+has 'target_library' => (
+    traits      => [qw(
+        Array
+    )],
+    is          => 'ro',
+    isa         => 'ArrayRef[Str]',
+    init_arg    => undef,
+    lazy_build  => 1,
+    handles     => {
+        route_to_target_library => 'elements',
+    },
+);
+
 has 'model' => (
     traits      => [qw(
         Array
@@ -73,19 +119,6 @@ has 'model' => (
     lazy_build  => 1,
     handles     => {
         route_to_model => 'elements',
-    },
-);
-
-has 'schema' => (
-    traits      => [qw(
-        Array
-    )],
-    is          => 'ro',
-    isa         => 'ArrayRef[Str]',
-    init_arg    => undef,
-    lazy_build  => 1,
-    handles     => {
-        route_to_schema => 'elements',
     },
 );
 
@@ -112,6 +145,19 @@ has 'target_model' => (
     lazy_build  => 1,
     handles     => {
         route_to_target_model => 'elements',
+    },
+);
+
+has 'schema' => (
+    traits      => [qw(
+        Array
+    )],
+    is          => 'ro',
+    isa         => 'ArrayRef[Str]',
+    init_arg    => undef,
+    lazy_build  => 1,
+    handles     => {
+        route_to_schema => 'elements',
     },
 );
 
@@ -151,10 +197,12 @@ around BUILDARGS => sub {
 
     my $args = $class->$next(@args);
 
-    delete $args->{source}
-        unless defined $args->{source};
-    delete $args->{target}
-        unless defined $args->{target};
+    foreach my $attribute (qw(
+        application library source target
+    )) {
+        delete $args->{$attribute}
+            unless defined $args->{$attribute};
+    }
 
     return $args;
 };
@@ -164,12 +212,43 @@ around BUILDARGS => sub {
 # builder(s)
 # ****************************************************************
 
+sub _build_application {
+    my $self = shift;
+
+    my $application = lc $self->class->application;
+    $application =~ s{::}{_}xmsg;
+
+    return $application;
+}
+
 sub _build_source {
-    return [qw(source lib)];
+    return [qw(source)];
 }
 
 sub _build_target {
+    return [qw()];
+}
+
+sub _build_library {
     return [qw(lib)];
+}
+
+sub _build_source_library {
+    my $self = shift;
+
+    return [
+        $self->route_to_source,
+        $self->route_to_library,
+    ];
+}
+
+sub _build_target_library {
+    my $self = shift;
+
+    return [
+        $self->route_to_target,
+        $self->route_to_library,
+    ];
 }
 
 sub _build_model {
@@ -178,17 +257,11 @@ sub _build_model {
     return $self->class->route_to_model;
 }
 
-sub _build_schema {
-    my $self = shift;
-
-    return $self->class->route_to_schema;
-}
-
 sub _build_source_model {
     my $self = shift;
 
     return [
-        $self->route_to_source,
+        $self->route_to_source_library,
         $self->route_to_model,
     ];
 }
@@ -197,16 +270,22 @@ sub _build_target_model {
     my $self = shift;
 
     return [
-        $self->route_to_target,
+        $self->route_to_target_library,
         $self->route_to_model,
     ];
+}
+
+sub _build_schema {
+    my $self = shift;
+
+    return $self->class->route_to_schema;
 }
 
 sub _build_source_schema {
     my $self = shift;
 
     return [
-        $self->route_to_source,
+        $self->route_to_source_library,
         $self->route_to_schema,
     ];
 }
@@ -215,7 +294,7 @@ sub _build_target_schema {
     my $self = shift;
 
     return [
-        $self->route_to_target,
+        $self->route_to_target_library,
         $self->route_to_schema,
     ];
 }
@@ -253,7 +332,7 @@ __END__
 
 =head1 NAME
 
-DBICx::Modeler::Generator::Tree -
+DBICx::Modeler::Generator::Tree - Implement class for DBICx::Modeler::Generator::TreeLike
 
 =head1 SYNOPSIS
 

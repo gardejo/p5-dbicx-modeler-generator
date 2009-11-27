@@ -20,7 +20,8 @@ use namespace::clean;
 # ****************************************************************
 
 requires qw(
-    dsn username password components is_debug make_schemata
+    components is_debug
+    make_schemata
 );
 
 

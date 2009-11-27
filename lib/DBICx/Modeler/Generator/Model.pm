@@ -31,7 +31,6 @@ bind_constructor '/DBICx/Modeler/Generator/Model' => (
     args => {
         class => bind_value '/DBICx/Modeler/Generator/Class',
         path  => bind_value '/DBICx/Modeler/Generator/Path',
-        base  => bind_value '/DBICx/Modeler/Generator/Model/base',
     },
 );
 
@@ -51,37 +50,6 @@ has 'path' => (
     does        => 'DBICx::Modeler::Generator::PathLike',
     required    => 1,
 );
-
-has 'base' => (
-    is          => 'ro',
-    isa         => 'Str',
-    lazy_build  => 1,
-);
-
-
-# ****************************************************************
-# hook(s) on construction
-# ****************************************************************
-
-around BUILDARGS => sub {
-    my ($next, $class, @args) = @_;
-
-    my $args = $class->$next(@args);
-
-    delete $args->{base}
-        unless defined $args->{base};
-
-    return $args;
-};
-
-
-# ****************************************************************
-# builder(s)
-# ****************************************************************
-
-sub _build_base {
-    return 'Base';
-}
 
 
 # ****************************************************************
@@ -125,10 +93,10 @@ sub _get_template {
     my $self = shift;
 
     return Text::MicroTemplate::Extended->new(
-        include_path    => [
+        include_path => [
             $self->path->source_models->stringify,
         ],
-        extension       => $self->path->extension,
+        extension    => $self->path->module_extension,
     );
 }
 
@@ -137,7 +105,7 @@ sub _get_template_name {
 
     return -f $self->path->source_models->file($table_module)
         ? $self->class->get_class_name_from_path_string($schema_file->basename)
-        : $self->base;
+        : $self->class->base_part;
 }
 
 sub _dump_models_with_template {
@@ -183,7 +151,7 @@ __END__
 
 =head1 NAME
 
-DBICx::Modeler::Generator::Model -
+DBICx::Modeler::Generator::Model - Implement class for DBICx::Modeler::Generator::ModelLike
 
 =head1 SYNOPSIS
 

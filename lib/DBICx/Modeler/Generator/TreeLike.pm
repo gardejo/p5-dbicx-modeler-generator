@@ -19,10 +19,16 @@ use namespace::clean;
 # interface(s)
 # ****************************************************************
 
+# Note: route_to_library, route_to_model, route_to_schema are internal methods
 requires qw(
-            model           schema
-    source  source_model    source_schema
-    target  target_model    target_schema
+    application             source                  target
+                            route_to_source         route_to_target
+    library                 source_library          target_library
+                            route_to_source_library route_to_target_library
+    model                   source_model            target_model
+                            route_to_source_model   route_to_target_model
+    schema                  source_schema           target_schema
+                            route_to_source_schema  route_to_target_schema
 );
 
 

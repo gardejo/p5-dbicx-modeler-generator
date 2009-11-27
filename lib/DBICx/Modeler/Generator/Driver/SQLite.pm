@@ -1,4 +1,4 @@
-package DBICx::Modeler::Generator::Schema;
+package DBICx::Modeler::Generator::Driver::SQLite;
 
 
 # ****************************************************************
@@ -10,13 +10,6 @@ use MooseX::Orochi;
 
 
 # ****************************************************************
-# general dependency(-ies)
-# ****************************************************************
-
-use DBIx::Class::Schema::Loader qw(make_schema_at);
-
-
-# ****************************************************************
 # namespace cleaner
 # ****************************************************************
 
@@ -24,16 +17,27 @@ use namespace::clean -except => [qw(meta)];
 
 
 # ****************************************************************
+# base class(es)
+# ****************************************************************
+
+extends qw(
+    DBICx::Modeler::Generator::Driver::Base
+);
+
+
+# ****************************************************************
 # dependency injection
 # ****************************************************************
 
-bind_constructor '/DBICx/Modeler/Generator/Schema' => (
+bind_constructor '/DBICx/Modeler/Generator/Driver' => (
     args => {
-        class      => bind_value '/DBICx/Modeler/Generator/Class',
-        driver     => bind_value '/DBICx/Modeler/Generator/Driver',
-        path       => bind_value '/DBICx/Modeler/Generator/Path',
-        components => bind_value '/DBICx/Modeler/Generator/Schema/components',
-        is_debug   => bind_value '/DBICx/Modeler/Generator/Schema/is_debug',
+        path      => bind_value '/DBICx/Modeler/Generator/Path',
+        tree      => bind_value '/DBICx/Modeler/Generator/Tree',
+        bin       => bind_value '/DBICx/Modeler/Generator/Driver/bin',
+        dbd       => bind_value '/DBICx/Modeler/Generator/Driver/dbd',
+        dbname    => bind_value '/DBICx/Modeler/Generator/Driver/dbname',
+        dsn       => bind_value '/DBICx/Modeler/Generator/Driver/dsn',
+        extension => bind_value '/DBICx/Modeler/Generator/Driver/extension',
     },
 );
 
@@ -42,33 +46,9 @@ bind_constructor '/DBICx/Modeler/Generator/Schema' => (
 # attribute(s)
 # ****************************************************************
 
-has 'class' => (
+has 'extension' => (
     is          => 'ro',
-    does        => 'DBICx::Modeler::Generator::ClassLike',
-    required    => 1,
-);
-
-has 'driver' => (
-    is          => 'ro',
-    does        => 'DBICx::Modeler::Generator::DriverLike',
-    required    => 1,
-);
-
-has 'path' => (
-    is          => 'ro',
-    does        => 'DBICx::Modeler::Generator::PathLike',
-    required    => 1,
-);
-
-has 'components' => (
-    is          => 'ro',
-    isa         => 'ArrayRef[Str]',
-    lazy_build  => 1,
-);
-
-has 'is_debug' => (
-    is          => 'ro',
-    isa         => 'Bool',
+    isa         => 'Str',
     lazy_build  => 1,
 );
 
@@ -83,7 +63,7 @@ around BUILDARGS => sub {
     my $args = $class->$next(@args);
 
     foreach my $attribute (qw(
-        components is_debug
+        extension
     )) {
         delete $args->{$attribute}
             unless defined $args->{$attribute};
@@ -97,40 +77,36 @@ around BUILDARGS => sub {
 # builder(s)
 # ****************************************************************
 
-sub _build_components {
-    return [qw(
-        UTF8Columns
-    )];
+sub _build_bin {
+    return 'sqlite3';
 }
 
-sub _build_is_debug {
-    return 0;
+sub _build_dbd {
+    return 'SQLite';
 }
 
+sub _build_extension {
+    return '.db';
+}
 
-# ****************************************************************
-# consuming role(s)
-# ****************************************************************
+around _build_dbname => sub {
+    my ($next, $self) = @_;
 
-sub make_schemata {
+    return $self->path->get_full_path(
+        $self->tree->route_to_target,
+        $self->$next,
+        $self->extension,
+    )->stringify;
+};
+
+sub _build_command {
     my $self = shift;
 
-    make_schema_at(
-        $self->class->schema,
-        {
-            components            => $self->components,
-            dump_directory        => $self->path->target_library,
-            really_erase_my_files => 1,
-            debug                 => $self->is_debug,
-        },
-        [
-            $self->driver->dsn,
-            $self->driver->username,
-            $self->driver->password,
-        ],
-    );
+    my $command = $self->bin;
+    $command .= sprintf ' "%s"', $self->dbname;
+    $command .= sprintf ' < "%s"', $self->path->creation_script->stringify;
 
-    return;
+    return $command;
 }
 
 
@@ -139,7 +115,7 @@ sub make_schemata {
 # ****************************************************************
 
 with qw(
-    DBICx::Modeler::Generator::SchemaLike
+    DBICx::Modeler::Generator::DriverLike
 );
 
 
@@ -166,7 +142,7 @@ __END__
 
 =head1 NAME
 
-DBICx::Modeler::Generator::Schema - Implement class for DBICx::Modeler::Generator::SchemaLike
+DBICx::Modeler::Generator::Driver::SQLite - Concrete implement class with SQLite for DBICx::Modeler::Generator::DriverLike
 
 =head1 SYNOPSIS
 
@@ -175,14 +151,6 @@ DBICx::Modeler::Generator::Schema - Implement class for DBICx::Modeler::Generato
 =head1 DESCRIPTION
 
 blah blah blah
-
-=head1 METHODS
-
-=head2 Generator
-
-=head3 C<< $self->make_schemata() >>
-
-Loads and generates schema modules.
 
 =head1 AUTHOR
 

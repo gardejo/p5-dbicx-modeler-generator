@@ -23,9 +23,18 @@ use namespace::clean -except => [qw(meta)];
 
 bind_constructor '/DBICx/Modeler/Generator/Path' => (
     args => {
-        tree      => bind_value '/DBICx/Modeler/Generator/Tree',
-        root      => bind_value '/DBICx/Modeler/Generator/Path/root',
-        extension => bind_value '/DBICx/Modeler/Generator/Path/extension',
+        class
+            => bind_value '/DBICx/Modeler/Generator/Class',
+        creation_script
+            => bind_value '/DBICx/Modeler/Generator/Path/creation_script',
+        module_extension
+            => bind_value '/DBICx/Modeler/Generator/Path/module_extension',
+        script_extension
+            => bind_value '/DBICx/Modeler/Generator/Path/script_extension',
+        root
+            => bind_value '/DBICx/Modeler/Generator/Path/root',
+        tree
+            => bind_value '/DBICx/Modeler/Generator/Tree',
     },
 );
 
@@ -33,6 +42,12 @@ bind_constructor '/DBICx/Modeler/Generator/Path' => (
 # ****************************************************************
 # attribute(s)
 # ****************************************************************
+
+has 'class' => (
+    is          => 'ro',
+    does        => 'DBICx::Modeler::Generator::ClassLike',
+    required    => 1,
+);
 
 has 'tree' => (
     is          => 'ro',
@@ -47,7 +62,7 @@ has 'root' => (
     required    => 1,
 );
 
-has [qw(source target)] => (
+has [qw(source_library target_library)] => (
     is          => 'ro',
     isa         => Dir,
     init_arg    => undef,
@@ -55,15 +70,9 @@ has [qw(source target)] => (
     lazy_build  => 1,
 );
 
-has 'extension' => (
-    is          => 'ro',
-    isa         => 'Str',
-    lazy_build  => 1,
-);
-
 has [qw(
-    source_model    source_schema
-    target_model    target_schema
+    source_model source_schema
+    target_model target_schema
 )] => (
     is          => 'ro',
     isa         => File,
@@ -72,12 +81,25 @@ has [qw(
 );
 
 has [qw(
-    source_models   source_schemata
-    target_models   target_schemata
+    source_models source_schemata
+    target_models target_schemata
 )] => (
     is          => 'ro',
     isa         => Dir,
     init_arg    => undef,
+    lazy_build  => 1,
+);
+
+has 'creation_script' => (
+    is          => 'ro',
+    isa         => File,
+    coerce      => 1,
+    lazy_build  => 1,
+);
+
+has [qw(module_extension script_extension)] => (
+    is          => 'ro',
+    isa         => 'Str',
     lazy_build  => 1,
 );
 
@@ -91,8 +113,12 @@ around BUILDARGS => sub {
 
     my $args = $class->$next(@args);
 
-    delete $args->{extension}
-        unless defined $args->{extension};
+    foreach my $attribute (qw(
+        module_extension script_extension creation_script
+    )) {
+        delete $args->{$attribute}
+            unless defined $args->{$attribute};
+    }
 
     return $args;
 };
@@ -102,44 +128,70 @@ around BUILDARGS => sub {
 # builder(s)
 # ****************************************************************
 
-sub _build_source {
+sub _build_source_library {
     my $self = shift;
 
-    return $self->root->subdir($self->tree->route_to_source);
+    return $self->root->subdir($self->tree->route_to_source_library);
 }
 
-sub _build_target {
+sub _build_target_library {
     my $self = shift;
 
-    return $self->root->subdir($self->tree->route_to_target);
+    return $self->root->subdir($self->tree->route_to_target_library);
 }
 
-sub _build_extension {
+sub _build_creation_script {
+    my $self = shift;
+
+    return $self->get_full_path(
+        $self->tree->route_to_source,
+        $self->class->application,
+        $self->script_extension,
+    );
+}
+
+sub _build_module_extension {
     return '.pm';
+}
+
+sub _build_script_extension {
+    return '.sql';
 }
 
 sub _build_source_model {
     my $self = shift;
 
-    return $self->_get_relative_file_path($self->tree->route_to_source_model);
+    return $self->get_full_path(
+        $self->tree->route_to_source_model,
+        $self->module_extension,
+    );
 }
 
 sub _build_target_model {
     my $self = shift;
 
-    return $self->_get_relative_file_path($self->tree->route_to_target_model);
+    return $self->get_full_path(
+        $self->tree->route_to_target_model,
+        $self->module_extension,
+    );
 }
 
 sub _build_source_schema {
     my $self = shift;
 
-    return $self->_get_relative_file_path($self->tree->route_to_source_schema);
+    return $self->get_full_path(
+        $self->tree->route_to_source_schema,
+        $self->module_extension,
+    );
 }
 
 sub _build_target_schema {
     my $self = shift;
 
-    return $self->_get_relative_file_path($self->tree->route_to_target_schema);
+    return $self->get_full_path(
+        $self->tree->route_to_target_schema,
+        $self->module_extension,
+    );
 }
 
 sub _build_source_models {
@@ -185,22 +237,24 @@ sub remove_path {
 sub add_source_library {
     my $self = shift;
 
-    unshift @INC, $self->source->stringify;
+    unshift @INC, $self->source_library->stringify;
 
     return;
 }
 
 
 # ****************************************************************
-# protected/private method(s)
+# public method(s)
 # ****************************************************************
 
-sub _get_relative_file_path {
+sub get_full_path {
     my ($self, @routes) = @_;
 
+    my ($file, $extension) = splice(@routes, -2, 2);
+
     return $self->root->file(
-        @routes[0 .. $#routes - 1],
-        $routes[-1] . $self->extension,
+        @routes[0 .. $#routes],
+        $file . $extension,
     );
 }
 
@@ -237,7 +291,7 @@ __END__
 
 =head1 NAME
 
-DBICx::Modeler::Generator::Path -
+DBICx::Modeler::Generator::Path - Implement class for DBICx::Modeler::Generator::PathLike
 
 =head1 SYNOPSIS
 
@@ -255,7 +309,11 @@ blah blah blah
 
 Removes file and directory tree.
 
-=head2 Maintainer for library path
+=head2 Utilities
+
+=head3 C<< $full_path = $self->get_full_path(@directories, $file, $extension) >>
+
+Returns L<Path::Class::File> object which corresponds with specified arguments.
 
 =head3 C<< $self->add_source_library() >>
 

@@ -21,9 +21,9 @@ use namespace::clean;
 
 requires qw(
     application
-    model_part      schema_part
-    model           schema
-    route_to_model  route_to_schema
+    base_part   model_part      schema_part
+                model           schema
+                route_to_model  route_to_schema
     reload_class
     get_class_name_from_path_string
     get_fully_qualified_class_name
