@@ -26,22 +26,43 @@ use inc::Module::Install;
 #   no_index directory => 'extlib';
 
 # ================================================================
+# build dependency(-ies)
+# ================================================================
+    build_requires  'Module::Install'               => '0.80';
+        # to avoid YAML::Tiny problem
+    build_requires  'Module::Load'                  => '0';
+        # is in perl 5.009_004
+
+# ================================================================
 # general dependency(-ies)
 # ================================================================
     requires        'Class::Unload'                 => '0';
-    requires        'DBIx::Class::Schema::Loader'   => '0';
     requires        'DBICx::Modeler'                => '0.005';
         # to avoid clone problem
+    requires        'DBIx::Class::Schema::Loader'   => '0';
     requires        'Module::Load'                  => '0';
     requires        'Moose'                         => '0.89_01';
         # for Moose::Meta::Attribute::Native
     requires        'MooseX::Orochi'                => '0';
     requires        'MooseX::Types::Path::Class'    => '0';
     requires        'Orochi'                        => '0';
-#   requires        'Text::MicroTemplate'           => '0';
     requires        'Text::MicroTemplate::Extended' => '0';
     requires        'namespace::clean'              => '0.08';
         # cf. MooseX-Types-DateTime
+
+# ================================================================
+# optional dependency(-ies)
+# ================================================================
+    features (
+        'Support MySQL driver' => [
+            -default => 0,
+            recommends( 'DBD::mysql' => '0' ),
+        ],
+        'Support SQLite driver' => [
+            -default => 0,
+            recommends( 'DBD::SQLite' => '0' ),
+        ],
+    );
 
 # ================================================================
 # test dependency(-ies)
@@ -51,14 +72,6 @@ use inc::Module::Install;
         # cf. MooseX-Types-DateTime
     test_requires   'Test::More'                    => '0';
     test_requires   'Test::Warn'                    => '0';
-
-# ================================================================
-# build dependency(-ies)
-# ================================================================
-    build_requires  'Module::Install'               => '0.80';
-        # to avoid YAML::Tiny problem
-    build_requires  'Module::Load'                  => '0';
-        # is in perl 5.009_004
 
 # ================================================================
 # test(s)
