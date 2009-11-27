@@ -250,12 +250,12 @@ sub add_source_library {
 sub get_full_path {
     my ($self, @routes) = @_;
 
-    my ($file, $extension) = splice(@routes, -2, 2);
+    confess 'Could not get full path with @routes because: '
+          . '@routes should have 2 (for basename, extension) or more elements '
+        if scalar @routes < 2;
+    my $file = join q{}, splice(@routes, -2, 2);    # basename.extension
 
-    return $self->root->file(
-        @routes[0 .. $#routes],
-        $file . $extension,
-    );
+    return $self->root->file(@routes, $file);
 }
 
 
