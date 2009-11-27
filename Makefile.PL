@@ -40,10 +40,14 @@ use inc::Module::Install;
     requires        'DBICx::Modeler'                => '0.005';
         # to avoid clone problem
     requires        'DBIx::Class::Schema::Loader'   => '0';
+    requires        'File::Find::Rule'              => '0';
+#   requires        'List::MoreUtils'               => '0';
+        # was included by Moose
     requires        'Module::Load'                  => '0';
     requires        'Moose'                         => '0.89_01';
         # for Moose::Meta::Attribute::Native
-    requires        'MooseX::Orochi'                => '0';
+#   requires        'MooseX::Orochi'                => '0';
+        # was included by Orochi
     requires        'MooseX::Types::Path::Class'    => '0';
     requires        'Orochi'                        => '0';
     requires        'Text::MicroTemplate::Extended' => '0';

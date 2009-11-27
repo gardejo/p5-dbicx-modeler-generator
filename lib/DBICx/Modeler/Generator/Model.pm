@@ -13,6 +13,8 @@ use MooseX::Orochi;
 # general dependency(-ies)
 # ****************************************************************
 
+use File::Find::Rule;
+use List::MoreUtils qw(uniq);
 use Text::MicroTemplate::Extended;
 
 
@@ -61,24 +63,24 @@ sub make_models {
 
     $self->path->target_models->mkpath;
 
-    my $template = $self->_get_template;
+    my $extension = $self->path->module_extension;
+    my $template  = $self->_get_template($extension);
 
-    foreach my $schema_file ( $self->path->target_schemata->children ) {
-        my $table_module = $schema_file->basename;
+    foreach my $target_module ( $self->_get_target_modules($extension) ) {
         my $template_name
-            = $self->_get_template_name($table_module, $schema_file);
+            = $self->_get_template_name($target_module, $extension);
 
         $template->template_args({
             stash => {
                 package => $self->class->get_fully_qualified_class_name(
                     $self->class->model,
-                    $self->class->get_class_name_from_path_string($table_module),
+                    $self->class->get_class_name_from_path_string
+                        ($target_module),
                 ),
-                code    => q{},
             }
         });
         $self->_dump_models_with_template
-            ($template, $table_module, $template_name);
+            ($template, $target_module, $template_name, $extension);
     }
 
     return;
@@ -90,28 +92,61 @@ sub make_models {
 # ****************************************************************
 
 sub _get_template {
-    my $self = shift;
+    my ($self, $extension) = @_;
 
     return Text::MicroTemplate::Extended->new(
         include_path => [
             $self->path->source_models->stringify,
         ],
-        extension    => $self->path->module_extension,
+        extension    => $extension,
     );
 }
 
-sub _get_template_name {
-    my ($self, $table_module, $schema_file) = @_;
+sub _get_target_modules {
+    my ($self, $extension) = @_;
 
-    return -f $self->path->source_models->file($table_module)
-        ? $self->class->get_class_name_from_path_string($schema_file->basename)
+    my @schema_modules = map {
+        $_->basename
+    } ($self->path->target_schemata->children);
+
+    my $base_file = $self->class->base_part . $extension;
+    my $rule = File::Find::Rule->new
+                               ->relative
+                               ->file
+                               ->name('*' . $extension);
+    my @model_modules = grep {
+        $_ ne $base_file;
+    } $rule->in($self->path->source_models->stringify);
+    # $self->path->source_models->children does not find recursively
+
+    return uniq @schema_modules, @model_modules;
+}
+
+sub _get_template_name {
+    my ($self, $target_module, $extension) = @_;
+
+    return -f $self->path->source_models->file($target_module)
+        ? $self->_remove_extension($target_module, $extension)
         : $self->class->base_part;
 }
 
-sub _dump_models_with_template {
-    my ($self, $template, $table_module, $template_name) = @_;
+sub _remove_extension {
+    my ($self, $target_module, $extension) = @_;
 
-    my $handle = $self->path->target_models->file($table_module)->openw;
+    # It is not need that
+    # $target_module =~ s{ \. pm \z }{}xms;
+    # for modules from schemata
+    $target_module =~ s{ $extension \z }{}xms;  # for modules from models
+
+    return $target_module;
+}
+
+sub _dump_models_with_template {
+    my ($self, $template, $target_module, $template_name) = @_;
+
+    my $target_model_path = $self->path->target_models->file($target_module);
+    $target_model_path->parent->mkpath;
+    my $handle = $target_model_path->openw;
     $handle->print($template->render($template_name));
     $handle->close;
 
