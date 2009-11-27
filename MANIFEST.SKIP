@@ -1,5 +1,8 @@
 # This MANIFEST.SKIP file was stolen from MooseX-Types-DateTime
 
+examples/lib/MyApp/
+examples/myapp\.db$
+
 # Avoid version control files.
 \bRCS\b
 \bCVS\b

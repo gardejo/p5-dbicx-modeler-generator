@@ -12,3 +12,5 @@ MANIFEST*
 *.bs
 cover_db
 DBICx-Modeler-Generator-*
+examples/lib/MyApp/*
+examples/myapp.db
