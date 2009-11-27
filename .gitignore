@@ -9,6 +9,6 @@ inc
 pm_to_blib
 MANIFEST*
 !MANIFEST.SKIP
-Amikeco-Value-ValueLike-*
 *.bs
 cover_db
+DBICx-Modeler-Generator-*
