@@ -222,7 +222,7 @@ sub _build_application {
 }
 
 sub _build_source {
-    return [qw(source)];
+    return [qw(src)];
 }
 
 sub _build_target {

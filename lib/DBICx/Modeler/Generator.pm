@@ -190,7 +190,7 @@ Updates schema modules.
 
 This class and subclasses using L<MooseX::Orochi> for dependency injection.
 
-See C</examples/source/sbin/maintain_models_mysql.pl> in this distribution
+See C</examples/src/sbin/maintain_models_mysql.pl> in this distribution
 for further datail.
 
 =head2 Mandatory dependencies
@@ -478,7 +478,7 @@ C<< /$root/$source/$application.$script_extension >>
 
 =item Example
 
-C<< /path/to/root/source/myapp.sql >>
+C<< /path/to/root/src/myapp.sql >>
 
 =back
 
@@ -578,7 +578,7 @@ C<< ArrayRef[Str] >>
 
 =item Default
 
-C<< [qw(source)] >>
+C<< [qw(src)] >>
 
 =back
 
