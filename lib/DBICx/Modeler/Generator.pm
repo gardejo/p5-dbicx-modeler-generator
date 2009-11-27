@@ -596,6 +596,16 @@ C<< [] >>
 
 =back
 
+=head1 EXAMPLES
+
+Run the following command at root directory of this distribution:
+
+    perl -Ilib examples/src/sbin/maintain_models_sqlite.pl
+
+or
+
+    perl -Ilib examples/src/sbin/maintain_models_mysql.pl
+
 =head1 SEE ALSO
 
 =over 4
