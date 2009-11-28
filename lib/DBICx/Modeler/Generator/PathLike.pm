@@ -29,6 +29,7 @@ requires qw(
     module_extension    script_extension
     remove_path
     add_source_library
+    get_full_path
 );
 
 
