@@ -242,16 +242,11 @@ sub add_source_library {
     return;
 }
 
-
-# ****************************************************************
-# public method(s)
-# ****************************************************************
-
 sub get_full_path {
     my ($self, @routes) = @_;
 
     confess 'Could not get full path with @routes because: '
-          . '@routes should have 2 (for basename, extension) or more elements '
+          . '@routes should have 2 (for basename, extension) or more elements.'
         if scalar @routes < 2;
     my $file = join q{}, splice(@routes, -2, 2);    # basename.extension
 
