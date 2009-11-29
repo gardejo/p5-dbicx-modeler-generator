@@ -300,7 +300,7 @@ blah blah blah
 
 =head2 Remover
 
-=head3 C<< $self->remove_path({ file => $file_attribute, directory => $directory_attribute}) >>
+=head3 C<< $self->remove_path({ file => $file_attribute, directory => $directory_attribute }) >>
 
 Removes file and directory tree.
 
