@@ -201,7 +201,7 @@ Updates schema modules.
 
 This class and subclasses using L<MooseX::Orochi> for dependency injection.
 
-See C</examples/src/sbin/maintain_models_mysql.pl> in this distribution
+See C</examples/src/sbin/maintain_models.pl> in this distribution
 for further datail.
 
 =head2 Mandatory dependencies
@@ -611,11 +611,14 @@ C<< [] >>
 
 Run the following command at root directory of this distribution:
 
-    perl -Ilib examples/src/sbin/maintain_models_sqlite.pl
+    perl -Ilib examples/src/sbin/maintain_models.pl \\
+         -a MyApp -r examples -d SQLite
 
 or
 
-    perl -Ilib examples/src/sbin/maintain_models_mysql.pl
+    perl -Ilib examples/src/sbin/maintain_models.pl \\
+         -a MyApp -r examples -d MySQL -u username -p password \\
+         -l /Path/script_extension=_mysql.sql
 
 =head1 SEE ALSO
 
