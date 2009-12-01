@@ -1,0 +1,75 @@
+This file documents the revision history for Perl distribution
+`DBICx-Modeler-Generator`.
+
+
+VERSION HISTORY
+===============
+
+0.00 : Released on 2009-XX-XX (JST)
+-----------------------------------
+
+Initial version.
+
+### Features
+
+#### `DBICx::Modeler::Generator`
+
+-   Implemented `DBICx::Modeler::Generator`,
+    which provides dynamic definition of a models for `DBICx::Modeler`
+    and schemata for `DBIx::Class::Schema` with `DBIx::Class::Schema::Loader`.
+
+### Tests
+
+-   Prepared tests for `DBICx::Modeler::Generator`.
+
+### Documents
+
+-   Prepared minimal documents.
+
+
+META INFORMATION
+================
+
+Version notation
+----------------
+
+    V.vvrr_dd : Released on YYYY-MM-DD
+
+### V  : Major version number
+
+-   Added ambitious features
+-   Changed in APIs
+    (older API will be keeped to compatibility for a some period)
+-   ...
+
+### vv : Minor version number (in major version)
+
+-   Added several features
+-   Improved any features
+-   Fixed bugs
+-   ...
+
+### rr : Revision number (in minor version, on demand)
+
+You would not need to update the distribution.
+
+-   Improved tests
+-   Updated documents
+
+### dd : Developer release number (in revision number, on demand)
+
+This is unstable version.
+Unless you are a developer, You will not be recommended to upgrade
+the distribution.
+
+-   Added experimental features
+-   Fixed bugs provisionally
+
+
+Document format
+---------------
+
+This `Changes` file was formatted in Markdown.
+
+    $ perl -MText::Markdown -MFile::Slurp -e \\
+      'print (Text::Markdown->new->markdown(scalar read_file(q{Changes})));'
