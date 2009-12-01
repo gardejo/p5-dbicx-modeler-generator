@@ -11,7 +11,15 @@ Test::More::plan( skip_all =>
     "for testing POD coverage"
 ) if $@;
 
-all_pod_coverage_ok('lib');
+all_pod_coverage_ok(
+    {
+        also_private => [qw(
+            BUILDARGS
+            BUILD
+            DEMOLISH
+        )],
+    },
+);
 
 # note: Devel::Cover and Attribute::Protected and Test::Pod::Coverage
 #       are incompatible?
