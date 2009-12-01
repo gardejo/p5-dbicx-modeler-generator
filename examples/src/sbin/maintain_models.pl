@@ -65,8 +65,9 @@ maintain_models - Maintainer of schema and model modules
            -r examples                                  \\
            -d MySQL                                     \\
            -u mysql_user                                \\
-           -p foobar                                    \\
+           -w foobar                                    \\
            -l /Path/script_extension=_mysql.sql
+
     # or
 
     $ perl -Ilib examples\src\sbin\maintain_models.pl   \\
@@ -77,24 +78,38 @@ maintain_models - Maintainer of schema and model modules
            --password=foobar                            \\
            --literal /Path/script_extension=_mysql.sql
 
-    # using default values...
+    # or
+
+    $ perl -Ilib examples\src\sbin\maintain_models.pl   \\
+           --application=MyApp                          \\
+           --root=examples                              \\
+           --driver=MySQL                               \\
+           --username=mysql_user                        \\
+           --password=foobar                            \\
+           --host=hostname                              \\
+           --port=3306                                  \\
+           --literal /Path/script_extension=_mysql.sql
+
+    # Note: using default values...
     # literal => {
-    #     /Class/base_part        => 'Base',
-    #     /Class/model_part       => 'Model',
-    #     /Class/schema_part      => 'Schema',
-    #     /Driver/bin             => 'sqlite',
-    #     /Driver/dbd             => 'SQLite',
-    #     /Driver/dbname          => 'myapp',
-    #     /Driver/dsn             => 'dbi:SQLite:dbname=examples/myapp.db',
-    #     /Driver/extension       => '.db',
-    #     /Path/creation_script   => 'examples/src/myapp_sqlite.sql',
-    #     /Path/module_extension  => '.pm',
-    #     /Schema/components      => [qw(UTF8Columns)],
-    #     /Schema/is_debug        => 1,
-    #     /Tree/application       => 'myapp',
-    #     /Tree/library           => [qw(lib)],
-    #     /Tree/src               => [qw(src)],
-    #     /Tree/target            => [qw()],
+    #     '/Class/base_part'       => 'Base',
+    #     '/Class/model_part'      => 'Model',
+    #     '/Class/schema_part'     => 'Schema',
+    #     '/Driver/bin'            => 'sqlite',
+    #     '/Driver/dbd'            => 'SQLite',
+    #     '/Driver/dbname'         => 'myapp',
+    #     '/Driver/dsn'            => 'dbi:SQLite:dbname=examples/myapp.db',
+    #     '/Driver/extension'      => '.db',
+    #     '/Driver/host'           => 'localhost',
+    #     '/Driver/port'           => 3306,
+    #     '/Path/creation_script'  => 'examples/src/myapp_sqlite.sql',
+    #     '/Path/module_extension' => '.pm',
+    #     '/Schema/components'     => [qw(UTF8Columns)],
+    #     '/Schema/is_debug'       => 1,
+    #     '/Tree/application'      => 'myapp',
+    #     '/Tree/library'          => [qw(lib)],
+    #     '/Tree/src'              => [qw(src)],
+    #     '/Tree/target'           => [qw()],
     # }
 
 =head1 DESCRIPTION

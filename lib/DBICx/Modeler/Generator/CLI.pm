@@ -99,6 +99,24 @@ has 'password' => (
     )],
     is          => 'ro',
     isa         => 'Str',
+    cmd_aliases => [qw(w)],
+);
+
+has 'host' => (
+    traits      => [qw(
+        Getopt
+    )],
+    is          => 'ro',
+    isa         => 'Str',
+    cmd_aliases => [qw(h)],
+);
+
+has 'port' => (
+    traits      => [qw(
+        Getopt
+    )],
+    is          => 'ro',
+    isa         => 'Int',
     cmd_aliases => [qw(p)],
 );
 
@@ -212,7 +230,7 @@ sub _inject_literals {
         '/Class/application' => $self->application,
         '/Path/root'         => $self->root,
     );
-    foreach my $driver_attribute (qw(username password)) {
+    foreach my $driver_attribute (qw(username password host port)) {
         $self->set_literal
             ('/Driver/' . $driver_attribute => $self->$driver_attribute)
                 if defined $self->$driver_attribute;

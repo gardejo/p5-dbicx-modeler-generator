@@ -43,7 +43,14 @@ Run the following command at root directory of this distribution:
 or
 
     perl -Ilib examples/src/sbin/maintain_models.pl \\
-         -a MyApp -r examples -d MySQL -u username -p password \\
+         -a MyApp -r examples -d MySQL -u username -w password \\
+         -l /Path/script_extension=_mysql.sql
+
+or
+
+    perl -Ilib examples/src/sbin/maintain_models.pl \\
+         -a MyApp -r examples -d MySQL -u username -w password \\
+         -h hostname -p 3307 \\
          -l /Path/script_extension=_mysql.sql
 
 AUTHOR
