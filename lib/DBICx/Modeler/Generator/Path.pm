@@ -2,6 +2,17 @@ package DBICx::Modeler::Generator::Path;
 
 
 # ****************************************************************
+# pragma(s)
+# ****************************************************************
+
+# Moose turns strict/warnings pragmas on,
+# however, kwalitee scorer can not detect such mechanism.
+# (Perl::Critic can it, with equivalent_modules parameter)
+use strict;
+use warnings;
+
+
+# ****************************************************************
 # MOP dependency(-ies)
 # ****************************************************************
 
