@@ -11,6 +11,7 @@ MANIFEST*
 !MANIFEST.SKIP
 *.bs
 cover_db
+Debian_CPANTS.txt
 DBICx-Modeler-Generator-*
 examples/lib/MyApp/*
 examples/myapp.db
