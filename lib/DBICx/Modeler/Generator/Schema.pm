@@ -181,11 +181,11 @@ DBICx::Modeler::Generator::Schema - Implement class for DBICx::Modeler::Generato
 
 =head1 SYNOPSIS
 
-    # yada yada yada
+    use DBICx::Modeler::Generator::Schema;
 
 =head1 DESCRIPTION
 
-blah blah blah
+This class is an implement class for L<DBICx::Modeler::Generator::SchemaLike>.
 
 =head1 METHODS
 

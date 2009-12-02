@@ -14,11 +14,11 @@ __END__
 
 =head1 SYNOPSIS
 
-    # blah blah blah
+    use <?= $stash->{package} ?>
 
 =head1 DESCRIPTION
 
-yada yada yada
+This class is a L<DBICx::Modeler> model.
 
 =head1 AUTHOR
 

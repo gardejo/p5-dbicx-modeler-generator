@@ -301,11 +301,11 @@ DBICx::Modeler::Generator::Path - Implement class for DBICx::Modeler::Generator:
 
 =head1 SYNOPSIS
 
-    # yada yada yada
+    use DBICx::Modeler::Generator::Path;
 
 =head1 DESCRIPTION
 
-# blah blah blah
+This class is an implement class for L<DBICx::Modeler::Generator::PathLike>.
 
 =head1 METHODS
 

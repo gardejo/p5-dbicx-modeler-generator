@@ -21,11 +21,11 @@ MyApp::Schema - Schema for MyApp
 
 =head1 SYNOPSIS
 
-    # blah blah blah
+    use MyApp::Schema;
 
 =head1 DESCRIPTION
 
-yada yada yada
+This class is a root schema for L<MyApp>.
 
 =head1 AUTHOR
 

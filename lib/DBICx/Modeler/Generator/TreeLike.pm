@@ -63,11 +63,15 @@ DBICx::Modeler::Generator::TreeLike - Tree interface to DBICx::Modeler::Generato
 
 =head1 SYNOPSIS
 
-    # yada yada yada
+    package DBICx::Modeler::Generator::Tree;
+
+    use Moose;
+
+    with qw(DBICx::Modeler::Generator::TreeLike);
 
 =head1 DESCRIPTION
 
-blah blah blah
+This role is a tree interface to L<DBICx::Modeler::Generator>.
 
 =head1 AUTHOR
 

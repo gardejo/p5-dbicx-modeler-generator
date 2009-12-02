@@ -61,11 +61,15 @@ DBICx::Modeler::Generator::ClassLike - Class interface to DBICx::Modeler::Genera
 
 =head1 SYNOPSIS
 
-    # yada yada yada
+    package DBICx::Modeler::Generator::Class;
+
+    use Moose;
+
+    with qw(DBICx::Modeler::Generator::ClassLike);
 
 =head1 DESCRIPTION
 
-blah blah blah
+This role is a class interface to L<DBICx::Modeler::Generator>.
 
 =head1 AUTHOR
 

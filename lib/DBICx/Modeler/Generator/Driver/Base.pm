@@ -157,11 +157,16 @@ DBICx::Modeler::Generator::Driver::Base - Base inmplement class for DBICx::Model
 
 =head1 SYNOPSIS
 
-    # yada yada yada
+    package DBICx::Modeler::Generator::Driver::SQLite;
+
+    use Moose;
+
+    extends qw(DBICx::Modeler::Generator::Driver::Base);
 
 =head1 DESCRIPTION
 
-blah blah blah
+This class is a base abstract class for
+L<DBICx::Modeler::Generator::DriverLike>.
 
 =head1 METHODS
 

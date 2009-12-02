@@ -347,11 +347,11 @@ DBICx::Modeler::Generator::Tree - Implement class for DBICx::Modeler::Generator:
 
 =head1 SYNOPSIS
 
-    # yada yada yada
+    use DBICx::Modeler::Generator::Tree;
 
 =head1 DESCRIPTION
 
-blah blah blah
+This class is an implement class for L<DBICx::Modeler::Generator::TreeLike>.
 
 =head1 AUTHOR
 

@@ -201,11 +201,11 @@ DBICx::Modeler::Generator::Model - Implement class for DBICx::Modeler::Generator
 
 =head1 SYNOPSIS
 
-    # yada yada yada
+    use DBICx::Modeler::Generator::Model;
 
 =head1 DESCRIPTION
 
-blah blah blah
+This class is an implement class for L<DBICx::Modeler::Generator::ModelLike>.
 
 =head1 METHODS
 

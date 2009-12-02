@@ -157,11 +157,12 @@ DBICx::Modeler::Generator::Driver::SQLite - Concrete implement class with SQLite
 
 =head1 SYNOPSIS
 
-    # yada yada yada
+    use DBICx::Modeler::Generator::Driver::SQLite;
 
 =head1 DESCRIPTION
 
-blah blah blah
+This class is a concrete implement class with SQLite for
+L<DBICx::Modeler::Generator::DriverLike>.
 
 =head1 AUTHOR
 

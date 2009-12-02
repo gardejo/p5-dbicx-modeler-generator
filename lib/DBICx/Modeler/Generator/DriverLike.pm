@@ -59,11 +59,15 @@ DBICx::Modeler::Generator::DriverLike - Driver interface to DBICx::Modeler::Gene
 
 =head1 SYNOPSIS
 
-    # yada yada yada
+    package DBICx::Modeler::Generator::Driver::SQLite;
+
+    use Moose;
+
+    with qw(DBICx::Modeler::Generator::DriverLike);
 
 =head1 DESCRIPTION
 
-blah blah blah
+This role is a driver interface to L<DBICx::Modeler::Generator>.
 
 =head1 AUTHOR
 

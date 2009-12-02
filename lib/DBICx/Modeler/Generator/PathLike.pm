@@ -64,11 +64,15 @@ DBICx::Modeler::Generator::PathLike - Path interface to DBICx::Modeler::Generato
 
 =head1 SYNOPSIS
 
-    # yada yada yada
+    use DBICx::Modeler::Generator::Path;
+
+    use Moose;
+
+    with qw(DBICx::Modeler::Generator::PathLike);
 
 =head1 DESCRIPTION
 
-blah blah blah
+This role is a path interface to L<DBICx::Modeler::Generator>.
 
 =head1 AUTHOR
 
