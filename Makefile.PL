@@ -84,6 +84,8 @@ use inc::Module::Install;
         # cf. MooseX-Types-DateTime
 #   test_requires   'Test::Kwalitee'                => '0';
         # for author tests
+    test_requires   'Test::More'                    => '0';
+#   test_requires   'Test::mysqld'                  => '0';
 #   test_requires   'Test::NoTabs'                  => '0';
         # for author tests
 #   test_requires   'Test::Perl::Critic'            => '0';
@@ -92,7 +94,7 @@ use inc::Module::Install;
         # for author tests
 #   test_requires   'Test::Pod::Coverage'           => '1.08';
         # for author tests
-    test_requires   'Test::More'                    => '0';
+    test_requires   'Test::Requires'                => '0';
 #   test_requires   'Test::Synopsis'                => '0.06';
         # for author tests
 #   test_requires   'Test::UseAllModules'           => '0';

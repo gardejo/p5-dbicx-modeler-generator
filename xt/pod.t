@@ -1,14 +1,18 @@
-#!perl -T
-
+use Test::Requires {
+    'Test::Pod' => 1.40,
+};
 eval {
-    require Test::Pod;
-    Test::Pod->import;
-    die if Test::Pod->VERSION < 1.40;
+    require 'Test::Pod';    # for Test::Kwalitee
 };
 
-Test::More::plan( skip_all =>
-    "Test::Pod 1.40 required " .
-    "for testing POD"
-) if $@;
+all_pod_files_ok( all_pod_files(qw(lib)) );
 
-all_pod_files_ok();
+__END__
+
+=pod
+
+=head1 NAME
+
+pod.t - testing POD syntax of modules in distribution
+
+=cut

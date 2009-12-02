@@ -1,13 +1,15 @@
-#!perl -T
-
-eval {
-    require Test::UseAllModules;
-    Test::UseAllModules->import;
+use Test::Requires {
+    'Test::UseAllModules' => 0,
 };
 
-Test::More::plan( skip_all =>
-    "Test::UseAllModules required " .
-    "for testing presence of all manifested modules"
-) if $@;
-
 all_uses_ok();
+
+__END__
+
+=pod
+
+=head1 NAME
+
+use_all_modules.t - testing presence of all manifested modules
+
+=cut

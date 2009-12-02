@@ -1,12 +1,13 @@
-use Test::More;
-eval {
-    require Test::Kwalitee;
-    die "Not maintainer"
-        unless -f 'MANIFEST.SKIP';
+use Test::Requires {
+    'Test::Kwalitee' => 0,
 };
 
-if($@) {
-    $@ =~ s{ \(\@INC contains.*}{}; # reduce the noise
-    plan( skip_all => $@ );
-}
-Test::Kwalitee->import(); 
+__END__
+
+=pod
+
+=head1 NAME
+
+kwalitee.t - testing that distribution complies with a kwalitee gauge
+
+=cut

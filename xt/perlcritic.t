@@ -1,20 +1,19 @@
-#!perl -T
-
-eval {
-    require Perl::Critic;
-    Perl::Critic->import;
-    die if Perl::Critic->VERSION < 1.094;   # for equivalent_modules
-
-    require Test::Perl::Critic;
-    # 'use Any::Moose' and 'use Ark' are same as 'use strict' and 'use warnings'
-    Test::Perl::Critic->import(
-        -profile => 'xt/perlcriticrc',
-    );
+use Test::Requires {
+    'Perl::Critic'       => 1.094,
+    'Test::Perl::Critic' => 0,
 };
 
-Test::More::plan( skip_all =>
-    "Perl::Critic 1.094 and Test::Perl::Critic required " .
-    "for testing PBP compliance"
-) if $@;
-
+Test::Perl::Critic->import(
+    -profile => 'xt/perlcriticrc',
+);
 all_critic_ok();
+
+__END__
+
+=pod
+
+=head1 NAME
+
+perlcritic.t - testing that modules complies with Perl::Critic
+
+=cut
