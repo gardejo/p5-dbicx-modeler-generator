@@ -35,7 +35,7 @@ requires qw(
     dbname      dsn         host        port
     username    password
     command
-    make_database
+    deploy_database
 );
 
 

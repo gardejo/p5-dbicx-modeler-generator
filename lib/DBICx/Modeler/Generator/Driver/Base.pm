@@ -120,7 +120,7 @@ sub _build_host {
 # public method(s)
 # ****************************************************************
 
-sub make_database {
+sub deploy_database {
     my $self = shift;
 
     system($self->command)
@@ -167,9 +167,9 @@ blah blah blah
 
 =head2 Generator
 
-=head3 C<< $self->make_database() >>
+=head3 C<< $self->deploy_database() >>
 
-Makes database with a creation script.
+Deploys database with a creation script.
 
 =head1 AUTHOR
 

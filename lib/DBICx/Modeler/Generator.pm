@@ -75,7 +75,7 @@ has 'driver' => (
     does        => 'DBICx::Modeler::Generator::DriverLike',
     required    => 1,
     handles     => {
-        make_database => 'make_database',
+        deploy_database => 'deploy_database',
     },
 );
 
@@ -185,9 +185,9 @@ This module provides dynamic definition of a L<DBICx::Modeler> model.
 
 =head2 Services
 
-=head3 C<< $self->make_database() >>
+=head3 C<< $self->deploy_database() >>
 
-Makes database with a creation script.
+Deploys database with a creation script.
 
 =head3 C<< $self->update_models() >>
 
