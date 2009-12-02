@@ -2,7 +2,7 @@ REM for MS Windows
 @echo off
 
 setlocal
-set HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,inc,perl/site/lib,perl/lib,t/,xt/
+set HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,inc,examples,perl/site/lib,perl/lib,t/,xt/
 
 rd /s /q cover_db 2>nul
 dmake realclean

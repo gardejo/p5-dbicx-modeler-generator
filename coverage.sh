@@ -1,5 +1,5 @@
 # for Unix, Linux, etc.
-set HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,inc,perl/site/lib,perl/lib,t/,xt/
+set HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,inc,examples,perl/site/lib,perl/lib,t/,xt/
 
 rm -rf cover_db
 make realclean
