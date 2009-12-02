@@ -156,7 +156,7 @@ sub _build_creation_script {
 
     return $self->get_full_path(
         $self->tree->route_to_source,
-        $self->class->application,
+        $self->tree->application,
         $self->script_extension,
     );
 }
@@ -305,7 +305,7 @@ DBICx::Modeler::Generator::Path - Implement class for DBICx::Modeler::Generator:
 
 =head1 DESCRIPTION
 
-blah blah blah
+# blah blah blah
 
 =head1 METHODS
 
