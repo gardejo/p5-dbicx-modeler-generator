@@ -1,0 +1,138 @@
+package Test::DBICx::Modeler::Generator::CLI;
+
+
+# ****************************************************************
+# pragma(s)
+# ****************************************************************
+
+use strict;
+use warnings;
+
+
+# ****************************************************************
+# base class(es)
+# ****************************************************************
+
+use base qw(
+    Test::DBICx::Modeler::Generator
+);
+
+
+# ****************************************************************
+# general dependency(-ies)
+# ****************************************************************
+
+use Test::More;
+use Test::Requires {
+    'MooseX::Getopt'       => 0,
+    'MooseX::SimpleConfig' => 0,
+};
+
+
+# ****************************************************************
+# internal dependency(-ies)
+# ****************************************************************
+
+use DBICx::Modeler::Generator::CLI;
+
+
+
+# ****************************************************************
+# class variable(s)
+# ****************************************************************
+
+our $Interface;
+
+
+# ****************************************************************
+# accessor(s) of class variable(s)
+# ****************************************************************
+
+sub interface {
+    $Interface = $_[1]
+        if scalar @_ == 2;
+
+    return $Interface;
+}
+
+
+# ****************************************************************
+# test(s)
+# ****************************************************************
+
+sub setup :Test(setup) {
+    my $self = shift;
+
+    local @ARGV = $self->_get_argument_values;
+    my $application = DBICx::Modeler::Generator::CLI->new_with_options;
+
+    $self->{container} = $application->container;
+    $self->{generator} = $application->generator;
+
+    return;
+}
+
+sub _get_argument_values {
+    my $self = shift;
+
+    my $interface = $self->interface;
+
+    return   $interface eq 'longname'   ? $self->_argument_values_for_longname
+           : $interface eq 'shortname'  ? $self->_argument_values_for_shortname
+           : $interface eq 'configfile' ? $self->_argument_values_for_configfile
+           :                              ();
+}
+
+
+# ****************************************************************
+# return trule
+# ****************************************************************
+
+1;
+__END__
+
+
+# ****************************************************************
+# POD
+# ****************************************************************
+
+=pod
+
+=head1 NAME
+
+Test::DBICx::Modeler::Generator::CLI - Tests for using DBICx::Modeler::Generator with a command line interface
+
+=head1 SYNOPSIS
+
+    package Test::DBICx::Modeler::Generator::CLI::SQLite;
+
+    use base qw(
+        Test::DBICx::Modeler::Generator::CLI
+        Test::DBICx::Modeler::Generator::SQLite
+    );
+
+=head1 DESCRIPTION
+
+This class is a base class of C<Test::DBICx::Modeler::Generator::CLI::*>.
+
+=head1 AUTHOR
+
+=over 4
+
+=item MORIYA Masaki (a.k.a. "Gardejo")
+
+C<< <moriya at ermitejo dot com> >>,
+L<http://ttt.ermitejo.com/>
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (c) 2009 by MORIYA Masaki (a.k.a. "Gardejo"),
+L<http://ttt.ermitejo.com>.
+
+This library is free software;
+you can redistribute it and/or modify it under the same terms as Perl itself.
+See L<perlgpl> and L<perlartistic>.
+
+=cut

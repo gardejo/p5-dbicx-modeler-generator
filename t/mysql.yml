@@ -1,0 +1,9 @@
+application:    MyApp
+root:           examples
+driver:         MySQL
+username:       mysql_user
+password:       foobar
+host:           localhost
+port:           3306
+literal:
+    /Path/script_extension: _mysql.sql
