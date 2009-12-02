@@ -1,13 +1,13 @@
 ? extends 'Base'
 
 <? block code => q{
-has 'foo' => (
+has 'price' => (
     is          => 'ro',
-    isa         => 'Str',
-    default     => 'foo',
+    isa         => 'Int',
+    default     => 0,
 );
 
-sub baz {
-    return 'baz';
+sub play {
+    return 'play music';
 }
 } ?>;

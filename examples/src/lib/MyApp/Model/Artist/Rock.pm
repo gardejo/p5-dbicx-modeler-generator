@@ -4,4 +4,9 @@
 extends qw(
     MyApp::Model::Artist
 );
+
+sub dance {
+    return;
+}
+
 } ?>;

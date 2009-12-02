@@ -1,5 +1,7 @@
 package MyApp::Schema::Artist;
 
-# yada yada yada
+sub birthday {
+    return;
+}
 
 1;

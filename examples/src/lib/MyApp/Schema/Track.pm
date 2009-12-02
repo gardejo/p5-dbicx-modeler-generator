@@ -1,5 +1,7 @@
 package MyApp::Schema::Track;
 
-# blah blah blah
+sub recording_time {
+    return;
+}
 
 1;
