@@ -175,7 +175,22 @@ DBICx::Modeler::Generator - Dynamic definition of a DBICx::Modeler model
 
 =head1 SYNOPSIS
 
-    # yada yada yada
+    use Orochi;
+
+    my $container = Orochi->new;
+    $container->inject_literal('/Class/application' => 'MyApp');
+    $container->inject_literal('/Path/root' => 'examples');
+    # ...
+    $container->inject_class('DBICx::Modeler::Generator');
+    $container->inject_class('DBICx::Modeler::Generator::Class');
+    # ...
+    my $generator = $container->get('/DBICx/Modeler/Generator');
+
+    $generator->deploy_database;
+    $generator->update_schemata;
+    $generator->update_models;
+
+    # note: use DBICx::Modeler::Generator::CLI instead of above codes.
 
 =head1 DESCRIPTION
 
@@ -627,6 +642,11 @@ or
          -h hostname -p 3307 \\
          -l /Path/script_extension=_mysql.sql
 
+or
+
+    perl -Ilib examples/src/sbin/maintain_models.pl \\
+         --configfile examples/src/myapp.yml
+
 =head1 SEE ALSO
 
 =over 4
@@ -645,19 +665,29 @@ L<DBIx::Class>
 
 =back
 
-=head1 INCOMPATIBILITIES
-
-None reported.
-
 =head1 TO DO
 
 =over 4
 
 =item *
 
-Using L<MooseX::Getopt>
+More tests
+
+=item *
+
+Using L<Test::mysqld> for tests
+(cf. L<http://mt.endeworks.jp/d-6/2009/10/things-ive-done-while-using-test-mysqld.html>
+by Daisuke Maki, a.k.a. lestrrat)
+
+=item *
+
+Using L<Test::Moose> for tests
 
 =back
+
+=head1 INCOMPATIBILITIES
+
+None reported.
 
 =head1 BUGS AND LIMITATIONS
 
@@ -686,6 +716,33 @@ You can find documentation for this module with the C<perldoc> command.
 This module is maintained using git.
 You can get the latest version from
 L<git://github.com/gardejo/p5-dbicx-modeler-generator.git>.
+
+=head1 CODE COVERAGE
+
+I use L<Devel::Cover> to test the code coverage of my tests,
+below is the C<Devel::Cover> summary report on this library's test suite.
+
+ ---------------------------- ------ ------ ------ ------ ------ ------ ------
+ File                           stmt   bran   cond    sub    pod   time  total
+ ---------------------------- ------ ------ ------ ------ ------ ------ ------
+ ...BICx/Modeler/Generator.pm  100.0    n/a    n/a  100.0  100.0   25.0  100.0
+ .../Modeler/Generator/CLI.pm  100.0  100.0    n/a  100.0    0.0   25.0   98.0
+ ...odeler/Generator/Class.pm  100.0    n/a    n/a  100.0  100.0    0.0  100.0
+ ...er/Generator/ClassLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
+ .../Generator/Driver/Base.pm  100.0   66.7    n/a  100.0  100.0   12.5   94.7
+ ...Generator/Driver/MySQL.pm  100.0   50.0    n/a  100.0    n/a    0.0   94.3
+ ...enerator/Driver/SQLite.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
+ ...r/Generator/DriverLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
+ ...odeler/Generator/Model.pm  100.0  100.0    n/a  100.0  100.0   12.5  100.0
+ ...er/Generator/ModelLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
+ ...Modeler/Generator/Path.pm  100.0   50.0    n/a  100.0  100.0   25.0   98.8
+ ...ler/Generator/PathLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
+ ...deler/Generator/Schema.pm  100.0    n/a    n/a  100.0  100.0    0.0  100.0
+ ...r/Generator/SchemaLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
+ ...Modeler/Generator/Tree.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
+ ...ler/Generator/TreeLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
+ Total                         100.0   68.8    n/a  100.0   91.7  100.0   99.0
+ ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 =head1 AUTHOR
 
