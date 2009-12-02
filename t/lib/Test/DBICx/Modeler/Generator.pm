@@ -228,7 +228,7 @@ sub test_as_blackbox : Tests(no_plan) {
     my $self = shift;
 
     SKIP: {
-        skip "You have no authority to make database", 4
+        skip "You have no authority to make database"
             unless $self->{has_authority};
 
         lives_ok {
