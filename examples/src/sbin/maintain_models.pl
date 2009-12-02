@@ -21,7 +21,7 @@ use DBICx::Modeler::Generator::CLI;
 # ****************************************************************
 
 my $application = DBICx::Modeler::Generator::CLI->new_with_options;
-$application->generator->make_database;
+$application->generator->deploy_database;
 $application->generator->update_schemata;
 $application->generator->update_models;
 
@@ -46,21 +46,21 @@ maintain_models - Maintainer of schema and model modules
 
 =head1 SYNOPSIS
 
-    $ perl -Ilib examples\src\sbin\maintain_models.pl   \\
+    $ perl -Ilib examples/src/sbin/maintain_models.pl   \\
            -a MyApp                                     \\
            -r examples                                  \\
            -d SQLite
 
     # or
 
-    $ perl -Ilib examples\src\sbin\maintain_models.pl   \\
+    $ perl -Ilib examples/src/sbin/maintain_models.pl   \\
            --application=MyApp                          \\
            --root=examples                              \\
            --driver=SQLite
 
     # or
 
-    $ perl -Ilib examples\src\sbin\maintain_models.pl   \\
+    $ perl -Ilib examples/src/sbin/maintain_models.pl   \\
            -a MyApp                                     \\
            -r examples                                  \\
            -d MySQL                                     \\
@@ -70,17 +70,7 @@ maintain_models - Maintainer of schema and model modules
 
     # or
 
-    $ perl -Ilib examples\src\sbin\maintain_models.pl   \\
-           --application=MyApp                          \\
-           --root=examples                              \\
-           --driver=MySQL                               \\
-           --username=mysql_user                        \\
-           --password=foobar                            \\
-           --literal /Path/script_extension=_mysql.sql
-
-    # or
-
-    $ perl -Ilib examples\src\sbin\maintain_models.pl   \\
+    $ perl -Ilib examples/src/sbin/maintain_models.pl   \\
            --application=MyApp                          \\
            --root=examples                              \\
            --driver=MySQL                               \\
@@ -90,27 +80,10 @@ maintain_models - Maintainer of schema and model modules
            --port=3306                                  \\
            --literal /Path/script_extension=_mysql.sql
 
-    # Note: using default values...
-    # literal => {
-    #     '/Class/base_part'       => 'Base',
-    #     '/Class/model_part'      => 'Model',
-    #     '/Class/schema_part'     => 'Schema',
-    #     '/Driver/bin'            => 'sqlite',
-    #     '/Driver/dbd'            => 'SQLite',
-    #     '/Driver/dbname'         => 'myapp',
-    #     '/Driver/dsn'            => 'dbi:SQLite:dbname=examples/myapp.db',
-    #     '/Driver/extension'      => '.db',
-    #     '/Driver/host'           => 'localhost',
-    #     '/Driver/port'           => 3306,
-    #     '/Path/creation_script'  => 'examples/src/myapp_sqlite.sql',
-    #     '/Path/module_extension' => '.pm',
-    #     '/Schema/components'     => [qw(UTF8Columns)],
-    #     '/Schema/is_debug'       => 1,
-    #     '/Tree/application'      => 'myapp',
-    #     '/Tree/library'          => [qw(lib)],
-    #     '/Tree/src'              => [qw(src)],
-    #     '/Tree/target'           => [qw()],
-    # }
+    # or
+
+    $ perl -Ilib examples/src/sbin/maintain_models.pl   \\
+           --configfile=examples/src/myapp.yml
 
 =head1 DESCRIPTION
 
@@ -119,25 +92,26 @@ This script provides a simple interface to L<DBICx::Modeler::Generator>.
 =head2 Directory tree of the example
 
     example/
-        myapp.db (... generating target)
+        myapp.db                    (... generating target)
         lib/
-            MyApp/ (... generating target)
+            MyApp/                  (... generating target)
                 Schema.pm
                 Model/
                     *.pm
                 Schema/
                     *.pm
         src/
-            myapp.sql (... SQLite source)
-            myapp_mysql.sql (... MySQL source)
+            myapp.yml               (... configuration file)
+            myapp.sql               (... SQLite source)
+            myapp_mysql.sql         (... MySQL source)
             lib/
                 MyApp/
-                    Model/ (... model sources)
+                    Model/          (... model sources)
                         *.pm
-                    Schema/ (... schema sources)
+                    Schema/         (... schema sources)
                         *.pm
             sbin/
-                maintain_models.pl (... this script)
+                maintain_models.pl  (... this script)
 
 =head1 SEE ALSO
 
@@ -150,6 +124,10 @@ L<MooseX::Getopt>
 =item *
 
 L<Getopt::Long>
+
+=item *
+
+L<MooseX::SimpleConfig>
 
 =item *
 

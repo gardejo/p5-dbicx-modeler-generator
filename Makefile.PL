@@ -68,7 +68,8 @@ use inc::Module::Install;
         ],
         'Support Getopt interface' => [
             -default => 0,
-            recommends( 'MooseX::Getopt' => '0' ),
+            recommends( 'MooseX::Getopt'       => '0' ),
+            recommends( 'MooseX::SimpleConfig' => '0' ),
         ],
     );
 

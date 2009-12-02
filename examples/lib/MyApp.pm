@@ -64,11 +64,11 @@ MyApp - Sample application for DBICx::Modeler::Generator
 
 =head1 SYNOPSIS
 
-    # blah blah blah
+    use MyApp;
 
 =head1 DESCRIPTION
 
-yada yada yada
+This class is a sample application for L<DBICx::Modeler::Generator>.
 
 =head1 AUTHOR
 

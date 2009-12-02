@@ -1,0 +1,70 @@
+# ****************************************************************
+# myapp.yml - configuration file for an example application 'MyApp'
+# ****************************************************************
+
+# ================================================================
+# sugar notations
+# ================================================================
+
+application:    MyApp
+# this is a sugar notation of $literal{'/Class/application'}
+
+root:           examples
+# this is a sugar notation of $literal{'/Path/root'}
+
+driver:         MySQL
+# this is a sugar notation of DBICx::Modeler::Generator::Driver::*
+
+username:       mysql_user
+# this is a sugar notation of $literal{'/Driver/username'}
+
+password:       foobar
+# this is a sugar notation of $literal{'/Driver/password'}
+
+# host:         localhost
+# this is a sugar notation of $literal{'/Driver/host'}
+
+# port:         3306
+# this is a sugar notation of $literal{'/Driver/port'}
+
+# ================================================================
+# raw notations
+# ================================================================
+
+literal:
+    /Path/script_extension: _mysql.sql
+
+# -------- * common * --------
+#   /Class/application:     MyApp
+#   /Class/base_part:       Base
+#   /Class/model_part:      Model
+#   /Class/schema_part:     Schema
+#   /Path/creation_script:  examples/src/myapp.sql
+#   /Path/module_extension: .pm
+#   /Path/script_extension: .sql
+#   /Path/root:             examples
+#   /Schema/components:
+#       - UTF8Columns
+#   /Schema/is_debug:       1
+#   /Tree/application:      myapp
+#   /Tree/library:
+#       - lib
+#   /Tree/src:
+#       - src
+#   /Tree/target:           []
+
+# -------- * for SQLite * --------
+#   /Driver/bin:            sqlite3
+#   /Driver/dbd:            SQLite
+#   /Driver/dbname:         myapp
+#   /Driver/dsn:            dbi:SQLite:dbname=examples/myapp.db
+#   /Driver/extension:      .db
+
+# -------- * for MySQL * --------
+#   /Driver/bin:            mysql
+#   /Driver/dbd:            mysql
+#   /Driver/dsn:            dbi:mysql
+#   /Driver/host:           localhost
+#   /Driver/password:       mysql_user
+#   /Driver/port:           3306
+#   /Driver/username:       foobar

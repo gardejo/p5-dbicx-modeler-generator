@@ -53,6 +53,11 @@ or
          -h hostname -p 3307 \\
          -l /Path/script_extension=_mysql.sql
 
+or
+
+    perl -Ilib examples/src/sbin/maintain_models.pl \\
+         --configfile examples/src/myapp.yml
+
 AUTHOR
 ------
 

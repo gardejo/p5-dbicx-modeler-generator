@@ -32,6 +32,7 @@ use Orochi;
 
 with qw(
     MooseX::Getopt
+    MooseX::SimpleConfig
 );
 
 
@@ -69,21 +70,6 @@ has 'root' => (
     cmd_aliases => [qw(r)],
 );
 
-has 'literal' => (
-    traits      => [qw(
-        Getopt
-        Hash
-    )],
-    is          => 'ro',
-    isa         => 'HashRef[Str]',
-    lazy_build  => 1,
-    handles     => {
-        literal_pairs => 'kv',
-        set_literal   => 'set',
-    },
-    cmd_aliases => [qw(l)],
-);
-
 has 'username' => (
     traits      => [qw(
         Getopt
@@ -118,6 +104,21 @@ has 'port' => (
     is          => 'ro',
     isa         => 'Int',
     cmd_aliases => [qw(p)],
+);
+
+has 'literal' => (
+    traits      => [qw(
+        Getopt
+        Hash
+    )],
+    is          => 'ro',
+    isa         => 'HashRef[Str]',
+    lazy_build  => 1,
+    handles     => {
+        literal_pairs => 'kv',
+        set_literal   => 'set',
+    },
+    cmd_aliases => [qw(l)],
 );
 
 has 'base_registory' => (
@@ -289,14 +290,14 @@ DBICx::Modeler::Generator::CLI - Command line interface to DBICx::Modeler::Gener
 
     my $application = DBICx::Modeler::Generator::CLI->new_with_options;
 
-    $application->generator->make_database;
+    $application->generator->deploy_database;
     $application->generator->update_schemata;
     $application->generator->update_models;
 
 =head1 DESCRIPTION
 
 This module wraps the interface to L<DBICx::Modeler::Generator>
-with L<MooseX::Getopt>.
+with L<MooseX::Getopt> and L<MooseX::SimpleConfig>.
 
 See C</examples/src/sbin/maintain_models.pl> of this distribution
 for further detail.
@@ -312,6 +313,10 @@ L<MooseX::Getopt>
 =item *
 
 L<Getopt::Long>
+
+=item *
+
+L<MooseX::SimpleConfig>
 
 =item *
 
