@@ -2,7 +2,7 @@ use Test::Requires {
     'Test::Pod::Coverage' => 1.08,
 };
 eval {
-    require 'Test::Pod::Coverage';  # for Test::Kwalitee
+    require 'Test::Pod::Coverage';  # a bad know-how: to pass Test::Kwalitee
 };
 
 all_pod_coverage_ok(

@@ -2,7 +2,7 @@ use Test::Requires {
     'Test::Pod' => 1.40,
 };
 eval {
-    require 'Test::Pod';    # for Test::Kwalitee
+    require 'Test::Pod';    # a bad know-how: to pass Test::Kwalitee
 };
 
 all_pod_files_ok( all_pod_files(qw(lib)) );
