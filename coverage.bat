@@ -1,13 +1,15 @@
-REM for MS Windows
+@REM for MS Windows
 @echo off
 
 setlocal
 set HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,inc,examples,perl/site/lib,perl/lib,t/,xt/
 
 rd /s /q cover_db 2>nul
-dmake realclean
+REM dmake realclean
 
-perl Makefile.PL
-dmake manifest
+REM perl Makefile.PL
+REM dmake manifest
 
-prove -l && cover && start cover_db/coverage.html
+REM fixme: how we set 'also_private' option of Pod::Coverage here?
+
+prove -l xt\supplement.t t && cover && start cover_db/coverage.html

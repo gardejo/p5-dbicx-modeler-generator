@@ -2,11 +2,13 @@
 set HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,inc,examples,perl/site/lib,perl/lib,t/,xt/
 
 rm -rf cover_db
-make realclean
+# make realclean
 
-perl Makefile.PL
-make manifest
+# perl Makefile.PL
+# make manifest
 
-prove -l
+# fixme: how we set 'also_private' option of Pod::Coverage here?
+
+prove -l xt/supplement.t t
 cover
 open cover_db/coverage.html

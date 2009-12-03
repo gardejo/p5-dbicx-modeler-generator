@@ -347,6 +347,24 @@ C<< Schema >>
 
 =back
 
+=head3 C<< /DBICx/Modeler/Generator/Driver/database >>
+
+=over 4
+
+=item Type
+
+C<< Str >>
+
+=item Default
+
+C<< $application >>, C<< /$root/$application.$database_extension >>, etc.
+
+=item Example
+
+C<< myapp >>, C<< my_app >>, C<< /path/to/root/my_app.db >>, etc.
+
+=back
+
 =head3 C<< /DBICx/Modeler/Generator/Driver/bin >>
 
 =over 4
@@ -383,24 +401,6 @@ etc.
 
 =back
 
-=head3 C<< /DBICx/Modeler/Generator/Driver/dbname >>
-
-=over 4
-
-=item Type
-
-C<< Str >>
-
-=item Default
-
-C<< $application >>, C<< /$root/$application.$database_extension >>, etc.
-
-=item Example
-
-C<< myapp >>, C<< my_app >>, C<< /path/to/root/my_app.db >>, etc.
-
-=back
-
 =head3 C<< /DBICx/Modeler/Generator/Driver/dsn >>
 
 =over 4
@@ -411,9 +411,10 @@ C<< Str >>
 
 =item Default
 
-C<< dbi:$dbd:dbname=$dbname >>,
-C<< dbi:$dbd:dbname=$dbname;host=$host >>,
-C<< dbi:$dbd:dbname=$dbname;host=$host;port=$port >>,
+C<< dbi:$dbd:database=$database >>,
+C<< dbi:$dbd:database=$database;host=$host >>,
+C<< dbi:$dbd:database=$database;host=$host;port=$port >>,
+C<< dbi:$dbd:dbname=$database >>,
 etc.
 
 =back
@@ -444,7 +445,7 @@ C<< Str >>
 
 =item Default
 
-C<< localhost >>
+C<< undef >> (it means C<< localhost >>)
 
 =back
 
@@ -459,6 +460,10 @@ C<< Str >>
 =item Example
 
 C<< foobar >>
+
+=item Default
+
+C<< undef >>
 
 =back
 
@@ -725,23 +730,23 @@ below is the C<Devel::Cover> summary report on this library's test suite.
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
  File                           stmt   bran   cond    sub    pod   time  total
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
- ...BICx/Modeler/Generator.pm  100.0    n/a    n/a  100.0  100.0   25.0  100.0
- .../Modeler/Generator/CLI.pm  100.0  100.0    n/a  100.0    0.0   25.0   98.0
- ...odeler/Generator/Class.pm  100.0    n/a    n/a  100.0  100.0    0.0  100.0
+ ...BICx/Modeler/Generator.pm  100.0    n/a    n/a  100.0  100.0    9.1  100.0
+ .../Modeler/Generator/CLI.pm  100.0  100.0    n/a  100.0    0.0   18.2   98.0
+ ...odeler/Generator/Class.pm  100.0    n/a    n/a  100.0  100.0    9.1  100.0
  ...er/Generator/ClassLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
- .../Generator/Driver/Base.pm  100.0   66.7    n/a  100.0  100.0   12.5   94.7
+ .../Generator/Driver/Base.pm  100.0   83.3    n/a  100.0  100.0    0.0   97.2
  ...Generator/Driver/MySQL.pm  100.0   50.0    n/a  100.0    n/a    0.0   94.3
  ...enerator/Driver/SQLite.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
  ...r/Generator/DriverLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
- ...odeler/Generator/Model.pm  100.0  100.0    n/a  100.0  100.0   12.5  100.0
- ...er/Generator/ModelLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
- ...Modeler/Generator/Path.pm  100.0   50.0    n/a  100.0  100.0   25.0   98.8
+ ...odeler/Generator/Model.pm  100.0  100.0    n/a  100.0  100.0    9.1  100.0
+ ...er/Generator/ModelLike.pm  100.0    n/a    n/a  100.0    n/a    9.1  100.0
+ ...Modeler/Generator/Path.pm  100.0   50.0    n/a  100.0  100.0   27.3   98.8
  ...ler/Generator/PathLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
- ...deler/Generator/Schema.pm  100.0    n/a    n/a  100.0  100.0    0.0  100.0
+ ...deler/Generator/Schema.pm  100.0   50.0    n/a  100.0  100.0    9.1   97.6
  ...r/Generator/SchemaLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
- ...Modeler/Generator/Tree.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
+ ...Modeler/Generator/Tree.pm  100.0    n/a    n/a  100.0    n/a    9.1  100.0
  ...ler/Generator/TreeLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
- Total                         100.0   68.8    n/a  100.0   91.7  100.0   99.0
+ Total                         100.0   72.2    n/a  100.0   91.7  100.0   99.0
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 =head1 AUTHOR
