@@ -55,15 +55,16 @@ literal:
 
 # -------- * for SQLite * --------
 #   /Driver/bin:            sqlite3
+#   /Driver/database:       examples/myapp.db
 #   /Driver/dbd:            SQLite
-#   /Driver/dbname:         myapp
 #   /Driver/dsn:            dbi:SQLite:dbname=examples/myapp.db
 #   /Driver/extension:      .db
 
 # -------- * for MySQL * --------
 #   /Driver/bin:            mysql
+#   /Driver/database:       myapp
 #   /Driver/dbd:            mysql
-#   /Driver/dsn:            dbi:mysql
+#   /Driver/dsn:            dbi:mysql:database=myapp
 #   /Driver/host:           localhost
 #   /Driver/password:       mysql_user
 #   /Driver/port:           3306

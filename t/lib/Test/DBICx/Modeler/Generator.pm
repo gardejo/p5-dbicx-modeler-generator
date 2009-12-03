@@ -22,6 +22,7 @@ use base qw(
 # general dependency(-ies)
 # ****************************************************************
 
+use DBICx::Modeler;
 use FindBin;
 use Module::Load;
 use Path::Class;
@@ -73,10 +74,13 @@ sub _has_authority {
     return -w $self->{examples}->stringify;
 }
 
-sub shutdown : Test(shutdown) {
+sub shutdown : Test(shutdown => no_plan) {
     my $self = shift;
 
-    if (exists $self->{dbh}) {
+    if ($self->{has_tables}) {
+        if ($self->_can_support_foreign_keys) {
+            $self->_test_generated_models;
+        }
         $self->_remove_generated_database;
         $self->_disconnect_database;
     }
@@ -89,9 +93,8 @@ sub shutdown : Test(shutdown) {
 sub _remove_generated_modules {
     my $self = shift;
 
-    eval {
-        $self->{generated_library}->rmtree;
-    } if $self->{has_authority};
+    $self->{generated_library}->rmtree
+        if $self->{has_authority};
 
     return;
 }
@@ -241,10 +244,11 @@ sub test_as_blackbox : Tests(no_plan) {
     SKIP: {
         skip "You have no authority to make database"
             unless $self->{has_authority};
-        skip "could not connect to the MySQL database"
+        skip "could not connect to the database"
             unless $self->{dbh};
         skip "'myapp' database already exists"
             if $self->_exists_database;
+        $self->{has_tables} = 1;
 
         warning_is {
             lives_ok {
@@ -361,6 +365,43 @@ sub _test_meta_information_of_model_modules {
         => "MyApp::Model::Cd has attribute 'price'";
     ok MyApp::Model::Cd->meta->has_method('play')
         => "MyApp::Model::Cd has method 'play'";
+
+    shift @INC;
+
+    return;
+}
+
+sub _test_generated_models {
+    my $self = shift;
+
+    unshift @INC, $self->{target_library}->stringify;
+
+    load 'MyApp';
+
+    $self->_reconnect_database;
+
+    my $modeler = MyApp->modeler($self->{connect_info});
+    isa_ok $modeler, 'DBICx::Modeler';
+
+    my ($artist, $cd, $track);
+    lives_ok {
+        $artist = $modeler->create( Artist => {
+            name             => 'Foo',
+            insert_date_time => '0000-00-00 00:00:00',
+        } );
+    } 'no exception to artist creation';
+    lives_ok {
+        $cd = $artist->create_related( cds => {
+            title            => 'Bar',
+            insert_date_time => '0000-00-00 00:00:00',
+        } );
+    } 'no exception to cd creation';
+    lives_ok {
+        $track = $cd->create_related( tracks => {
+            title            => 'Baz',
+            insert_date_time => '0000-00-00 00:00:00',
+        } );
+    } 'no exception to track creation';
 
     shift @INC;
 

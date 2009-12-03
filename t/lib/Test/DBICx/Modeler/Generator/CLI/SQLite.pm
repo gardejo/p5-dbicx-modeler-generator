@@ -31,25 +31,44 @@ use Test::More;
 # ****************************************************************
 
 sub _argument_values_for_longname {
+    my $self = shift;
+
     return (
-        '--application', 'MyApp',
-        '--root',        'examples',
-        '--driver',      'SQLite',
+        '--application' => 'MyApp',
+        '--root'        => 'examples',
+        '--driver'      => 'SQLite',
+        $self->_argument_values_for_sqlite,
     );
 }
 
 sub _argument_values_for_shortname {
+    my $self = shift;
+
     return (
-        '-a', 'MyApp',
-        '-r', 'examples',
-        '-d', 'SQLite',
+        '-a' => 'MyApp',
+        '-r' => 'examples',
+        '-d' => 'SQLite',
+        $self->_argument_values_for_sqlite,
     );
 }
 
 sub _argument_values_for_configfile {
+    my $self = shift;
+
     return (
-        '--configfile', 't/sqlite.yml',
+        '--configfile' => 't/sqlite.yml',
+        $self->_argument_values_for_sqlite,
     );
+}
+
+sub _argument_values_for_sqlite {
+    my $self = shift;
+
+    $self->_set_script_extension;
+
+    return $self->_can_support_foreign_keys ? (
+        '--literal' => '/Path/script_extension=' . $self->{script_extension}
+    ) : ();
 }
 
 

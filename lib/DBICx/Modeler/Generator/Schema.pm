@@ -132,7 +132,7 @@ sub make_schemata {
     my $stderr = q{};
     local *STDERR;
     open STDERR, '>', \$stderr
-        or die $!;
+        or die $!;  # note: can not cover this false branch
 
     make_schema_at(
         $self->class->schema,

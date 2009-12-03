@@ -66,6 +66,10 @@ use inc::Module::Install;
             -default => 0,
             recommends( 'DBD::SQLite' => '0' ),
         ],
+        'Support SQLite driver with foreign keys' => [
+            -default => 0,
+            recommends( 'DBD::SQLite' => '1.26_06' ),
+        ],
         'Support Getopt interface' => [
             -default => 0,
             recommends( 'MooseX::Getopt'       => '0' ),

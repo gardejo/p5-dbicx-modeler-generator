@@ -43,8 +43,8 @@ extends qw(
 bind_constructor '/DBICx/Modeler/Generator/Driver' => (
     args => {
         bin      => bind_value '/DBICx/Modeler/Generator/Driver/bin',
+        database => bind_value '/DBICx/Modeler/Generator/Driver/database',
         dbd      => bind_value '/DBICx/Modeler/Generator/Driver/dbd',
-        dbname   => bind_value '/DBICx/Modeler/Generator/Driver/dbname',
         dsn      => bind_value '/DBICx/Modeler/Generator/Driver/dsn',
         host     => bind_value '/DBICx/Modeler/Generator/Driver/host',
         password => bind_value '/DBICx/Modeler/Generator/Driver/password',

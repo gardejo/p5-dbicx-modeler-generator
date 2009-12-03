@@ -31,12 +31,16 @@ use Test::More;
 # ****************************************************************
 
 sub _argument_values_for_longname {
+    my $self = shift;
+
+    $self->_set_host_and_port('localhost', 3306);
+
     return (
         '--application', 'MyApp',
         '--root',        'examples',
         '--driver',      'MySQL',
-        '--host',        'localhost',
-        '--port',        3306,
+        '--host',        $self->{host},
+        '--port',        $self->{port},
         '--username',    'mysql_user',
         '--password',    'foobar',
         '--literal',     '/Path/script_extension=_mysql.sql',
@@ -44,12 +48,14 @@ sub _argument_values_for_longname {
 }
 
 sub _argument_values_for_shortname {
+    my $self = shift;
+
+    $self->_set_host_and_port(undef, undef);    # to improve a variation
+
     return (
         '-a', 'MyApp',
         '-r', 'examples',
         '-d', 'MySQL',
-        '-h', 'localhost',
-        '-p', 3306,
         '-u', 'mysql_user',
         '-w', 'foobar',
         '-l', '/Path/script_extension=_mysql.sql',
@@ -57,6 +63,10 @@ sub _argument_values_for_shortname {
 }
 
 sub _argument_values_for_configfile {
+    my $self = shift;
+
+    $self->_set_host_and_port('localhost', 3306);
+
     return (
         '--configfile', 't/mysql.yml',
     );

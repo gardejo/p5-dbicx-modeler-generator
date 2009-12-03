@@ -32,7 +32,7 @@ use namespace::clean;
 
 requires qw(
     bin
-    dbname      dsn         host        port
+    database    dsn         host        port
     username    password
     command
     deploy_database

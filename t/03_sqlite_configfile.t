@@ -9,6 +9,7 @@ use lib 't/lib';
 use Test::DBICx::Modeler::Generator::CLI::SQLite;
 
 Test::DBICx::Modeler::Generator::CLI::SQLite->interface('configfile');
+Test::DBICx::Modeler::Generator::SQLite->with_foreign_key(0);
 Test::DBICx::Modeler::Generator::CLI::SQLite->runtests;
 
 1;

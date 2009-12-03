@@ -42,13 +42,13 @@ extends qw(
 
 bind_constructor '/DBICx/Modeler/Generator/Driver' => (
     args => {
-        path      => bind_value '/DBICx/Modeler/Generator/Path',
-        tree      => bind_value '/DBICx/Modeler/Generator/Tree',
         bin       => bind_value '/DBICx/Modeler/Generator/Driver/bin',
+        database  => bind_value '/DBICx/Modeler/Generator/Driver/database',
         dbd       => bind_value '/DBICx/Modeler/Generator/Driver/dbd',
-        dbname    => bind_value '/DBICx/Modeler/Generator/Driver/dbname',
         dsn       => bind_value '/DBICx/Modeler/Generator/Driver/dsn',
         extension => bind_value '/DBICx/Modeler/Generator/Driver/extension',
+        path      => bind_value '/DBICx/Modeler/Generator/Path',
+        tree      => bind_value '/DBICx/Modeler/Generator/Tree',
     },
 );
 
@@ -100,7 +100,7 @@ sub _build_extension {
     return '.db';
 }
 
-around _build_dbname => sub {
+around _build_database => sub {
     my ($next, $self) = @_;
 
     return $self->path->get_full_path(
@@ -110,11 +110,22 @@ around _build_dbname => sub {
     )->stringify;
 };
 
+override _build_dsn => sub {
+    my $self = shift;
+
+    my $dsn = sprintf 'dbi:%s:dbname=%s', (
+        $self->dbd,
+        $self->database,
+    );
+
+    return $dsn;
+};
+
 sub _build_command {
     my $self = shift;
 
     my $command = $self->bin;
-    $command .= sprintf ' "%s"', $self->dbname;
+    $command .= sprintf ' "%s"', $self->database;
     $command .= sprintf ' < "%s"', $self->path->creation_script->stringify;
 
     return $command;

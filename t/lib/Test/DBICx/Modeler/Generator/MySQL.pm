@@ -40,30 +40,47 @@ sub _get_driver_class {
 }
 
 sub _get_special_literals {
+    my $self = shift;
+
+    $self->_set_host_and_port('localhost', 3306);
+
     return (
-        '/Driver/host'           => 'localhost',
+        '/Driver/host'           => $self->{host},
         '/Driver/password'       => 'foobar',
-        '/Driver/port'           => 3306,
+        '/Driver/port'           => $self->{port},
         '/Driver/username'       => 'mysql_user',
         '/Path/script_extension' => '_mysql.sql',
     );
 }
 
+sub _set_host_and_port {
+    my ($self, $host, $port) = @_;
+
+    $self->{host} = $host;
+    $self->{port} = $port;
+
+    return;
+}
+
 sub _connect_database {
-    my $self = shift;
+    my ($self, $database) = @_;
 
     # fixme: use Test::mysqld
     # or
     # fixme: store the running status of mysql daemon and run mysql daemon
-    my $dbh = DBI->connect(
-        'dbi:mysql:',
+    my $dsn = 'dbi:mysql:';
+    $dsn .= 'database=myapp'
+        if defined $database;
+    $self->{connect_info} = [
+        $dsn,
         'mysql_user',
         'foobar',
         {
             PrintWarn  => 0,
             PrintError => 0,
-        }
-    );
+        },
+    ];
+    my $dbh = DBI->connect(@{ $self->{connect_info} });
     $self->{dbh} = $dbh
         if defined $dbh;
 
@@ -97,16 +114,20 @@ sub test_driver : Tests(no_plan) {
         => 'driver: bin ok';
     is $driver->dbd, 'mysql'
         => 'driver: dbd ok';
-    is $driver->dsn,
-        "dbi:mysql:dbname=myapp;host=localhost;port=3306"
-            => 'driver: dsn ok';
-    is $driver->host, 'localhost'
+    my $dsn = 'dbi:mysql:database=myapp';
+    $dsn .= ';host=' . $self->{host}
+        if defined $self->{host};
+    $dsn .= ';port=' . $self->{port}
+        if defined $self->{port};
+    is $driver->dsn, $dsn
+        => 'driver: dsn ok';
+    is_deeply [$driver->host], [$self->{host}]
         => 'driver: host ok';
     is $driver->username, 'mysql_user'
         => 'driver: username ok';
     is $driver->password, 'foobar'
         => 'driver: password ok';
-    is $driver->port, 3306
+    is_deeply [$driver->port], [$self->{port}]
         => 'driver: port ok';
     my $script = file('examples/src/myapp_mysql.sql')->stringify;
     is $driver->command,
@@ -126,7 +147,7 @@ sub _remove_generated_database {
     my $self = shift;
 
     $self->{dbh}->do(q{DROP DATABASE IF EXISTS myapp})
-        or die $self->{dbh}->errstr;
+        or $self->BAILOUT($self->{dbh}->errstr);
 
     return;
 }
@@ -134,10 +155,24 @@ sub _remove_generated_database {
 sub _disconnect_database {
     my $self = shift;
 
-    $self->{dbh}->disconnect;
+    $self->{dbh}->disconnect
+        or $self->BAILOUT($self->{dbh}->errstr);
     delete $self->{dbh};
 
     return;
+}
+
+sub _reconnect_database {
+    my $self = shift;
+
+    $self->_disconnect_database;
+    $self->_connect_database('myapp');
+
+    return;
+}
+
+sub _can_support_foreign_keys {
+    return 1;
 }
 
 sub _clean_up_database {

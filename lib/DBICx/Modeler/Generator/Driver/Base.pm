@@ -42,13 +42,13 @@ has 'tree' => (
     required    => 1,
 );
 
-has [qw(bin dbd dbname dsn host)] => (
+has [qw(bin database dbd dsn)] => (
     is          => 'ro',
     isa         => 'Str',
     lazy_build  => 1,
 );
 
-has [qw(username password)] => (
+has [qw(host username password)] => (
     is          => 'ro',
     isa         => 'Str',
 );
@@ -76,7 +76,7 @@ around BUILDARGS => sub {
     my $args = $class->$next(@args);
 
     foreach my $attribute (qw(
-        bin dbd dbname dsn host port
+        bin database dbd dsn host port username password
     )) {
         delete $args->{$attribute}
             unless defined $args->{$attribute};
@@ -90,7 +90,7 @@ around BUILDARGS => sub {
 # builder(s)
 # ****************************************************************
 
-sub _build_dbname {
+sub _build_database {
     my $self = shift;
 
     return $self->tree->application;
@@ -99,9 +99,9 @@ sub _build_dbname {
 sub _build_dsn {
     my $self = shift;
 
-    my $dsn = sprintf 'dbi:%s:dbname=%s', (
+    my $dsn = sprintf 'dbi:%s:database=%s', (
         $self->dbd,
-        $self->dbname,
+        $self->database,
     );
     $dsn .= sprintf ';host=%s', $self->host
         if defined $self->host;
@@ -109,10 +109,6 @@ sub _build_dsn {
         if defined $self->port;
 
     return $dsn;
-}
-
-sub _build_host {
-    return 'localhost';
 }
 
 
