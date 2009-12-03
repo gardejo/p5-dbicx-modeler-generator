@@ -34,12 +34,16 @@ sub schema {
 }
 
 sub modeler {
-    my $self = shift;
+    my ($self, $schema_or_connect_info, @options) = @_;
 
     return DBICx::Modeler->new(
-        schema    => $self->schema,
+        schema    => (
+            ref $schema_or_connect_info eq 'ARRAY'
+                ? $self->schema(@$schema_or_connect_info)
+                : $schema_or_connect_info
+        ),
         namespace => '+MyApp::Model',
-        @_,
+        @options,
     );
 }
 
