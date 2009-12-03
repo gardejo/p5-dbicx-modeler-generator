@@ -215,6 +215,15 @@ Test::DBICx::Modeler::Generator::MySQL - Tests for DBICx::Modeler::Generator::Dr
 
 This class is a base class of C<Test::DBICx::Modeler::Generator::*::MySQL>.
 
+=head1 USER ACCOUNT
+
+This test suite hard-codes the user account to connect MySQL daemon below:
+
+    GRANT
+        SELECT,INSERT,UPDATE,DELETE,DROP,CREATE,INDEX
+        ON myapp.*
+        TO 'mysql_user'@'localhost' IDENTIFIED BY 'foobar';
+
 =head1 AUTHOR
 
 =over 4

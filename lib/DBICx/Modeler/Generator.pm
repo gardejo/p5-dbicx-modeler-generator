@@ -730,23 +730,23 @@ below is the C<Devel::Cover> summary report on this library's test suite.
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
  File                           stmt   bran   cond    sub    pod   time  total
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
- ...BICx/Modeler/Generator.pm  100.0    n/a    n/a  100.0  100.0    9.1  100.0
- .../Modeler/Generator/CLI.pm  100.0  100.0    n/a  100.0    0.0   18.2   98.0
- ...odeler/Generator/Class.pm  100.0    n/a    n/a  100.0  100.0    9.1  100.0
+ ...BICx/Modeler/Generator.pm  100.0    n/a    n/a  100.0  100.0    0.0  100.0
+ .../Modeler/Generator/CLI.pm  100.0  100.0    n/a  100.0    0.0   22.2   98.0
+ ...odeler/Generator/Class.pm  100.0    n/a    n/a  100.0  100.0    0.0  100.0
  ...er/Generator/ClassLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
- .../Generator/Driver/Base.pm  100.0   83.3    n/a  100.0  100.0    0.0   97.2
- ...Generator/Driver/MySQL.pm  100.0   50.0    n/a  100.0    n/a    0.0   94.3
- ...enerator/Driver/SQLite.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
+ .../Generator/Driver/Base.pm  100.0  100.0    n/a  100.0  100.0    0.0  100.0
+ ...Generator/Driver/MySQL.pm  100.0  100.0    n/a  100.0    n/a    0.0  100.0
+ ...enerator/Driver/SQLite.pm  100.0    n/a    n/a  100.0    n/a   11.1  100.0
  ...r/Generator/DriverLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
- ...odeler/Generator/Model.pm  100.0  100.0    n/a  100.0  100.0    9.1  100.0
- ...er/Generator/ModelLike.pm  100.0    n/a    n/a  100.0    n/a    9.1  100.0
- ...Modeler/Generator/Path.pm  100.0   50.0    n/a  100.0  100.0   27.3   98.8
+ ...odeler/Generator/Model.pm  100.0  100.0    n/a  100.0  100.0   44.4  100.0
+ ...er/Generator/ModelLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
+ ...Modeler/Generator/Path.pm  100.0  100.0    n/a  100.0  100.0    0.0  100.0
  ...ler/Generator/PathLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
- ...deler/Generator/Schema.pm  100.0   50.0    n/a  100.0  100.0    9.1   97.6
+ ...deler/Generator/Schema.pm  100.0   50.0    n/a  100.0  100.0   22.2   97.6
  ...r/Generator/SchemaLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
- ...Modeler/Generator/Tree.pm  100.0    n/a    n/a  100.0    n/a    9.1  100.0
+ ...Modeler/Generator/Tree.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
  ...ler/Generator/TreeLike.pm  100.0    n/a    n/a  100.0    n/a    0.0  100.0
- Total                         100.0   72.2    n/a  100.0   91.7  100.0   99.0
+ Total                         100.0   94.4    n/a  100.0   91.7  100.0   99.7
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 =head1 AUTHOR
