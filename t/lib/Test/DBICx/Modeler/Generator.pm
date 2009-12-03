@@ -27,6 +27,7 @@ use Module::Load;
 use Path::Class;
 use Test::Exception;
 use Test::More;
+use Test::Warn;
 
 
 # ****************************************************************
@@ -245,21 +246,27 @@ sub test_as_blackbox : Tests(no_plan) {
         skip "'myapp' database already exists"
             if $self->_exists_database;
 
-        lives_ok {
-            $self->{generator}->deploy_database;
-        } 'deploy_database: ok';
+        warning_is {
+            lives_ok {
+                $self->{generator}->deploy_database;
+            } 'no exception to deploy_database';
+        } undef, 'no warning to deploy_database';
         ok $self->_exists_database
             => 'database exists';
 
-        lives_ok {
-            $self->{generator}->update_schemata;
-        } 'update_schemata: ok';
+        # warning_is {
+            lives_ok {
+                $self->{generator}->update_schemata;
+            } 'no exception to update_schemata';
+        # } undef, 'no warning to update_schemata';
         $self->_test_existence_of_schemata;
         $self->_test_meta_information_of_schema_modules;
 
-        lives_ok {
-            $self->{generator}->update_models;
-        } 'update_models: ok';
+        warning_is{
+            lives_ok {
+                $self->{generator}->update_models;
+            } 'no exception to update_models';
+        } undef, 'no warning to update_models';
         $self->_test_existence_of_models;
         $self->_test_meta_information_of_model_modules;
     };

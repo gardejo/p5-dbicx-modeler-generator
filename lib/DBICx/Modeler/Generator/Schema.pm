@@ -126,6 +126,14 @@ sub _build_is_debug {
 sub make_schemata {
     my $self = shift;
 
+    # keep make_schema_at()'s mouth shut! (for Perl 5.8+)
+    # cf. http://d.hatena.ne.jp/ktat/20060829/1156853692
+    # cf. http://d.hatena.ne.jp/ktat/20090607/1244332749
+    my $stderr = q{};
+    local *STDERR;
+    open STDERR, '>', \$stderr
+        or die $!;
+
     make_schema_at(
         $self->class->schema,
         {
