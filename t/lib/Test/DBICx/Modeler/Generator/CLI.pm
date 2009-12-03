@@ -10,19 +10,9 @@ use warnings;
 
 
 # ****************************************************************
-# base class(es)
-# ****************************************************************
-
-use base qw(
-    Test::DBICx::Modeler::Generator
-);
-
-
-# ****************************************************************
 # general dependency(-ies)
 # ****************************************************************
 
-use Test::More;
 use Test::Requires {
     'MooseX::Getopt'       => 0,
     'MooseX::SimpleConfig' => 0,
@@ -60,7 +50,7 @@ sub interface {
 # test(s)
 # ****************************************************************
 
-sub setup :Test(setup) {
+sub _get_generator {
     my $self = shift;
 
     local @ARGV = $self->_get_argument_values;

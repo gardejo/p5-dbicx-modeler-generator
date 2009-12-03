@@ -22,8 +22,13 @@ use base qw(
 # general dependency(-ies)
 # ****************************************************************
 
+use DBI;
+use List::MoreUtils qw(all apply uniq);
 use Path::Class;
 use Test::More;
+use Test::Requires {
+    'DBD::SQLite' => 0,
+};
 
 
 # ****************************************************************
@@ -32,12 +37,6 @@ use Test::More;
 
 sub _get_driver_class {
     return 'DBICx::Modeler::Generator::Driver::SQLite';
-}
-
-sub _has_authority {
-    my $self = shift;
-
-    return -w $self->{examples}->stringify;
 }
 
 sub _get_special_literals {
@@ -49,7 +48,17 @@ sub _get_special_literals {
 sub _connect_database {
     my $self = shift;
 
-    $self->{db_file} = $self->{examples}->file('myapp.db');
+    $self->{db_file} = $self->{examples}->file('myapp.db')->relative;
+    my $dbh = DBI->connect(
+        'dbi:SQLite:dbname=' . $self->{db_file}->stringify,
+        undef,
+        undef,
+        {
+            PrintError => 0,
+        }
+    );
+    $self->{dbh} = $dbh
+        if defined $dbh;
 
     return;
 }
@@ -83,7 +92,7 @@ sub test_driver : Tests(no_plan) {
         => 'driver: bin ok';
     is $driver->dbd, 'SQLite'
         => 'driver: dbd ok';
-    my $dbname = file('examples/myapp.db')->stringify;
+    my $dbname = $self->{db_file}->stringify;
     is file($driver->dbname)->stringify,
         $dbname
             => 'driver: dbname ok';
@@ -109,21 +118,54 @@ sub test_driver : Tests(no_plan) {
 sub _exists_database {
     my $self = shift;
 
-    return -f $self->{db_file}->stringify;
+    my %table;
+    @table{
+        apply {
+            s{
+                \A
+                "main" \.
+                "(.+?)"
+                \z
+            }{$1}xms;
+        } uniq (
+            $self->{dbh}->tables(undef, 'main')
+        )
+    } = ();
+
+    return all {
+        exists $table{$_};
+    } qw(artist cd track);
 }
 
 sub _remove_generated_database {
     my $self = shift;
 
-    # fixme: cannot remove the database file: the test process locks it!
-    eval {
-        $self->{db_file}->remove;
-    } if $self->{has_authority};
+    foreach my $table (qw(artist cd track)) {
+        $self->{dbh}->do(sprintf 'DROP TABLE IF EXISTS %s', $table)
+            or die $self->{dbh}->errstr;
+    }
 
     return;
 }
 
 sub _disconnect_database {
+    my $self = shift;
+
+    $self->{dbh}->disconnect
+        or warn $self->{dbh}->errstr;
+    delete $self->{dbh};
+
+    return;
+}
+
+sub _clean_up_database {
+    my $self = shift;
+
+    # fixme: could not access to the file because an other process uses it
+    # $self->{db_file}->remove
+    #     or die $!;
+    $self->{db_file}->remove;
+
     return;
 }
 

@@ -22,10 +22,10 @@ use base qw(
 # general dependency(-ies)
 # ****************************************************************
 
+use DBI;
 use Path::Class;
 use Test::More;
 use Test::Requires {
-    'DBI'          => 0,
     'DBD::mysql'   => 0,
     # 'Test::mysqld' => 0,
 };
@@ -37,10 +37,6 @@ use Test::Requires {
 
 sub _get_driver_class {
     return 'DBICx::Modeler::Generator::Driver::MySQL';
-}
-
-sub _has_authority {
-    return 1;
 }
 
 sub _get_special_literals {
@@ -58,19 +54,18 @@ sub _connect_database {
 
     # fixme: use Test::mysqld
     # or
-    # fixme: store the running status of mysql daemon
-    # fixme: run mysql daemon
-
-    $self->{dbh} = DBI->connect(
-        'dbi:mysql:host=localhost;port=3306',
+    # fixme: store the running status of mysql daemon and run mysql daemon
+    my $dbh = DBI->connect(
+        'dbi:mysql:',
         'mysql_user',
         'foobar',
+        {
+            PrintWarn  => 0,
+            PrintError => 0,
+        }
     );
-
-    plan skip_all => "could not connect to the MySQL database"
-        unless $self->{dbh};
-    plan skip_all => "'myapp' database already exists"
-        if $self->_exists_database;
+    $self->{dbh} = $dbh
+        if defined $dbh;
 
     return;
 }
@@ -124,19 +119,28 @@ sub test_driver : Tests(no_plan) {
 sub _exists_database {
     my $self = shift;
 
-    # fixme: this validation
-    return $self->{dbh}->do(q{SHOW DATABASES LIKE 'myapp'}) eq 1;
+    return scalar $self->{dbh}->tables(undef, 'myapp');
 }
 
 sub _remove_generated_database {
     my $self = shift;
 
-    $self->{dbh}->do(q{DROP DATABASE IF EXISTS myapp});
+    $self->{dbh}->do(q{DROP DATABASE IF EXISTS myapp})
+        or die $self->{dbh}->errstr;
 
     return;
 }
 
 sub _disconnect_database {
+    my $self = shift;
+
+    $self->{dbh}->disconnect;
+    delete $self->{dbh};
+
+    return;
+}
+
+sub _clean_up_database {
     my $self = shift;
 
     # fixme: shutdown mysql daemon if it was ran at connect_database()

@@ -38,6 +38,7 @@ sub startup : Test(startup) {
 
     $self->_set_environment;
     $self->_connect_database;
+    $self->_get_generator;
 
     return;
 }
@@ -65,11 +66,20 @@ sub _set_environment {
     return;
 }
 
-sub teardown : Test(shutdown) {
+sub _has_authority {
     my $self = shift;
 
-    $self->_disconnect_database;
-    $self->_remove_generated_database;
+    return -w $self->{examples}->stringify;
+}
+
+sub shutdown : Test(shutdown) {
+    my $self = shift;
+
+    if (exists $self->{dbh}) {
+        $self->_remove_generated_database;
+        $self->_disconnect_database;
+    }
+    $self->_clean_up_database;
     $self->_remove_generated_modules;
 
     return;
@@ -230,12 +240,16 @@ sub test_as_blackbox : Tests(no_plan) {
     SKIP: {
         skip "You have no authority to make database"
             unless $self->{has_authority};
+        skip "could not connect to the MySQL database"
+            unless $self->{dbh};
+        skip "'myapp' database already exists"
+            if $self->_exists_database;
 
         lives_ok {
             $self->{generator}->deploy_database;
         } 'deploy_database: ok';
         ok $self->_exists_database
-            => 'database file exists';
+            => 'database exists';
 
         lives_ok {
             $self->{generator}->update_schemata;
@@ -247,7 +261,7 @@ sub test_as_blackbox : Tests(no_plan) {
             $self->{generator}->update_models;
         } 'update_models: ok';
         $self->_test_existence_of_models;
-        $self->_test_meta_information_of_model_modules
+        $self->_test_meta_information_of_model_modules;
     };
 
     return;
