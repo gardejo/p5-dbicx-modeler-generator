@@ -198,7 +198,7 @@ sub test_schema : Tests(no_plan) {
     isa_ok $schema, 'DBICx::Modeler::Generator::Schema';
     does_ok $schema, 'DBICx::Modeler::Generator::SchemaLike';
 
-    is_deeply $schema->components, [qw(UTF8Columns)]
+    is_deeply $schema->components, []
         => 'schema: components ok';
     ok ! $schema->is_debug
         => 'schema: is_debug ok';

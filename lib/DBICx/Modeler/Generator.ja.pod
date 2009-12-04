@@ -518,7 +518,10 @@ C<< ArrayRef[Str] >>
 
 =item 初期値(Default)
 
-C<< [qw(UTF8Columns)] >>
+C<< [] >>
+
+(I<Don't use DBIx::Class::UTF8Columns>,
+L<http://perl-users.jp/articles/advent-calendar/2009/hacker/04.html>も参照)
 
 =back
 

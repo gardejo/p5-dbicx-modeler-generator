@@ -28,9 +28,19 @@ use MyApp::Schema;
 # ****************************************************************
 
 sub schema {
-    my $class = shift;
+    my ($class, $dsn, $username, $password, $option) = @_;
 
-    return MyApp::Schema->connect(@_);
+    $option ||= {};
+    %$option = %$option, (
+        # cf. "Don't use DBIx::Class::UTF8Columns",
+        # http://perl-users.jp/articles/advent-calendar/2009/hacker/04.html
+        # sqlite_unicode    => 1,                     # DBD::SQLite
+        # unicode           => 1,                     # DBD::SQLite <1.26
+        # mysql_enable_utf8 => 1,                     # DBD::mysql
+        # on_connect_do     => ['SET NAMES utf8'],    # DBD::mysql
+    );
+
+    return MyApp::Schema->connect($dsn, $username, $password, $option);
 }
 
 sub modeler {

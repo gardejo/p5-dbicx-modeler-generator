@@ -43,8 +43,7 @@ literal:
 #   /Path/module_extension: .pm
 #   /Path/script_extension: .sql
 #   /Path/root:             examples
-#   /Schema/components:
-#       - UTF8Columns
+#   /Schema/components:     []
 #   /Schema/is_debug:       1
 #   /Tree/application:      myapp
 #   /Tree/library:

@@ -745,7 +745,10 @@ C<< ArrayRef[Str] >>
 
 =item Default
 
-C<< [qw(UTF8Columns)] >>
+C<< [] >>
+
+(cf. I<Don't use DBIx::Class::UTF8Columns>,
+L<http://perl-users.jp/articles/advent-calendar/2009/hacker/04.html>)
 
 =back
 

@@ -109,9 +109,7 @@ around BUILDARGS => sub {
 # ****************************************************************
 
 sub _build_components {
-    return [qw(
-        UTF8Columns
-    )];
+    return [];
 }
 
 sub _build_is_debug {
