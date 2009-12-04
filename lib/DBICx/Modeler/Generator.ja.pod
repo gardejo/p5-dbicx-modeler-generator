@@ -28,8 +28,8 @@ DBICx::Modeler::Generator - DBIx::Class::SchemaとDBICx::Modelerの動的な生�
 エンタープライズアプリケーションでは、上手なアーキテクチャーを考慮する必要があります。
 特に、モデリングはアプリケーションの保守性に多大な影響を及ぼします。
 
-そこで、L<DBICx::Modeler>を使ってスキーマとモデルのモジュールを分離することを推奨します。
-この小気味よいモジュールは、L<DBIx::Class>スキーマに対して、L<Moose>に基づいたレイヤーを提供します。
+そこで、L<DBICx::Modeler|DBICx::Modeler>を使ってスキーマとモデルのモジュールを分離することを推奨します。
+この小気味よいモジュールは、L<DBIx::Class|DBIx::Class>スキーマに対して、L<Moose|Moose>に基づいたレイヤーを提供します。
 
 しかしながら、その分離による恩恵を享受するためには、たくさんのモデルモジュールを定義しなければなりません。
 これはとても面倒な作業です。
@@ -44,15 +44,15 @@ DBICx::Modeler::Generator - DBIx::Class::SchemaとDBICx::Modelerの動的な生�
 
 =item *
 
-L<DBIx::Class>スキーマモジュール群の動的な定義
+L<DBIx::Class|DBIx::Class>スキーマモジュール群の動的な定義
 
 =item *
 
-L<DBICx::Modeler>モデルモジュール群の動的な定義
+L<DBICx::Modeler|DBICx::Modeler>モデルモジュール群の動的な定義
 
 =back
 
-なお、このC<DBICx::Modeler::Generator>モジュールは、L<DBIx::Class::Schema::Loadler>によるスキーマモジュール群の動的な生成を自動化する、単純なラッパーとしても使えます。
+なお、このC<DBICx::Modeler::Generator>モジュールは、L<DBIx::Class::Schema::Loadler|DBIx::Class::Schema::Loadler>によるスキーマモジュール群の動的な生成を自動化する、単純なラッパーとしても使えます。
 
 =head2 アプリケーションのモデリング方法 - 典型的な作業手順(ワークフロー)
 
@@ -67,7 +67,7 @@ I<MySQL Workbench>アプリケーション(L<http://www.mysql.com/products/workb
 このアプリケーションは表(テーブル), 列(カラム), 索引(インデックス), 関係(リレーション)などを設計出来ます。
 
 スキーマファイルの実例(サンプル)は、このディストリビューションのF<examples/doc/DBDSC_schemata.mwb>に同梱されています。
-これはL<DBICx::Modeler>のテスト用モジュール群を再現したもので、C<artist>, C<cd>, C<track>というテーブル(スキーマ)を備えています。
+これはL<DBICx::Modeler|DBICx::Modeler>のテスト用モジュール群を再現したもので、C<artist>, C<cd>, C<track>というテーブル(スキーマ)を備えています。
 
 =item 2.
 
@@ -79,7 +79,7 @@ ER図として出力した画像ファイルの実例(サンプル)は、この�
 
 I<MySQL Workbench>のC<< [Database] - [Forward Engineer...] >>機能を使って、スキーマからデータベースを動的に配備します。
 
-もしくは、このモジュールのL<< deploy_database()メソッド||/$self->deploy_database() >>で、I<MySQL Workbench>のC<< [File] - [Export] - [Forward Engineer SQL CREATE Script...] >>機能によって生成したデータベース作成用スクリプト(データ定義言語, DDL: Data Definition Language)を使って配備します。
+もしくは、このモジュールのL<< deploy_database()メソッド|/$self->deploy_database() >>で、I<MySQL Workbench>のC<< [File] - [Export] - [Forward Engineer SQL CREATE Script...] >>機能によって生成したデータベース作成用スクリプト(データ定義言語, DDL: Data Definition Language)を使って配備します。
 
 生成したデータベース作成用スクリプトの実例(サンプル)は、このディストリビューションのF<examples/src/myapp_mysql.sql>に同梱されています。
 
@@ -100,7 +100,7 @@ I<MySQL Workbench>のC<< [Database] - [Forward Engineer...] >>機能を使って
 
 追加の定義が必要なモデルモジュール群を静的に定義します(自分で書くということです)。
 
-追加の定義とは、L<Moose>のアトリビュート(attributes), メソッド(methods), メソッドモディファイヤー(method modifiers)などです。
+追加の定義とは、L<Moose|Moose>のアトリビュート(attributes), メソッド(methods), メソッドモディファイヤー(method modifiers)などです。
 
 追加の定義のみを記述したモデルモジュールファイルの実例は、このディストリビューションのF<examples/src/lib/MyApp/Model/Cd.pm>に同梱されています。
 
@@ -164,13 +164,13 @@ C<< [Right] >>テキストボックスへC<< [12] >>mmを入力
 
 詳細はL<依存性の注入|/依存性の注入>節を参照してください。
 
-L<DBICx::Modeler::Generator::CLI>によって依存性の注入を包み込んだインターフェースを使うことも出来ます。
+L<DBICx::Modeler::Generator::CLI|DBICx::Modeler::Generator::CLI>によって依存性の注入を包み込んだインターフェースを使うことも出来ます。
 
 =head3 C<< DBICx::Modeler::Generator::CLI->new_with_options(%init_args) >>
 
-L<DBICx::Modeler::Generator::CLI>オブジェクトを返します。
+L<DBICx::Modeler::Generator::CLI|DBICx::Modeler::Generator::CLI>オブジェクトを返します。
 
-ジェネレーターオブジェクトを取得するためには、このインターフェースを使うことをB<強く>推奨します。L<MooseX::Getopt>とL<MooseX::SimpleConfig>を用いて依存性の注入作業を包み込むことが出来るためです。
+ジェネレーターオブジェクトを取得するためには、このインターフェースを使うことをB<強く>推奨します。L<MooseX::Getopt|MooseX::Getopt>とL<MooseX::SimpleConfig|MooseX::SimpleConfig>を用いて依存性の注入作業を包み込むことが出来るためです。
 
 以下の具体的なコードを参照してください:
 
@@ -196,7 +196,7 @@ L<DBICx::Modeler::Generator::CLI>オブジェクトを返します。
 
 =head1 依存性の注入
 
-このクラスとそのサブクラスでは依存性の注入(DI: Dependency Injection)のためにL<MooseX::Orochi>を使っています。
+このクラスとそのサブクラスでは依存性の注入(DI: Dependency Injection)のためにL<MooseX::Orochi|MooseX::Orochi>を使っています。
 
 詳細はこのディストリビューションに同梱されているF<examples/src/sbin/maintain_models.pl>を参照してください。
 
@@ -204,9 +204,9 @@ L<DBICx::Modeler::Generator::CLI>オブジェクトを返します。
 
 =head3 C<< /DBICx/Modeler/Generator/Class >>
 
-L<DBICx::Modeler::Generator::ClassLike>インターフェースを満たす実装クラスのインスタンスです。
+L<DBICx::Modeler::Generator::ClassLike|DBICx::Modeler::Generator::ClassLike>インターフェースを満たす実装クラスのインスタンスです。
 
-このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::Class>を同梱しています。
+このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::Class|DBICx::Modeler::Generator::Driver::Class>を同梱しています。
 
 =head3 C<< /DBICx/Modeler/Generator/Class/application >>
 
@@ -226,21 +226,21 @@ C<< MyApp >>, C<< My::App >>, 等
 
 =head3 C<< /DBICx/Modeler/Generator/Driver >>
 
-L<DBICx::Modeler::Generator::DriverLike>インターフェースを満たす実装クラスのインスタンスです。
+L<DBICx::Modeler::Generator::DriverLike|DBICx::Modeler::Generator::DriverLike>インターフェースを満たす実装クラスのインスタンスです。
 
-このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::MySQL>とL<DBICx::Modeler::Generator::Driver::SQLite>を同梱しています。
+このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::MySQL|DBICx::Modeler::Generator::Driver::MySQL>とL<DBICx::Modeler::Generator::Driver::SQLite|DBICx::Modeler::Generator::Driver::SQLite>を同梱しています。
 
 =head3 C<< /DBICx/Modeler/Generator/Model >>
 
-L<DBICx::Modeler::Generator::ModelLike>インターフェースを満たす実装クラスのインスタンスです。
+L<DBICx::Modeler::Generator::ModelLike|DBICx::Modeler::Generator::ModelLike>インターフェースを満たす実装クラスのインスタンスです。
 
-このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::Model>を同梱しています。
+このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::Model|DBICx::Modeler::Generator::Driver::Model>を同梱しています。
 
 =head3 C<< /DBICx/Modeler/Generator/Path >>
 
-L<DBICx::Modeler::Generator::PathLike>インターフェースを満たす実装クラスのインスタンスです。
+L<DBICx::Modeler::Generator::PathLike|DBICx::Modeler::Generator::PathLike>インターフェースを満たす実装クラスのインスタンスです。
 
-このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::Path>を同梱しています。
+このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::Path|DBICx::Modeler::Generator::Driver::Path>を同梱しています。
 
 =head3 C<< /DBICx/Modeler/Generator/Path/root >>
 
@@ -250,7 +250,8 @@ L<DBICx::Modeler::Generator::PathLike>インターフェースを満たす実装
 
 =item 型(Type)
 
-L<Path::Class::Dir> (L<MooseX::Types::Path::Class>で型変換されます)
+L<Path::Class::Dir|Path::Class::Dir>
+(L<MooseX::Types::Path::Class|MooseX::Types::Path::Class>で型変換されます)
 
 =item 用例(Example)
 
@@ -260,15 +261,15 @@ F<< /path/to/root >>
 
 =head3 C<< /DBICx/Modeler/Generator/Schema >>
 
-L<DBICx::Modeler::Generator::SchemaLike>インターフェースを満たす実装クラスのインスタンスです。
+L<DBICx::Modeler::Generator::SchemaLike|DBICx::Modeler::Generator::SchemaLike>インターフェースを満たす実装クラスのインスタンスです。
 
-このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::Schema>を同梱しています。
+このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::Schema|DBICx::Modeler::Generator::Driver::Schema>を同梱しています。
 
 =head3 C<< /DBICx/Modeler/Generator/Tree >>
 
-L<DBICx::Modeler::Generator::TreeLike>インターフェースを満たす実装クラスのインスタンスです。
+L<DBICx::Modeler::Generator::TreeLike|DBICx::Modeler::Generator::TreeLike>インターフェースを満たす実装クラスのインスタンスです。
 
-このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::Tree>を同梱しています。
+このディストリビューションでは、一般的な用途に使える実装クラスとして、L<DBICx::Modeler::Generator::Driver::Tree|DBICx::Modeler::Generator::Driver::Tree>を同梱しています。
 
 =head2 任意の依存
 
@@ -325,9 +326,9 @@ C<< Str >>
 =item 初期値(Default)
 
 C<< mysql >>
-(ドライバーの実装クラスがL<DBICx::Modeler::Generator::Driver::MySQL>の場合),
+(ドライバーの実装クラスがL<DBICx::Modeler::Generator::Driver::MySQL|DBICx::Modeler::Generator::Driver::MySQL>の場合),
 C<< sqlite3 >>
-(ドライバーの実装クラスがL<DBICx::Modeler::Generator::Driver::SQLite>の場合),
+(ドライバーの実装クラスがL<DBICx::Modeler::Generator::Driver::SQLite|DBICx::Modeler::Generator::Driver::SQLite>の場合),
 等
 
 =back
@@ -361,9 +362,9 @@ C<< Str >>
 =item 初期値(Default)
 
 C<< mysql >>
-(ドライバーの実装クラスがL<DBICx::Modeler::Generator::Driver::MySQL>の場合),
+(ドライバーの実装クラスがL<DBICx::Modeler::Generator::Driver::MySQL|DBICx::Modeler::Generator::Driver::MySQL>の場合),
 C<< SQLite >>
-(ドライバーの実装クラスがL<DBICx::Modeler::Generator::Driver::SQLite>の場合),
+(ドライバーの実装クラスがL<DBICx::Modeler::Generator::Driver::SQLite|DBICx::Modeler::Generator::Driver::SQLite>の場合),
 等
 
 =back
@@ -397,7 +398,7 @@ C<< Str >>
 =item 初期値(Default)
 
 F<< .dbl >>
-(ドライバーの実装クラスがL<DBICx::Modeler::Generator::Driver::SQLite>の場合),
+(ドライバーの実装クラスがL<DBICx::Modeler::Generator::Driver::SQLite|DBICx::Modeler::Generator::Driver::SQLite>の場合),
 等
 
 =back
@@ -468,7 +469,8 @@ C<< mysql_user >>
 
 =item 型(Type)
 
-L<Path::Class::File> (L<MooseX::Types::Path::Class>で型変換されます)
+L<Path::Class::File|Path::Class::File>
+(L<MooseX::Types::Path::Class|MooseX::Types::Path::Class>で型変換されます)
 
 =item 初期値(Default)
 
@@ -623,15 +625,15 @@ C<< [] >>
 
 =item *
 
-L<DBICx::Modeler>
+L<DBICx::Modeler|DBICx::Modeler>
 
 =item *
 
-L<DBIx::Class::Schema::Loader>
+L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader>
 
 =item *
 
-L<DBIx::Class>
+L<DBIx::Class|DBIx::Class>
 
 =item *
 
@@ -684,7 +686,7 @@ L<http://blog.eorzea.asia/2009/10/post_76.html>
 
 =item *
 
-テストでのL<Test::mysqld>の使用
+テストでのL<Test::mysqld|Test::mysqld>の使用
 (参考: 牧 大輔さん(lestrratさん)による、L<http://mt.endeworks.jp/d-6/2009/10/things-ive-done-while-using-test-mysqld.html>の記事)
 
 =back
@@ -712,7 +714,7 @@ L<http://blog.eorzea.asia/2009/10/post_76.html>
 
     perldoc DBICx::Modeler::Generator
 
-日本語版はL<Pod::PerldocJp>を使ったC<perldocjp>コマンドで閲覧出来ます。
+日本語版はL<Pod::PerldocJp|Pod::PerldocJp>を使ったC<perldocjp>コマンドで閲覧出来ます。
 
     perldocjp DBICx::Modeler::Generator.ja
 
@@ -724,7 +726,7 @@ L<http://blog.eorzea.asia/2009/10/post_76.html>
 
 =head1 コード網羅率
 
-テストのコード網羅率(コードカバレッジ)を検査するために、L<Devel::Cover>を使っています。
+テストのコード網羅率(コードカバレッジ)を検査するために、L<Devel::Cover|Devel::Cover>を使っています。
 このディストリビューションのテストスートに関するC<Devel::Cover>による調査結果の概要を以下に示します。
 
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
@@ -767,14 +769,14 @@ L<http://ttt.ermitejo.com>.
 
 This module is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.
-See L<perlgpl> and L<perlartistic>.
+See L<perlgpl|perlgpl> and L<perlartistic|perlartistic>.
 
 The full text of the license can be found in the F<LICENSE> file
 included with this distribution.
 
 このモジュールはフリーソフトウェアです。
 あなたはこれをPerlと同じように自由に再配布・改変することが出来ます。
-詳しくはL<perlgpl>およびL<perlartistic>を参照してください。
+詳しくはL<perlgpl|perlgpl>およびL<perlartistic|perlartistic>を参照してください。
 
 使用許諾条件の全文はこのディストリビューションに同梱されているF<LICENSE>ファイルにあります。
 

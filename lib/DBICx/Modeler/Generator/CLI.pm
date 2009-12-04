@@ -296,8 +296,10 @@ DBICx::Modeler::Generator::CLI - Command line interface to DBICx::Modeler::Gener
 
 =head1 DESCRIPTION
 
-This module wraps the interface to L<DBICx::Modeler::Generator>
-with L<MooseX::Getopt> and L<MooseX::SimpleConfig>.
+This module wraps the interface
+to L<DBICx::Modeler::Generator|DBICx::Modeler::Generator>
+with L<MooseX::Getopt|MooseX::Getopt>
+and L<MooseX::SimpleConfig|MooseX::SimpleConfig>.
 
 See C</examples/src/sbin/maintain_models.pl> of this distribution
 for further detail.
@@ -308,27 +310,27 @@ for further detail.
 
 =item *
 
-L<MooseX::Getopt>
+L<MooseX::Getopt|MooseX::Getopt>
 
 =item *
 
-L<Getopt::Long>
+L<Getopt::Long|Getopt::Long>
 
 =item *
 
-L<MooseX::SimpleConfig>
+L<MooseX::SimpleConfig|MooseX::SimpleConfig>
 
 =item *
 
-L<DBICx::Modeler>
+L<DBICx::Modeler|DBICx::Modeler>
 
 =item *
 
-L<DBIx::Class::Schema::Loader>
+L<DBIx::Class::Schema::Loader|DBIx::Class::Schema::Loader>
 
 =item *
 
-L<DBICx::Modeler::Generator>
+L<DBICx::Modeler::Generator|DBICx::Modeler::Generator>
 
 =back
 
@@ -350,7 +352,7 @@ L<http://ttt.ermitejo.com>.
 
 This module is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.
-See L<perlgpl> and L<perlartistic>.
+See L<perlgpl|perlgpl> and L<perlartistic|perlartistic>.
 
 The full text of the license can be found in the F<LICENSE> file
 included with this distribution.

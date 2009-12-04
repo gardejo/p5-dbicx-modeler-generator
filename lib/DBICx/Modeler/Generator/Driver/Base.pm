@@ -162,7 +162,7 @@ DBICx::Modeler::Generator::Driver::Base - Base inmplement class for DBICx::Model
 =head1 DESCRIPTION
 
 This class is a base abstract class for
-L<DBICx::Modeler::Generator::DriverLike>.
+L<DBICx::Modeler::Generator::DriverLike|DBICx::Modeler::Generator::DriverLike>.
 
 =head1 METHODS
 
@@ -190,7 +190,7 @@ L<http://ttt.ermitejo.com>.
 
 This module is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.
-See L<perlgpl> and L<perlartistic>.
+See L<perlgpl|perlgpl> and L<perlartistic|perlartistic>.
 
 The full text of the license can be found in the F<LICENSE> file
 included with this distribution.

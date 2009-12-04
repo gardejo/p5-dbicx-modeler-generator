@@ -305,7 +305,8 @@ DBICx::Modeler::Generator::Path - Implement class for DBICx::Modeler::Generator:
 
 =head1 DESCRIPTION
 
-This class is an implement class for L<DBICx::Modeler::Generator::PathLike>.
+This class is an implement class for
+L<DBICx::Modeler::Generator::PathLike|DBICx::Modeler::Generator::PathLike>.
 
 =head1 METHODS
 
@@ -319,7 +320,8 @@ Removes file and directory tree.
 
 =head3 C<< $full_path = $self->get_full_path(@directories, $file, $extension) >>
 
-Returns L<Path::Class::File> object which corresponds with specified arguments.
+Returns L<Path::Class::File|Path::Class::File> object
+which corresponds with specified arguments.
 
 =head3 C<< $self->add_source_library() >>
 
@@ -343,7 +345,7 @@ L<http://ttt.ermitejo.com>.
 
 This module is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.
-See L<perlgpl> and L<perlartistic>.
+See L<perlgpl|perlgpl> and L<perlartistic|perlartistic>.
 
 The full text of the license can be found in the F<LICENSE> file
 included with this distribution.
