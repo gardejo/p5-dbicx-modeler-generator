@@ -288,11 +288,11 @@ DBICx::Modeler::Generator::CLI - Command line interface to DBICx::Modeler::Gener
 
     use DBICx::Modeler::Generator::CLI;
 
-    my $application = DBICx::Modeler::Generator::CLI->new_with_options;
+    my $generator = DBICx::Modeler::Generator::CLI->new_with_options->generator;
 
-    $application->generator->deploy_database;
-    $application->generator->update_schemata;
-    $application->generator->update_models;
+    $generator->deploy_database;
+    $generator->update_schemata;
+    $generator->update_models;
 
 =head1 DESCRIPTION
 
@@ -348,8 +348,11 @@ L<http://ttt.ermitejo.com/>
 Copyright (c) 2009 by MORIYA Masaki (a.k.a. "Gardejo"),
 L<http://ttt.ermitejo.com>.
 
-This library is free software;
+This module is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.
 See L<perlgpl> and L<perlartistic>.
+
+The full text of the license can be found in the F<LICENSE> file
+included with this distribution.
 
 =cut

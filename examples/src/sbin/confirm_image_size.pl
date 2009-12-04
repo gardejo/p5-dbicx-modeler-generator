@@ -47,27 +47,27 @@ To export an Entity-Relationship Diagram
 as "Quad-VGA" (width: 1280px * height: 960px) PNG image
 from MySQL Workbench (5.1.18 OSS),
 select C<< [File] - [Page Setup] >> menu (open C<< [Page Setup] >> window)
-and specify below settings:
+and specify settings below:
 
 =over 4
 
 =item C<< [Paper] >> group
 
-C<< [Size] >> listbox : C<< [A4 (210 mm x 297 mm)] >> item
+select C<< [A4 (210 mm x 297 mm)] >> item from C<< [Size] >> listbox
 
 =item C<< [Orientation] >> group
 
-C<< [Landscape] >> radio button : on
+turn on C<< [Landscape] >> radio button
 
 =item C<< [Margins] >> group
 
-C<< [Top] >> text box : C<< [10] >>mm
+input C<< [10] >>mm into C<< [Top] >> text box
 
-C<< [Left] >> text box : C<< [10] >>mm
+input C<< [10] >>mm into C<< [Left] >> text box
 
-C<< [Bottom] >> text box : C<< [35] >>mm
+input C<< [35] >>mm into C<< [Bottom] >> text box
 
-C<< [Right] >> text box : C<< [12] >>mm
+input C<< [12] >>mm into C<< [Right] >> text box 
 
 =back
 
@@ -92,8 +92,11 @@ L<http://ttt.ermitejo.com/>
 Copyright (c) 2009 by MORIYA Masaki (a.k.a. "Gardejo"),
 L<http://ttt.ermitejo.com>.
 
-This library is free software;
+This module is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.
 See L<perlgpl> and L<perlartistic>.
+
+The full text of the license can be found in the F<LICENSE> file
+included with this distribution.
 
 =cut

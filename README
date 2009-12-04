@@ -21,7 +21,7 @@ by the following command:
 DEPENDENCIES
 ------------
 
-See C<Makefile.PL>.
+See "Makefile.PL".
 
 DESCRIPTION
 -----------
@@ -49,13 +49,6 @@ or
 or
 
     perl -Ilib examples/src/sbin/maintain_models.pl \\
-         -a MyApp -r examples -d MySQL -u username -w password \\
-         -h hostname -p 3307 \\
-         -l /Path/script_extension=_mysql.sql
-
-or
-
-    perl -Ilib examples/src/sbin/maintain_models.pl \\
          --configfile examples/src/myapp.yml
 
 AUTHOR
@@ -71,6 +64,9 @@ COPYRIGHT AND LICENSE
 Copyright (c) 2009 by MORIYA Masaki (a.k.a. "Gardejo"),
 L<http://ttt.ermitejo.com>.
 
-This library is free software;
+This distribution is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.
 See perlgpl and perlartistic.
+
+The full text of the license can be found in the "LICENSE" file
+included with this distribution.
