@@ -25,6 +25,7 @@ use base qw(
 use DBI;
 use List::MoreUtils qw(all apply uniq);
 use Path::Class;
+use Test::Moose;
 use Test::More;
 use Test::Requires {
     'DBD::SQLite' => 0,
@@ -126,21 +127,21 @@ sub test_driver : Tests(no_plan) {
 
     my $driver = $self->{generator}->driver;
     isa_ok $driver, 'DBICx::Modeler::Generator::Driver::SQLite';
-    ok $driver->meta->does_role('DBICx::Modeler::Generator::DriverLike');
+    does_ok $driver, 'DBICx::Modeler::Generator::DriverLike';
 
-    is $driver->extension, '.db'
-        => 'driver: extension ok';
     is $driver->bin, 'sqlite3'
         => 'driver: bin ok';
-    is $driver->dbd, 'SQLite'
-        => 'driver: dbd ok';
     my $database = $self->{db_file}->stringify;
     is file($driver->database)->stringify,
         $database
             => 'driver: database ok';
+    is $driver->dbd, 'SQLite'
+        => 'driver: dbd ok';
     is $driver->dsn,
         "dbi:SQLite:dbname=$database"
             => 'driver: dsn ok';
+    is $driver->extension, '.db'
+        => 'driver: extension ok';
     is_deeply [$driver->host], [undef]
         => 'driver: host ok';
     is_deeply [$driver->username], [undef]

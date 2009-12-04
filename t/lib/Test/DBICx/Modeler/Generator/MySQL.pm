@@ -24,6 +24,7 @@ use base qw(
 
 use DBI;
 use Path::Class;
+use Test::Moose;
 use Test::More;
 use Test::Requires {
     'DBD::mysql'   => 0,
@@ -108,7 +109,7 @@ sub test_driver : Tests(no_plan) {
 
     my $driver = $self->{generator}->driver;
     isa_ok $driver, 'DBICx::Modeler::Generator::Driver::MySQL';
-    ok $driver->meta->does_role('DBICx::Modeler::Generator::DriverLike');
+    does_ok $driver, 'DBICx::Modeler::Generator::DriverLike';
 
     is $driver->bin, 'mysql'
         => 'driver: bin ok';

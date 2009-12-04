@@ -89,6 +89,8 @@ use inc::Module::Install;
         # cf. MooseX-Types-DateTime
 #   test_requires   'Test::Kwalitee'                => '0';
         # for author tests
+#   test_requires   'Test::Moose'                   => '0';
+        # was included by Moose
     test_requires   'Test::More'                    => '0';
 #   test_requires   'Test::mysqld'                  => '0';
 #   test_requires   'Test::NoTabs'                  => '0';
