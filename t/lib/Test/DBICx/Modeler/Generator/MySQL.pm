@@ -112,6 +112,8 @@ sub test_driver : Tests(no_plan) {
 
     is $driver->bin, 'mysql'
         => 'driver: bin ok';
+    is $driver->database, 'myapp'
+        => 'driver: database ok';
     is $driver->dbd, 'mysql'
         => 'driver: dbd ok';
     my $dsn = 'dbi:mysql:database=myapp';
