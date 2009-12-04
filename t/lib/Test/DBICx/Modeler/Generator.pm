@@ -448,16 +448,6 @@ Test::DBICx::Modeler::Generator - Tests for DBICx::Modeler::Generator
 
 This class is a base class of C<Test::DBICx::Modeler::Generator::*>.
 
-=head1 TO DO
-
-=over 4
-
-=item *
-
-Using L<Test::Moose> to test meta information.
-
-=back
-
 =head1 AUTHOR
 
 =over 4
