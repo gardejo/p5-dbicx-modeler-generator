@@ -945,7 +945,9 @@ No bugs have been reported.
 =head2 Making suggestions and reporting bugs
 
 Please report any found bugs, feature requests, and ideas for improvements
-to L<http://github.com/gardejo/p5-dbicx-modeler-generator/issues>.
+to C<bug-dbicx-modeler-generator at rt.cpan.org>,
+or through the web interface
+at L<http://rt.cpan.org/Public/Bug/Report.html?Queue=DBICx-Modeler-Generator>.
 I will be notified, and then you'll automatically be notified of progress
 on your bugs/requests as I make changes.
 
@@ -964,6 +966,28 @@ You can also find the Japanese edition of documentation for this module
 with the C<perldocjp> command from L<Pod::PerldocJp|Pod::PerldocJp>.
 
     perldocjp DBICx::Modeler::Generator.ja
+
+You can also look for information at:
+
+=over 4
+
+=item RT: CPAN's request tracker
+
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=DBICx-Modeler-Generator>
+
+=item AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/DBICx-Modeler-Generator>
+
+=item Search CPAN
+
+L<http://search.cpan.org/dist/DBICx-Modeler-Generator>
+
+=item CPAN Ratings
+
+L<http://cpanratings.perl.org/dist/DBICx-Modeler-Generator>
+
+=back
 
 =head1 VERSION CONTROL
 

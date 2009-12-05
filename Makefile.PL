@@ -17,7 +17,8 @@ use inc::Module::Install;
         repository
             => 'git://github.com/gardejo/p5-dbicx-modeler-generator.git',
         bugtracker
-            => 'http://github.com/gardejo/p5-dbicx-modeler-generator/issues',
+            => 'http://rt.cpan.org/Public/Dist/Display.html?Name='
+             . 'DBICx-Modeler-Generator',
         homepage
             => 'http://github.com/gardejo/p5-dbicx-modeler-generator',
     );

@@ -696,7 +696,8 @@ L<http://blog.eorzea.asia/2009/10/post_76.html>
 
 =head2 提案やバグ報告の方法
 
-何かバグを発見されたら、機能のご要望がありましたら、または改善のためのご意見がありましたら、L<http://github.com/gardejo/p5-dbicx-modeler-generator/issues>のバグトラッカーを使って報告してください。
+何かバグを発見されたら、機能のご要望がありましたら、または改善のためのご意見がありましたら、メール(C<bug-dbicx-modeler-generator at rt.cpan.org>宛)で報告してください。
+または、Webインターフェース(L<http://rt.cpan.org/Public/Bug/Report.html?Queue=DBICx-Modeler-Generator>)を使って報告してください。
 これによって、その報告内容が開発者へ通知されます。
 さらに、バグや要望の対応状況について、報告者が通知を自動的に受けることも出来ます。
 
@@ -712,6 +713,28 @@ L<http://blog.eorzea.asia/2009/10/post_76.html>
 日本語版はL<Pod::PerldocJp|Pod::PerldocJp>を使ったC<perldocjp>コマンドで閲覧出来ます。
 
     perldocjp DBICx::Modeler::Generator.ja
+
+また、以下の場所も参照してください:
+
+=over 4
+
+=item RT: CPAN's request tracker
+
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=DBICx-Modeler-Generator>
+
+=item AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/DBICx-Modeler-Generator>
+
+=item Search CPAN
+
+L<http://search.cpan.org/dist/DBICx-Modeler-Generator>
+
+=item CPAN Ratings
+
+L<http://cpanratings.perl.org/dist/DBICx-Modeler-Generator>
+
+=back
 
 =head1 バージョン管理
 

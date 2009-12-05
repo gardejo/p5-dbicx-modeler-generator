@@ -1,8 +1,8 @@
-# Avoid generated files of an example
+# Avoid generated files of examples.
 examples/lib/MyApp/
 examples/myapp\.db$
 
-# Avoid Test::Kwalitee related file(s).
+# Avoid Test::Kwalitee related files.
 Debian_CPANTS.txt
 
 # This MANIFEST.SKIP file was stolen from MooseX-Types-DateTime
