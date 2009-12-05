@@ -640,12 +640,7 @@ L<DBIx::Class|DBIx::Class>
 I<MySQL Workbench>アプリケーションのホームページ,
 L<http://www.mysql.com/products/workbench/>
 
-=item *
-
-I<MySQL Workbench>アプリケーションの日本語版ホームページ,
-L<http://www-jp.mysql.com/products/workbench/>
-
-訳注: このアプリケーションの日本語版が存在するわけではありません。
+訳注: 日本語版ページはL<http://www-jp.mysql.com/products/workbench/>にあります。ただし、このアプリケーションの日本語版が存在するわけではありません。
 
 =item *
 
@@ -798,7 +793,7 @@ L<http://ttt.ermitejo.com/>
 =item 音引き
 
 この文書の訳出にあたっては、英単語のカタカナ表記について、語尾の音引き(katakana prolonged sound mark)を省かずに表記しています(JIS Z 8301で規定されているような省略はしていません)。
-例えば、「constructor」を「コンストラクタ」ではなく「コンストラクタB<ー>」と表記しています。
+例えば、「constructor」を「コンストラクB<タ>」ではなく「コンストラクB<ター>」と表記しています。
 
 =back
 

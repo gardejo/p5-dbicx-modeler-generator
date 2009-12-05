@@ -246,7 +246,7 @@ and much more.
 The sample of a schema file available for
 F<examples/doc/DBDSC_schemata.mwb> in this distribution.
 It catches L<DBICx::Modeler|DBICx::Modeler>'s test modules
-which has C<artist>, C<cd> and C<track> tables (schemata).
+which has C<artist>, C<cd>, and C<track> tables (schemata).
 
 =item 2.
 
@@ -286,8 +286,8 @@ Dynamically define schema module files
 by L<< update_schemata() method|/$self->update_schemata() >> of this module.
 
 For example, this will enable us to generate schema file which path is
-F<examples/lib/MyApp/Schema/Artist.pm> and
-F<examples/lib/MyApp/Schema/Cd.pm> and much more
+F<examples/lib/MyApp/Schema/Artist.pm>,
+F<examples/lib/MyApp/Schema/Cd.pm>, and much more
 in this distribution.
 
 =item 6.
@@ -307,8 +307,8 @@ Dynamically define model module files
 by L<< update_models() method|/$self->update_models() >> of this module.
 
 For example, this will enable us to generate model file which path is
-F<examples/lib/MyApp/Model/Artist.pm> and
-F<examples/lib/MyApp/Model/Cd.pm> and much more
+F<examples/lib/MyApp/Model/Artist.pm>,
+F<examples/lib/MyApp/Model/Cd.pm>, and much more
 in this distribution.
 
 =back
