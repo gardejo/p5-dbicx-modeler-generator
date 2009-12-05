@@ -5,10 +5,10 @@ This file documents the revision history for Perl distribution
 VERSION HISTORY
 ===============
 
-0.00 : Released on 2009-XX-XX (JST)
+0.00 : Released on 2009-12-05 (JST)
 -----------------------------------
 
-Initial version.
+Initial release.
 
 ### Features
 
@@ -33,7 +33,7 @@ META INFORMATION
 Version notation
 ----------------
 
-    V.vvrr_dd : Released on YYYY-MM-DD
+    V.vvrr_dd : Released on YYYY-MM-DD (Time Zone)
 
 ### V  : Major version number
 
@@ -55,6 +55,7 @@ You would not need to update the distribution.
 
 -   Improved tests
 -   Updated documents
+-   ...
 
 ### dd : Developer release number (in revision number, on demand)
 
@@ -64,6 +65,7 @@ the distribution.
 
 -   Added experimental features
 -   Fixed bugs provisionally
+-   ...
 
 
 Document format
