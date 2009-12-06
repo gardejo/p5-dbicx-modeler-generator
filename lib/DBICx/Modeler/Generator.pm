@@ -323,6 +323,7 @@ and dynamic definition of models.
 
 The sample of a batch script file available for
 F<examples/src/sbin/maintain_models.pl> in this distribution.
+See L<EXAMPLES|/EXAMPLES> section for further detail.
 
 =head3 How to make exported graphics the same size
 
