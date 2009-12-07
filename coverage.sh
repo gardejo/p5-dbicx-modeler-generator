@@ -1,5 +1,5 @@
 # for Unix, Linux, etc.
-set HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,inc,examples,perl/site/lib,perl/lib,t/,xt/
+export HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,inc,examples,perl/site/lib,perl/lib,t/,xt/
 
 rm -rf cover_db
 # make realclean
@@ -11,4 +11,4 @@ rm -rf cover_db
 
 prove -l xt/supplement.t t
 cover
-open cover_db/coverage.html
+firevox cover_db/coverage.html &
