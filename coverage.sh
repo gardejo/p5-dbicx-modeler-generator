@@ -11,4 +11,4 @@ rm -rf cover_db
 
 prove -l xt/supplement.t t
 cover
-firevox cover_db/coverage.html &
+firefox cover_db/coverage.html &
