@@ -51,6 +51,8 @@ sub _set_environment {
 
     $self->{examples}
         = dir($FindBin::Bin)->parent->subdir('examples')->cleanup;
+    $self->{has_means}
+        = $self->_has_means;
     $self->{has_authority}
         = $self->_has_authority;
     $self->{target_library}
@@ -243,7 +245,10 @@ sub test_as_blackbox : Tests(no_plan) {
     my $self = shift;
 
     SKIP: {
-        skip "You have no authority to make database"
+        skip "You have no means to operate a database "
+           . "via command line interface"
+            unless $self->{has_means};
+        skip "You have no authority to make the database"
             unless $self->{has_authority};
         skip "could not connect to the database"
             unless $self->{dbh};

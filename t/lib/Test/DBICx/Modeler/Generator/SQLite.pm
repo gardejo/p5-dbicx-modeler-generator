@@ -55,6 +55,10 @@ sub with_foreign_key {
 # test(s)
 # ****************************************************************
 
+sub _has_means {
+    ! system('sqlite3 --version');
+}
+
 sub _get_driver_class {
     return 'DBICx::Modeler::Generator::Driver::SQLite';
 }

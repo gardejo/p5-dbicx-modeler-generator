@@ -36,6 +36,10 @@ use Test::Requires {
 # test(s)
 # ****************************************************************
 
+sub _has_means {
+    ! system('mysql --version');
+}
+
 sub _get_driver_class {
     return 'DBICx::Modeler::Generator::Driver::MySQL';
 }
