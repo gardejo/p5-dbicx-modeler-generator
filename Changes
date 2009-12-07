@@ -5,10 +5,28 @@ This file documents the revision history for Perl distribution
 VERSION HISTORY
 ===============
 
+0.0001 : Released on 2009-12-07 (JST)
+-------------------------------------
+
+Fixed several problems in Unix-like systems.
+(not for CPAN)
+
+### Fixed bugs
+
+#### `DBICx::Modeler::Generator::CLI`
+
+-   Modified a circular dependency problem.
+
+### Tests
+
+-   Added skip_all if command line interface is not installed/is not available.
+-   Modified syntax of `coverage.sh`.
+
 0.00 : Released on 2009-12-07 (JST)
 -----------------------------------
 
 Initial release.
+(not for CPAN)
 
 ### Features
 
