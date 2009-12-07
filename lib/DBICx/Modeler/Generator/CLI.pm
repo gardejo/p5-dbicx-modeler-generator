@@ -178,16 +178,19 @@ sub _build_base_registory {
 sub _build_classes {
     my $self = shift;
 
+    # **** CAVEAT: THE CLASS ORDER IS SENSITIVE! SEE POD ****
     return [
         qw(
-            DBICx::Modeler::Generator
             DBICx::Modeler::Generator::Class
-            DBICx::Modeler::Generator::Model
-            DBICx::Modeler::Generator::Path
-            DBICx::Modeler::Generator::Schema
             DBICx::Modeler::Generator::Tree
+            DBICx::Modeler::Generator::Path
+            DBICx::Modeler::Generator::Model
         ),
         'DBICx::Modeler::Generator::Driver::' . $self->driver,
+        qw(
+            DBICx::Modeler::Generator::Schema
+            DBICx::Modeler::Generator
+        ),
     ];
 }
 
@@ -303,6 +306,27 @@ and L<MooseX::SimpleConfig|MooseX::SimpleConfig>.
 
 See C</examples/src/sbin/maintain_models.pl> of this distribution
 for further detail.
+
+=head1 CAVEAT
+
+L<Orochi|Orochi> 0.00006 does not resolve a circular dependency.
+
+In case of that the order is invalid, our program may die at
+L<Orochi::Injection::Constructor|Orochi::Injection::Constructor>
+with the exception below:
+
+    Attribute (tree) does not pass the type constraint because:
+    Validation failed for 'DBICx::Modeler::Generator::TreeLike' failed
+    with value Orochi::Injection::BindValue=HASH(0x5921b8)
+
+The valid order is below:
+
+    (1)Generator -> (2)Schema,  (3)Driver,  (3)Model,   (5)Path,    (7)Class
+    (2)Schema    -> (3)Driver,  (5)Path,    (7)Class
+    (3)Driver    -> (5)Path,    (6)Tree
+    (3)Model     -> (5)Path,    (7)Class
+    (5)Path      -> (6)Tree,    (7)Class
+    (6)Tree      -> (7)Class
 
 =head1 SEE ALSO
 
