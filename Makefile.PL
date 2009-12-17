@@ -42,8 +42,9 @@ use inc::Module::Install;
         # to avoid clone problem
     requires        'DBIx::Class::Schema::Loader'   => '0';
     requires        'File::Find::Rule'              => '0';
-#   requires        'List::MoreUtils'               => '0';
+    requires        'List::MoreUtils'               => '0';
         # was included by Moose
+        # (but Kwalitee scorer blames implicit prerequirement)
     requires        'Module::Load'                  => '0';
     requires        'Moose'                         => '0.89_01';
         # for Moose::Meta::Attribute::Native
