@@ -1027,7 +1027,7 @@ below is the C<Devel::Cover> summary report on this distribution's test suite.
 
 =over 4
 
-=item MORIYA Masaki (a.k.a. "Gardejo")
+=item MORIYA Masaki (a.k.a. Gardejo)
 
 C<< <moriya at ermitejo dot com> >>,
 L<http://ttt.ermitejo.com/>
@@ -1036,7 +1036,7 @@ L<http://ttt.ermitejo.com/>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2009 by MORIYA Masaki (a.k.a. "Gardejo"),
+Copyright (c) 2009 by MORIYA Masaki (a.k.a. Gardejo),
 L<http://ttt.ermitejo.com>.
 
 This module is free software;

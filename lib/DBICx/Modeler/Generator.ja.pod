@@ -774,7 +774,7 @@ L<http://cpanratings.perl.org/dist/DBICx-Modeler-Generator>
 
 =over 4
 
-=item 守屋 雅樹, MORIYA Masaki (a.k.a. "Gardejo")
+=item 守屋 雅樹, MORIYA Masaki (a.k.a. Gardejo)
 
 C<< <moriya at ermitejo dot com> >>,
 L<http://ttt.ermitejo.com/>
@@ -783,7 +783,7 @@ L<http://ttt.ermitejo.com/>
 
 =head1 著作権と使用許諾条件
 
-Copyright (c) 2009 by MORIYA Masaki (a.k.a. "Gardejo"),
+Copyright (c) 2009 by MORIYA Masaki (a.k.a. Gardejo),
 L<http://ttt.ermitejo.com>.
 
 This module is free software;
@@ -803,7 +803,7 @@ included with this distribution.
 
 =over 4
 
-=item 守屋 雅樹, MORIYA Masaki (a.k.a. "Gardejo")
+=item 守屋 雅樹, MORIYA Masaki (a.k.a. Gardejo)
 
 C<< <moriya at ermitejo dot com> >>,
 L<http://ttt.ermitejo.com/>
