@@ -254,7 +254,7 @@ B<Optionally> draw an ERD (Entity-Relationship Diagram) with I<MySQL Workbench>
 for documentation.
 
 The sample of an exported graphic file available for
-F<examples/doc/DBDERII_Including Information.png> in this distribution.
+F<examples/doc/DBDERII_Including_Information.png> in this distribution.
 
 =item 3.
 

@@ -73,7 +73,7 @@ I<MySQL Workbench>アプリケーション(L<http://www.mysql.com/products/workb
 
 文書化のためのB<任意の作業として>、I<MySQL Workbench>を使ってER図(ERD: Entity-Relationship Diagram)を描画します。
 
-ER図として出力した画像ファイルの実例(サンプル)は、このディストリビューションのF<examples/doc/DBDERII_Including Information.png>に同梱されています。
+ER図として出力した画像ファイルの実例(サンプル)は、このディストリビューションのF<examples/doc/DBDERII_Including_Information.png>に同梱されています。
 
 =item 3.
 
