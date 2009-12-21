@@ -5,6 +5,19 @@ This file documents the revision history for Perl distribution
 VERSION HISTORY
 ===============
 
+0.0003 : Released on 2009-12-21 (JST)
+-------------------------------------
+
+### Distribution
+
+-   Fixed the pre-required modules.
+
+
+### Documents
+
+-   Updates trivial description of documents.
+
+
 0.0002 : Released on 2009-12-17 (JST)
 -------------------------------------
 
