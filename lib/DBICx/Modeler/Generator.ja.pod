@@ -606,18 +606,18 @@ C<< [] >>
 
 ディストリビューションのルートディレクトリーで、以下のコマンドを実行してください:
 
-    perl -Ilib examples/src/sbin/maintain_models.pl \\
+    perl -Ilib examples/src/sbin/maintain_models.pl \
          -a MyApp -r examples -d SQLite
 
 または
 
-    perl -Ilib examples/src/sbin/maintain_models.pl \\
-         -a MyApp -r examples -d MySQL -u username -w password \\
+    perl -Ilib examples/src/sbin/maintain_models.pl            \
+         -a MyApp -r examples -d MySQL -u username -w password \
          -l /Path/script_extension=_mysql.sql
 
 または
 
-    perl -Ilib examples/src/sbin/maintain_models.pl \\
+    perl -Ilib examples/src/sbin/maintain_models.pl \
          --configfile examples/src/myapp.yml
 
 =head1 関連情報

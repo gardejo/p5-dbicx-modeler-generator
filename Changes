@@ -115,5 +115,5 @@ Document format
 
 This `Changes` file was formatted in Markdown.
 
-    $ perl -MText::Markdown -MFile::Slurp -e \\
+    $ perl -MText::Markdown -MFile::Slurp -e \
       'print (Text::Markdown->new->markdown(scalar read_file(q{Changes})));'

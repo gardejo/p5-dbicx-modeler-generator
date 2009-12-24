@@ -46,43 +46,43 @@ maintain_models - Maintainer of schema and model modules
 
 =head1 SYNOPSIS
 
-    $ perl -Ilib examples/src/sbin/maintain_models.pl   \\
-           -a MyApp                                     \\
-           -r examples                                  \\
+    $ perl -Ilib examples/src/sbin/maintain_models.pl   \
+           -a MyApp                                     \
+           -r examples                                  \
            -d SQLite
 
     # or
 
-    $ perl -Ilib examples/src/sbin/maintain_models.pl   \\
-           --application=MyApp                          \\
-           --root=examples                              \\
+    $ perl -Ilib examples/src/sbin/maintain_models.pl   \
+           --application=MyApp                          \
+           --root=examples                              \
            --driver=SQLite
 
     # or
 
-    $ perl -Ilib examples/src/sbin/maintain_models.pl   \\
-           -a MyApp                                     \\
-           -r examples                                  \\
-           -d MySQL                                     \\
-           -u mysql_user                                \\
-           -w foobar                                    \\
+    $ perl -Ilib examples/src/sbin/maintain_models.pl   \
+           -a MyApp                                     \
+           -r examples                                  \
+           -d MySQL                                     \
+           -u mysql_user                                \
+           -w foobar                                    \
            -l /Path/script_extension=_mysql.sql
 
     # or
 
-    $ perl -Ilib examples/src/sbin/maintain_models.pl   \\
-           --application=MyApp                          \\
-           --root=examples                              \\
-           --driver=MySQL                               \\
-           --username=mysql_user                        \\
-           --password=foobar                            \\
-           --host=hostname                              \\
-           --port=3306                                  \\
+    $ perl -Ilib examples/src/sbin/maintain_models.pl   \
+           --application=MyApp                          \
+           --root=examples                              \
+           --driver=MySQL                               \
+           --username=mysql_user                        \
+           --password=foobar                            \
+           --host=hostname                              \
+           --port=3306                                  \
            --literal /Path/script_extension=_mysql.sql
 
     # or
 
-    $ perl -Ilib examples/src/sbin/maintain_models.pl   \\
+    $ perl -Ilib examples/src/sbin/maintain_models.pl   \
            --configfile=examples/src/myapp.yml
 
 =head1 DESCRIPTION

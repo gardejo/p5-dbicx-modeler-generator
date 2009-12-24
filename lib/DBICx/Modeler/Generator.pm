@@ -860,18 +860,18 @@ L<workflow|/How to model in your application - typical workflow> above.
 
 Run the following command at root directory of this distribution:
 
-    perl -Ilib examples/src/sbin/maintain_models.pl \\
+    perl -Ilib examples/src/sbin/maintain_models.pl \
          -a MyApp -r examples -d SQLite
 
 or
 
-    perl -Ilib examples/src/sbin/maintain_models.pl \\
-         -a MyApp -r examples -d MySQL -u username -w password \\
+    perl -Ilib examples/src/sbin/maintain_models.pl            \
+         -a MyApp -r examples -d MySQL -u username -w password \
          -l /Path/script_extension=_mysql.sql
 
 or
 
-    perl -Ilib examples/src/sbin/maintain_models.pl \\
+    perl -Ilib examples/src/sbin/maintain_models.pl \
          --configfile examples/src/myapp.yml
 
 =head1 SEE ALSO
