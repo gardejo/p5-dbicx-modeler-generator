@@ -258,7 +258,7 @@ Returns a string which joined C<@parts_of_class_name> with joint string C<::>.
 
 =item MORIYA Masaki (a.k.a. Gardejo)
 
-C<< <moriya at ermitejo dot com> >>,
+C<< <moriya at cpan dot org> >>,
 L<http://ttt.ermitejo.com/>
 
 =back

@@ -110,7 +110,7 @@ This class is a base class of C<Test::DBICx::Modeler::Generator::CLI::*>.
 
 =item MORIYA Masaki (a.k.a. Gardejo)
 
-C<< <moriya at ermitejo dot com> >>,
+C<< <moriya at cpan dot org> >>,
 L<http://ttt.ermitejo.com/>
 
 =back

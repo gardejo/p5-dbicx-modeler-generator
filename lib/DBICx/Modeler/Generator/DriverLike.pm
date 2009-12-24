@@ -76,7 +76,7 @@ to L<DBICx::Modeler::Generator|DBICx::Modeler::Generator>.
 
 =item MORIYA Masaki (a.k.a. Gardejo)
 
-C<< <moriya at ermitejo dot com> >>,
+C<< <moriya at cpan dot org> >>,
 L<http://ttt.ermitejo.com/>
 
 =back

@@ -56,13 +56,14 @@ AUTHOR
 
 MORIYA Masaki (a.k.a. Gardejo)
 
-    <moriya@cpan.org>, http://ttt.ermitejo.com/
+    <moriya at cpan dot org>,
+    http://ttt.ermitejo.com/
 
 COPYRIGHT AND LICENSE
 ---------------------
 
 Copyright (c) 2009 by MORIYA Masaki (a.k.a. Gardejo),
-L<http://ttt.ermitejo.com>.
+http://ttt.ermitejo.com
 
 This distribution is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.

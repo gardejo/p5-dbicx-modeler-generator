@@ -33,7 +33,7 @@ This class is a root schema for L<MyApp|MyApp>.
 
 =item MORIYA Masaki (a.k.a. Gardejo)
 
-C<< <moriya at ermitejo dot com> >>,
+C<< <moriya at cpan dot org> >>,
 L<http://ttt.ermitejo.com/>
 
 =back

@@ -776,7 +776,7 @@ L<http://cpanratings.perl.org/dist/DBICx-Modeler-Generator>
 
 =item 守屋 雅樹, MORIYA Masaki (a.k.a. Gardejo)
 
-C<< <moriya at ermitejo dot com> >>,
+C<< <moriya at cpan dot org> >>,
 L<http://ttt.ermitejo.com/>
 
 =back
@@ -805,7 +805,7 @@ included with this distribution.
 
 =item 守屋 雅樹, MORIYA Masaki (a.k.a. Gardejo)
 
-C<< <moriya at ermitejo dot com> >>,
+C<< <moriya at cpan dot org> >>,
 L<http://ttt.ermitejo.com/>
 
 =back
