@@ -12,7 +12,7 @@ use inc::Module::Install;
     all_from        'lib/DBICx/Modeler/Generator.pm';
 
     # supplement
-    author          'MORIYA Masaki (a.k.a. Gardejo) <moriya@cpan.org>';
+    author          'MORIYA Masaki (a.k.a. Gardejo) <moriya at cpan dot org>';
     resources (
         repository
             => 'git://github.com/gardejo/p5-dbicx-modeler-generator.git',
