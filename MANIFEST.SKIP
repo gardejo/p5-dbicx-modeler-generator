@@ -1,7 +1,3 @@
-# Avoid generated files of examples.
-examples/lib/MyApp/
-examples/myapp\.db$
-
 # Avoid Test::Kwalitee related files.
 Debian_CPANTS.txt
 
