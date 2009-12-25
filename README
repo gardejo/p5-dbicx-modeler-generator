@@ -11,45 +11,27 @@ To install this distribution,
 first, to make Makefile, build this distribution and run tests
 by the following command:
 
-    cpan -t .
+    % cpan -t .
 
 next, to deploy this distribution
 by the following command:
 
-    cpan -i .
+    % cpan -i .
 
 DEPENDENCIES
 ------------
 
 See "Makefile.PL".
 
-DESCRIPTION
------------
+DOCUMENTATION
+-------------
 
-This module provides dynamic definition of a DBICx::Modeler model.
+DBICx::Modeler::Generator documentation is available as in POD.
+So you can do:
 
-See further document of this distribution by the following commands:
+    % perldoc DBICx::Modeler::Generator
 
-    perldoc DBICx::Modeler::Generator
-
-EXAMPLES
---------
-
-Run the following command at root directory of this distribution:
-
-    perl -Ilib examples/src/sbin/maintain_models.pl \
-         -a MyApp -r examples -d SQLite
-
-or
-
-    perl -Ilib examples/src/sbin/maintain_models.pl            \
-         -a MyApp -r examples -d MySQL -u username -w password \
-         -l /Path/script_extension=_mysql.sql
-
-or
-
-    perl -Ilib examples/src/sbin/maintain_models.pl \
-         --configfile examples/src/myapp.yml
+to read the documentation online with your favorite pager.
 
 AUTHOR
 ------
