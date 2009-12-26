@@ -128,7 +128,7 @@ sub test_supplements_of_mysql_deploy_database : Test(no_plan) {
 
 
 # ****************************************************************
-# return trule
+# return true
 # ****************************************************************
 
 1;
