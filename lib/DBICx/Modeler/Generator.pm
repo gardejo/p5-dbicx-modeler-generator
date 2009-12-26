@@ -268,7 +268,13 @@ C<< [File] - [Export] - [Forward Engineer SQL CREATE Script...] >> function
 of I<MySQL Workbench>.
 
 The sample of an exported creation script file available for
-F<examples/src/myapp_mysql.sql> in this distribution.
+F<examples/src/myapp_mysql.sql> (for MySQL) and
+F<examples/src/myappl.sql> (for SQLite)
+in this distribution.
+
+Note: I<MySQL Workbench> can export DDL script for SQLite
+with I<SQLite export plugin for MySQL Workbench> plugin
+(L<http://www.henlich.de/software/sqlite-export-plugin-for-mysql-workbench/>).
 
 =item 4.
 

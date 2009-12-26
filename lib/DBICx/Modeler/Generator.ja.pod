@@ -81,7 +81,9 @@ I<MySQL Workbench>のC<< [Database] - [Forward Engineer...] >>機能を使って
 
 もしくは、このモジュールのL<< deploy_database()メソッド|/$self->deploy_database() >>で、I<MySQL Workbench>のC<< [File] - [Export] - [Forward Engineer SQL CREATE Script...] >>機能によって生成したデータベース作成用スクリプト(データ定義言語, DDL: Data Definition Language)を使って配備します。
 
-生成したデータベース作成用スクリプトの実例(サンプル)は、このディストリビューションのF<examples/src/myapp_mysql.sql>に同梱されています。
+生成したデータベース作成用スクリプトの実例(サンプル)は、このディストリビューションのF<examples/src/myapp_mysql.sql>(MySQL用)やF<examples/src/myapp.sql>(SQLite用)に同梱されています。
+
+注: I<MySQL Workbench>はI<SQLite export plugin for MySQL Workbench>プラグイン(L<http://www.henlich.de/software/sqlite-export-plugin-for-mysql-workbench/>)によってSQLite用のDDLスクリプトを出力することが出来ます。
 
 =item 4.
 
