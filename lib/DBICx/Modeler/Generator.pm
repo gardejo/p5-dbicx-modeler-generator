@@ -937,7 +937,7 @@ More tests
 
 Using L<Test::mysqld|Test::mysqld> for tests
 (cf. L<http://mt.endeworks.jp/d-6/2009/10/things-ive-done-while-using-test-mysqld.html>
-by Daisuke Maki, a.k.a. lestrrat)
+by Daisuke Maki, alias lestrrat
 
 =back
 
@@ -1033,7 +1033,7 @@ below is the C<Devel::Cover> summary report on this distribution's test suite.
 
 =over 4
 
-=item MORIYA Masaki (a.k.a. Gardejo)
+=item MORIYA Masaki, alias Gardejo
 
 C<< <moriya at cpan dot org> >>,
 L<http://ttt.ermitejo.com/>
@@ -1042,8 +1042,7 @@ L<http://ttt.ermitejo.com/>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2009 by MORIYA Masaki (a.k.a. Gardejo),
-L<http://ttt.ermitejo.com/>.
+Copyright (c) 2009-2010 MORIYA Masaki, alias Gardejo
 
 This module is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.

@@ -776,7 +776,18 @@ L<http://cpanratings.perl.org/dist/DBICx-Modeler-Generator>
 
 =over 4
 
-=item 守屋 雅樹, MORIYA Masaki (a.k.a. Gardejo)
+=item 守屋 雅樹 (Gardejo) (en: MORIYA Masaki, alias Gardejo)
+
+C<< <moriya at cpan dot org> >>,
+L<http://ttt.ermitejo.com/>
+
+=back
+
+=head2 訳註: 訳者
+
+=over 4
+
+=item 守屋 雅樹 (Gardejo) (en: MORIYA Masaki, alias Gardejo)
 
 C<< <moriya at cpan dot org> >>,
 L<http://ttt.ermitejo.com/>
@@ -785,15 +796,7 @@ L<http://ttt.ermitejo.com/>
 
 =head1 著作権と使用許諾条件
 
-Copyright (c) 2009 by MORIYA Masaki (a.k.a. Gardejo),
-L<http://ttt.ermitejo.com/>.
-
-This module is free software;
-you can redistribute it and/or modify it under the same terms as Perl itself.
-See L<perlgpl|perlgpl> and L<perlartistic|perlartistic>.
-
-The full text of the license can be found in the F<LICENSE> file
-included with this distribution.
+著作権保有 (c) 2009-2010 守屋 雅樹 (Gardejo)
 
 このモジュールはフリーソフトウェアです。
 あなたはこれをPerlと同じように自由に再配布・改変することが出来ます。
@@ -801,16 +804,16 @@ included with this distribution.
 
 使用許諾条件の全文はこのディストリビューションに同梱されているF<LICENSE>ファイルにあります。
 
-=head1 訳者
+=head2 訳註: 著作権と使用許諾条件の原文
 
-=over 4
+Copyright (c) 2009-2010 MORIYA Masaki, alias Gardejo
 
-=item 守屋 雅樹, MORIYA Masaki (a.k.a. Gardejo)
+This module is free software;
+you can redistribute it and/or modify it under the same terms as Perl itself.
+See L<perlgpl|perlgpl> and L<perlartistic|perlartistic>.
 
-C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
-
-=back
+The full text of the license can be found in the F<LICENSE> file
+included with this distribution.
 
 =head1 訳注
 
