@@ -38,7 +38,7 @@ use namespace::clean -except => [qw(meta)];
 # class constant(s)
 # ****************************************************************
 
-our $VERSION = "0.0003";
+our $VERSION = "0.01";
 
 
 # ****************************************************************
@@ -172,6 +172,12 @@ __END__
 =head1 NAME
 
 DBICx::Modeler::Generator - Dynamic definition of a DBIx::Class::Schema and a DBICx::Modeler
+
+=head1 VERSION
+
+This document describes
+L<DBICx::Modeler::Generator|DBICx::Modeler::Generator>
+version C<0.01>.
 
 =head1 SYNOPSIS
 
