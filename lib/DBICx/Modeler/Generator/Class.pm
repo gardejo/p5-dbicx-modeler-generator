@@ -259,14 +259,13 @@ Returns a string which joined C<@parts_of_class_name> with joint string C<::>.
 =item MORIYA Masaki, alias Gardejo
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 
 =head1 COPYRIGHT AND LICENSE
 
 Copyright (c) 2009-2010 MORIYA Masaki, alias Gardejo
-L<http://ttt.ermitejo.com/>.
 
 This module is free software;
 you can redistribute it and/or modify it under the same terms as Perl itself.

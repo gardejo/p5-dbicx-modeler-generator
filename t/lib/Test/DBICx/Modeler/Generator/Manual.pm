@@ -114,7 +114,7 @@ This class is a base class of C<Test::DBICx::Modeler::Generator::Manual::*>.
 =item MORIYA Masaki, alias Gardejo
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 

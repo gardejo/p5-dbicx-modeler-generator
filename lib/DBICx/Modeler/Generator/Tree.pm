@@ -361,7 +361,7 @@ L<DBICx::Modeler::Generator::TreeLike|DBICx::Modeler::Generator::TreeLike>.
 =item MORIYA Masaki, alias Gardejo
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 

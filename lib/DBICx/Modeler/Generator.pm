@@ -1036,7 +1036,7 @@ below is the C<Devel::Cover> summary report on this distribution's test suite.
 =item MORIYA Masaki, alias Gardejo
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 

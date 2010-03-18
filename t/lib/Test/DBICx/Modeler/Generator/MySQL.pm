@@ -238,7 +238,7 @@ This test suite hard-codes the user account to connect MySQL daemon below:
 =item MORIYA Masaki, alias Gardejo
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 

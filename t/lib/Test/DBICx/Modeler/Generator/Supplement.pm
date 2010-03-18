@@ -162,7 +162,7 @@ This class provides supplemental tests for C<DBICx::Modeler::Generator>.
 =item MORIYA Masaki, alias Gardejo
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 

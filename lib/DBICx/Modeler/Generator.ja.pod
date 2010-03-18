@@ -15,7 +15,7 @@ DBICx::Modeler::Generator.ja - (deprecated) DBIx::Class::SchemaとDBICx::Modeler
 =item 守屋 雅樹 (Gardejo) (en: MORIYA Masaki, alias Gardejo)
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 
@@ -26,7 +26,7 @@ L<http://ttt.ermitejo.com/>
 =item 守屋 雅樹 (Gardejo) (en: MORIYA Masaki, alias Gardejo)
 
 C<< <moriya at cpan dot org> >>,
-L<http://ttt.ermitejo.com/>
+L<http://gardejo.org/>
 
 =back
 
