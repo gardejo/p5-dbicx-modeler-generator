@@ -1,3 +1,7 @@
+# Avoid coverage verifier
+coverage.bat
+coverage.sh
+
 # Avoid Test::Kwalitee related files.
 Debian_CPANTS.txt
 
