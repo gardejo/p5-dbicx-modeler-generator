@@ -6,7 +6,7 @@ DBICx::Modeler::Generator::JA - DBIx::Class::SchemaとDBICx::Modelerの動的な
 
 =head1 バージョン
 
-この文書はL<DBICx::Modeler::Generator|DBICx::Modeler::Generator>のバージョンC<0.01>について記述しています。
+この文書はL<DBICx::Modeler::Generator|DBICx::Modeler::Generator>のバージョンC<0.02>について記述しています。
 
 =head1 概要
 
